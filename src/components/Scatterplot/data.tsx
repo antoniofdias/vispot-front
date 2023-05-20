@@ -1,4 +1,6 @@
-export const data = [
+import { DataItem } from "./types";
+
+export const data: DataItem[] = [
   {
     name: "Afghanistan",
     x: 0.579127974169232,

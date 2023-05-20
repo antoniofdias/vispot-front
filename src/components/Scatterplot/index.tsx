@@ -22,7 +22,7 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
   const squares = sortedData.map((d, i) => {
     const size = sizeScale(d.size);
 
-    const xPos = xScale(d.x) - size / 2;
+    const xPos = xScale(d.x === "" ? -1 : d.x) - size / 2;
     const yPos = yScale(d.y) - size / 2;
 
     const isDimmed = interactionData && interactionData.color !== d.color;
@@ -62,7 +62,7 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
     .map((d, i) => {
       const size = sizeScale(d.size);
 
-      const x = xScale(d.x); // position of the baricenter of the square
+      const x = xScale(d.x === "" ? -1 : d.x); // position of the baricenter of the square
       const y = yScale(d.y);
 
       const xText =

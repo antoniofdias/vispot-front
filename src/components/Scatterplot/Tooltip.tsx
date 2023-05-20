@@ -25,7 +25,7 @@ export const Tooltip = ({ interactionData }: TooltipProps) => {
       <div className={styles.topHalfContainer} style={{ borderColor: color }}>
         <div className={styles.row}>
           <span>Vulnerability index</span>
-          <b>{Math.round(x * 100) / 100}</b>
+          <b>{Math.round((x === "" ? -1 : x) * 100) / 100}</b>
         </div>
         <div className={styles.row}>
           <span>Readiness index</span>

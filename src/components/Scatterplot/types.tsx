@@ -1,10 +1,10 @@
 export type DataItem = {
   name: string;
-  x: number; // vulnerability
+  x: number | ""; // vulnerability
   y: number; // readiness
   size: number; // CO2 emission
   color: string;
-  categoryy: "RED" | "GREEN" | "YELLOW" | "BLUE";
+  categoryy: string;
   annotation?: "top" | "right" | "left" | "bottom";
 };
 
