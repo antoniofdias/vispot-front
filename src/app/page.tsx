@@ -7,7 +7,6 @@ import { data } from '@/components/Scatterplot/data'
 export default function Home() {
   return (
     <main className={styles.main}>
-      <h1>Hello World</h1>
       <DataTable rows={mockedData.songs}></DataTable>
       <Scatterplot data={data} width={400} height={400}></Scatterplot>
     </main>
