@@ -6,6 +6,8 @@ import { Scatterplot } from '@/components/Scatterplot'
 import { EdgeBundling } from '@/components/EdgeBundling';
 import { mockedData } from './data'
 import { data } from '@/components/Scatterplot/data'
+import flare from '@/components/EdgeBundling/flare.json'
+import flareDependencies from '@/components/EdgeBundling/flare-dependencies.json'
 // import { useEffect, useState } from 'react';
 // import { backendApi } from '@/services/api';
 
@@ -29,7 +31,7 @@ export default function Home() {
       {/* <h1>{JSON.stringify(sampleText)}</h1> */}
       <DataTable rows={mockedData.songs}></DataTable>
       <Scatterplot data={data} width={400} height={400} />
-      <EdgeBundling />
+      <EdgeBundling flare={flare} flareDependencies={flareDependencies} />
     </main>
   )
 }
