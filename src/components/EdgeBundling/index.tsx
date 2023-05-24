@@ -211,7 +211,7 @@ const testSpec = {
   ]
 } as VisualizationSpec;
 
-export default createClassFromSpec({
+export const EdgeBundling = createClassFromSpec({
   "mode": 'vega-lite',
   "spec": testSpec
 });
