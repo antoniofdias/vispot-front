@@ -1,168 +1,217 @@
-'use client'
-import React, { useEffect, useRef } from 'react';
-import * as d3 from 'd3';
+"use client"
+import { createClassFromSpec, VisualizationSpec } from 'react-vega';
 
-interface LeafNode {
-  x: number;
-  y: number;
-  data: { key: string; size: number };
-}
+const testSpec = {
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.",
+  "padding": 5,
+  "width": 720,
+  "height": 720,
+  "autosize": "none",
 
-const BubbleChart: React.FC = () => {
-  const chartRef = useRef<SVGSVGElement | null>(null);
+  "signals": [
+    {
+      "name": "tension", "value": 0.85,
+      "bind": {"input": "range", "min": 0, "max": 1, "step": 0.01}
+    },
+    {
+      "name": "radius", "value": 280,
+      "bind": {"input": "range", "min": 20, "max": 400}
+    },
+    {
+      "name": "extent", "value": 360,
+      "bind": {"input": "range", "min": 0, "max": 360, "step": 1}
+    },
+    {
+      "name": "rotate", "value": 0,
+      "bind": {"input": "range", "min": 0, "max": 360, "step": 1}
+    },
+    {
+      "name": "textSize", "value": 8,
+      "bind": {"input": "range", "min": 2, "max": 20, "step": 1}
+    },
+    {
+      "name": "textOffset", "value": 2,
+      "bind": {"input": "range", "min": 0, "max": 10, "step": 1}
+    },
+    {
+      "name": "layout", "value": "cluster",
+      "bind": {"input": "radio", "options": ["tidy", "cluster"]}
+    },
+    { "name": "colorIn", "value": "firebrick" },
+    { "name": "colorOut", "value": "forestgreen" },
+    { "name": "originX", "update": "width / 2" },
+    { "name": "originY", "update": "height / 2" },
+    {
+      "name": "active", "value": null,
+      "on": [
+        { "events": "text:mouseover", "update": "datum.id" },
+        { "events": "mouseover[!event.item]", "update": "null" }
+      ]
+    }
+  ],
 
-  useEffect(() => {
-    const PADDING_BUBBLE = 15;
-    const PADDING_LABEL = 30;
-    const BUBBLE_SIZE_MIN = 4;
-    const BUBBLE_SIZE_MAX = 20;
+  "data": [
+    {
+      "name": "tree",
+      "url": "https://raw.githubusercontent.com/vega/vega/main/docs/data/flare.json",
+      "transform": [
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parent"
+        },
+        {
+          "type": "tree",
+          "method": {"signal": "layout"},
+          "size": [1, 1],
+          "as": ["alpha", "beta", "depth", "children"]
+        },
+        {
+          "type": "formula",
+          "expr": "(rotate + extent * datum.alpha + 270) % 360",
+          "as":   "angle"
+        },
+        {
+          "type": "formula",
+          "expr": "inrange(datum.angle, [90, 270])",
+          "as":   "leftside"
+        },
+        {
+          "type": "formula",
+          "expr": "originX + radius * datum.beta * cos(PI * datum.angle / 180)",
+          "as":   "x"
+        },
+        {
+          "type": "formula",
+          "expr": "originY + radius * datum.beta * sin(PI * datum.angle / 180)",
+          "as":   "y"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "!datum.children"
+        }
+      ]
+    },
+    {
+      "name": "dependencies",
+      "url": "https://raw.githubusercontent.com/vega/vega/main/docs/data/flare-dependencies.json",
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "treePath('tree', datum.source, datum.target)",
+          "as":   "treepath",
+          "initonly": true
+        }
+      ]
+    },
+    {
+      "name": "selected",
+      "source": "dependencies",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.source === active || datum.target === active"
+        }
+      ]
+    }
+  ],
 
-    const diameter = 560;
-    const radius = diameter / 2;
-    const innerRadius = radius - 170;
-
-    const cluster = d3
-      .cluster<LeafNode>()
-      .size([360, innerRadius]);
-
-    const line = d3
-      .radialLine<LeafNode>()
-      .curve(d3.curveBundle.beta(0.85))
-      .radius((d) => d.y)
-      .angle((d) => (d.x / 180) * Math.PI);
-
-    const svg = d3
-      .select(chartRef.current)
-      .attr('width', diameter)
-      .attr('height', diameter)
-      .append('g')
-      .attr('transform', `translate(${radius}, ${radius})`);
-
-    let link: d3.Selection<SVGPathElement, unknown, SVGGElement, unknown>;
-    let label: d3.Selection<SVGTextElement, LeafNode, SVGGElement, unknown>;
-    let bubble: d3.Selection<SVGCircleElement, LeafNode, SVGGElement, unknown>;
-
-    const bubbleSizeScale = d3
-      .scaleLinear<number, number>()
-      .domain([0, 100])
-      .range([BUBBLE_SIZE_MIN, BUBBLE_SIZE_MAX]);
-
-    d3.json(
-      'https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/data_hierarchical_edge_bundling.json'
-    ).then((hierarchicalData: any) => {
-      const root = packageHierarchy(hierarchicalData).sum((d) => d.size);
-
-      cluster(root);
-      const leaves = root.leaves();
-
-      link = svg
-        .append('g')
-        .selectAll('.link')
-        .data(packageImports(leaves))
-        .enter()
-        .append('path')
-        .each(function (d) {
-          d.source = d[0];
-          d.target = d[d.length - 1];
-        })
-        .attr('class', 'link')
-        .attr('d', line)
-        .attr('fill', 'none')
-        .attr('stroke', 'black');
-
-      label = svg
-        .append('g')
-        .selectAll('.label')
-        .data(leaves)
-        .enter()
-        .append('text')
-        .attr('class', 'label')
-        .attr('dy', '0.31em')
-        .attr('transform', function (d) {
-          return (
-            'rotate(' +
-            (d.x - 90) +
-            ')translate(' +
-            (d.y + PADDING_LABEL) +
-            ',0)' +
-            (d.x < 180 ? '' : 'rotate(180)')
-          );
-        })
-        .attr('text-anchor', function (d) {
-          return d.x < 180 ? 'start' : 'end';
-        })
-        .text(function (d) {
-          return d.data.key;
-        });
-
-      bubble = svg
-        .append('g')
-        .selectAll('.bubble')
-        .data(leaves)
-        .enter()
-        .append('circle')
-        .attr('class', 'bubble')
-        .attr('transform', function (d) {
-          return (
-            'rotate(' +
-            (d.x - 90) +
-            ')translate(' +
-            (d.y + PADDING_BUBBLE) +
-            ',0)'
-          );
-        })
-        .attr('r', (d) => bubbleSizeScale(d.value))
-        .attr('stroke', 'black')
-        .attr('fill', '#69a3b2')
-        .style('opacity', 0.2);
-    });
-
-    function packageHierarchy(classes: any[]) {
-      const map: { [key: string]: any } = {};
-
-      function find(name: string, data: any) {
-        let node = map[name];
-        let i;
-
-        if (!node) {
-          node = map[name] = data || { name: name, children: [] };
-          if (name.length) {
-            node.parent = find(name.substring(0, (i = name.lastIndexOf('.'))));
-            node.parent.children.push(node);
-            node.key = name.substring(i + 1);
+  "marks": [
+    {
+      "type": "text",
+      "from": {"data": "leaves"},
+      "encode": {
+        "enter": {
+          "text": {"field": "name"},
+          "baseline": {"value": "middle"}
+        },
+        "update": {
+          "x": {"field": "x"},
+          "y": {"field": "y"},
+          "dx": {"signal": "textOffset * (datum.leftside ? -1 : 1)"},
+          "angle": {"signal": "datum.leftside ? datum.angle - 180 : datum.angle"},
+          "align": {"signal": "datum.leftside ? 'right' : 'left'"},
+          "fontSize": {"signal": "textSize"},
+          "fontWeight": [
+            {"test": "indata('selected', 'source', datum.id)", "value": "bold"},
+            {"test": "indata('selected', 'target', datum.id)", "value": "bold"},
+            {"value": null}
+          ],
+          "fill": [
+            {"test": "datum.id === active", "value": "black"},
+            {"test": "indata('selected', 'source', datum.id)", "signal": "colorIn"},
+            {"test": "indata('selected', 'target', datum.id)", "signal": "colorOut"},
+            {"value": "black"}
+          ]
+        }
+      }
+    },
+    {
+      "type": "group",
+      "from": {
+        "facet": {
+          "name":  "path",
+          "data":  "dependencies",
+          "field": "treepath"
+        }
+      },
+      "marks": [
+        {
+          "type": "line",
+          "interactive": false,
+          "from": {"data": "path"},
+          "encode": {
+            "enter": {
+              "interpolate": {"value": "bundle"},
+              "strokeWidth": {"value": 1.5}
+            },
+            "update": {
+              "stroke": [
+                {"test": "parent.source === active", "signal": "colorOut"},
+                {"test": "parent.target === active", "signal": "colorIn"},
+                {"value": "steelblue"}
+              ],
+              "strokeOpacity": [
+                {"test": "parent.source === active || parent.target === active", "value": 1},
+                {"value": 0.2}
+              ],
+              "tension": {"signal": "tension"},
+              "x": {"field": "x"},
+              "y": {"field": "y"}
+            }
           }
         }
-
-        return node;
-      }
-
-      classes.forEach(function (d) {
-        find(d.name, d);
-      });
-
-      return d3.hierarchy(map['']);
+      ]
     }
+  ],
 
-    function packageImports(nodes: LeafNode[]) {
-      const map: { [key: string]: LeafNode } = {};
-      const imports: any[] = [];
-
-      nodes.forEach(function (d) {
-        map[d.data.name] = d;
-      });
-
-      nodes.forEach(function (d) {
-        if (d.data.imports)
-          d.data.imports.forEach(function (i: string) {
-            imports.push(map[d.data.name].path(map[i]));
-          });
-      });
-
-      return imports;
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["depends on", "imported by"],
+      "range": [{"signal": "colorIn"}, {"signal": "colorOut"}]
     }
-  }, []);
+  ],
 
-  return <svg ref={chartRef} id="my_dataviz" />;
-};
+  "legends": [
+    {
+      "stroke": "color",
+      "orient": "bottom-right",
+      "title": "Dependencies",
+      "symbolType": "stroke"
+    }
+  ]
+} as VisualizationSpec;
 
-export default BubbleChart;
+export default createClassFromSpec({
+  "mode": 'vega-lite',
+  "spec": testSpec
+});
