@@ -31,7 +31,7 @@ export default function Home() {
       {/* <h1>{JSON.stringify(sampleText)}</h1> */}
       <DataTable rows={mockedData.songs}></DataTable>
       <Scatterplot data={data} width={400} height={400} />
-      <EdgeBundling flare={flare} flareDependencies={flareDependencies} />
+      <EdgeBundling flare={flare} flareDependencies={flareDependencies} data={mockedData} />
     </main>
   )
 }

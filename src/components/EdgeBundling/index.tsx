@@ -1,9 +1,39 @@
 "use client"
 import { createClassFromSpec, VisualizationSpec } from 'react-vega';
 
-export const EdgeBundling = ({ flare, flareDependencies }: any) => {
-  console.log(flare, flareDependencies)
+interface Edge {
+  source: number;
+  target: number;
+  weight: number;
+}
 
+export const EdgeBundling = ({ data }: any) => {
+
+  const nodes = data.songs.map((track: any, index: number) => {
+    return {
+      id: index + 1,
+      name: track.name,
+      parent: 0
+    }
+  });
+  const root = {
+    id: 0,
+    name: "root"
+  }
+  nodes.unshift(root)
+
+  const edges: Edge[] = [];
+  for (let i = 1; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      edges.push({
+        source: i,
+        target: j,
+        weight: data.correlation[i - 1][j - 1]
+      })
+    }
+  }
+
+  const filteredEdges = edges.filter((edge: Edge) => edge.weight > 0.05);
 
   const testSpec = {
     "$schema": "https://vega.github.io/schema/vega/v5.json",
@@ -40,7 +70,7 @@ export const EdgeBundling = ({ flare, flareDependencies }: any) => {
       },
       {
         "name": "layout", "value": "cluster",
-        "bind": {"input": "radio", "options": ["tidy", "cluster"]}
+        // "bind": {"input": "radio", "options": ["tidy", "cluster"]}
       },
       { "name": "colorIn", "value": "firebrick" },
       { "name": "colorOut", "value": "forestgreen" },
@@ -58,7 +88,7 @@ export const EdgeBundling = ({ flare, flareDependencies }: any) => {
     "data": [
       {
         "name": "tree",
-        "values": flare,
+        "values": nodes,
         "transform": [
           {
             "type": "stratify",
@@ -105,7 +135,7 @@ export const EdgeBundling = ({ flare, flareDependencies }: any) => {
       },
       {
         "name": "dependencies",
-        "values": flareDependencies,
+        "values": filteredEdges,
         "transform": [
           {
             "type": "formula",
