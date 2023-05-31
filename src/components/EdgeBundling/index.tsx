@@ -1,5 +1,7 @@
 "use client"
 import { createClassFromSpec, VisualizationSpec } from 'react-vega';
+import { useContext, useEffect, useState } from 'react';
+import { TrackContext } from '@/context';
 
 interface Edge {
   source: number;
@@ -8,11 +10,14 @@ interface Edge {
 }
 
 export const EdgeBundling = ({ data }: any) => {
+  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+  const [ selectedTrackId, setSelectedTrackId ] = useState('');
 
   const nodes = data.songs.map((track: any, index: number) => {
     return {
       id: index + 1,
       name: track.name,
+      uri: track.uri,
       parent: 0
     }
   });
@@ -20,7 +25,13 @@ export const EdgeBundling = ({ data }: any) => {
     id: 0,
     name: "root"
   }
-  nodes.unshift(root)
+  nodes.unshift(root);
+
+  useEffect(() => {
+    const kkk = nodes.find((node: any) => node.uri === selectedTrack);
+    console.log(kkk?.id)
+    setSelectedTrackId(kkk?.id + "")
+  }, [selectedTrack, nodes]);
 
   const edges: Edge[] = [];
   for (let i = 1; i < nodes.length; i++) {
@@ -34,8 +45,6 @@ export const EdgeBundling = ({ data }: any) => {
   }
 
   const filteredEdges = edges.filter((edge: Edge) => edge.weight > 0.05);
-
-  const selectedId = 3;
 
   const testSpec = {
     "$schema": "https://vega.github.io/schema/vega/v5.json",
@@ -79,10 +88,10 @@ export const EdgeBundling = ({ data }: any) => {
       { "name": "originX", "update": "width / 2" },
       { "name": "originY", "update": "height / 2" },
       {
-        "name": "active", "value": selectedId,
+        "name": "active", "value": selectedTrackId,
         "on": [
           { "events": "text:mouseover", "update": "datum.id" },
-          { "events": "mouseover[!event.item]", "update": "null" }
+          { "events": "mouseover[!event.item]", "update": selectedTrackId }
         ]
       }
     ],

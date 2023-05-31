@@ -1,7 +1,8 @@
 'use client'
-import React from 'react';
+import React, { useContext } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { DataTableProps } from './types';
+import { TrackContext } from '@/context';
 
 
 const columns: GridColDef[] = [
@@ -25,6 +26,8 @@ const columns: GridColDef[] = [
 ];
 
 export const DataTable = ({ rows }: DataTableProps) => {
+  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+
   return rows !== undefined ? (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
@@ -37,7 +40,7 @@ export const DataTable = ({ rows }: DataTableProps) => {
           },
         }}
         pageSizeOptions={[5, 10]}
-        checkboxSelection
+        onRowClick={(params) => setSelectedTrack(params.row.uri)}
       />
     </div>
   ) : <></>;
