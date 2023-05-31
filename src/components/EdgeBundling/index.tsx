@@ -35,6 +35,8 @@ export const EdgeBundling = ({ data }: any) => {
 
   const filteredEdges = edges.filter((edge: Edge) => edge.weight > 0.05);
 
+  const selectedId = 3;
+
   const testSpec = {
     "$schema": "https://vega.github.io/schema/vega/v5.json",
     "description": "A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.",
@@ -77,7 +79,7 @@ export const EdgeBundling = ({ data }: any) => {
       { "name": "originX", "update": "width / 2" },
       { "name": "originY", "update": "height / 2" },
       {
-        "name": "active", "value": null,
+        "name": "active", "value": selectedId,
         "on": [
           { "events": "text:mouseover", "update": "datum.id" },
           { "events": "mouseover[!event.item]", "update": "null" }
