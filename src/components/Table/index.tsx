@@ -1,14 +1,13 @@
-'use client'
-import React, { useContext } from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { DataTableProps } from './types';
+'use client';
 import { TrackContext } from '@/context';
-
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { useContext } from 'react';
+import { DataTableProps } from './types';
 
 const columns: GridColDef[] = [
   { field: 'uri', headerName: 'uri', width: 70 },
   { field: 'name', headerName: 'name', width: 70 },
-  { field: 'duration_ms', headerName: 'duration', width: 70},
+  { field: 'duration_ms', headerName: 'duration', width: 70 },
   { field: 'explicit', headerName: 'explicit', width: 70 },
   { field: 'artist', headerName: 'artist', width: 70 },
   { field: 'danceability', headerName: 'danceability', width: 70 },
@@ -22,7 +21,7 @@ const columns: GridColDef[] = [
   { field: 'valence', headerName: 'valence', width: 70 },
   { field: 'tempo', headerName: 'tempo', width: 70 },
   { field: 'x', headerName: 'x', width: 70 },
-  { field: 'y', headerName: 'y', width: 70 }
+  { field: 'y', headerName: 'y', width: 70 },
 ];
 
 export const DataTable = ({ rows }: DataTableProps) => {
@@ -43,5 +42,7 @@ export const DataTable = ({ rows }: DataTableProps) => {
         onRowClick={(params) => setSelectedTrack(params.row.id)}
       />
     </div>
-  ) : <></>;
-}
+  ) : (
+    <></>
+  );
+};

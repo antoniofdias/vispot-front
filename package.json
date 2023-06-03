@@ -31,6 +31,7 @@
     "vega-lite": "^5.9.3"
   },
   "devDependencies": {
-    "@types/d3": "^7.4.0"
+    "@types/d3": "^7.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.8"
   }
 }

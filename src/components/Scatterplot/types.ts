@@ -1,11 +1,11 @@
 export type DataItem = {
   name: string;
-  x: number | ""; // vulnerability
+  x: number | ''; // vulnerability
   y: number; // readiness
   size: number; // CO2 emission
   color: string;
   categoryy: string;
-  annotation?: "top" | "right" | "left" | "bottom";
+  annotation?: 'top' | 'right' | 'left' | 'bottom';
 };
 
 export type ScatterplotProps = {
