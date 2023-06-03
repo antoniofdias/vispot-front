@@ -1,10 +1,10 @@
-'use client'
-import { useState } from "react";
-import * as d3 from "d3";
-import { InteractionData, ScatterplotProps } from "./types";
-import { Axes } from "./Axes";
-import styles from "./scatterplot.module.css";
-import { Tooltip } from "./Tooltip";
+'use client';
+import * as d3 from 'd3';
+import { useState } from 'react';
+import { Axes } from './Axes';
+import { Tooltip } from './Tooltip';
+import styles from './scatterplot.module.css';
+import { InteractionData, ScatterplotProps } from './types';
 
 export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
   // Sort the data: bigger squares must appear at the bottom
@@ -22,12 +22,12 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
   const squares = sortedData.map((d, i) => {
     const size = sizeScale(d.size);
 
-    const xPos = xScale(d.x === "" ? -1 : d.x) - size / 2;
+    const xPos = xScale(d.x === '' ? -1 : d.x) - size / 2;
     const yPos = yScale(d.y) - size / 2;
 
     const isDimmed = interactionData && interactionData.color !== d.color;
     const className = isDimmed
-      ? styles.scatterplotSquare + " " + styles.dimmed
+      ? styles.scatterplotSquare + ' ' + styles.dimmed
       : styles.scatterplotSquare;
 
     return (
@@ -62,32 +62,32 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
     .map((d, i) => {
       const size = sizeScale(d.size);
 
-      const x = xScale(d.x === "" ? -1 : d.x); // position of the baricenter of the square
+      const x = xScale(d.x === '' ? -1 : d.x); // position of the baricenter of the square
       const y = yScale(d.y);
 
       const xText =
-        d.annotation === "left"
+        d.annotation === 'left'
           ? x - size / 2 - 5
-          : d.annotation === "right"
+          : d.annotation === 'right'
           ? x + size / 2 + 5
           : x;
 
       const yText =
-        d.annotation === "top"
+        d.annotation === 'top'
           ? y - size / 2 - 7
-          : d.annotation === "bottom"
+          : d.annotation === 'bottom'
           ? y + size / 2 + 7
           : y;
 
       const isDimmed = interactionData && interactionData.color !== d.color;
-      const className = isDimmed ? styles.dimmed : "";
+      const className = isDimmed ? styles.dimmed : '';
 
       const textAnchor =
-        d.annotation === "left"
-          ? "end"
-          : d.annotation === "right"
-          ? "start"
-          : "middle";
+        d.annotation === 'left'
+          ? 'end'
+          : d.annotation === 'right'
+          ? 'start'
+          : 'middle';
 
       return (
         <g key={i} className={className}>
@@ -95,9 +95,9 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
             x={x - size / 2}
             y={y - size / 2}
             opacity={1}
-            fill={"none"}
+            fill={'none'}
             strokeWidth={1}
-            stroke={"black"}
+            stroke={'black'}
             width={size}
             height={size}
           />
@@ -107,7 +107,7 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
             fontSize={12}
             fontWeight={500}
             textAnchor={textAnchor} // horizontal alignment
-            dominantBaseline={"middle"} // vertical alignment
+            dominantBaseline={'middle'} // vertical alignment
           >
             {d.name}
           </text>
@@ -116,8 +116,8 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
     });
 
   return (
-    <div style={{ position: "relative" }}>
-      <svg width={width} height={height} shapeRendering={"crispEdges"}>
+    <div style={{ position: 'relative' }}>
+      <svg width={width} height={height} shapeRendering={'crispEdges'}>
         <g>
           <Axes
             x={xScale(0.43)}
@@ -131,12 +131,12 @@ export const Scatterplot = ({ width, height, data }: ScatterplotProps) => {
       </svg>
       <div
         style={{
-          position: "absolute",
+          position: 'absolute',
           width,
           height,
           top: 0,
           left: 0,
-          pointerEvents: "none",
+          pointerEvents: 'none',
         }}
       >
         <Tooltip interactionData={interactionData} />

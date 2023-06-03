@@ -32,8 +32,8 @@ export const Axes = ({ x, y, width, height }: AxesProps) => {
         y={y - 15}
         fill="#ababab"
         fontSize={16}
-        textRendering={"optimizeLegibility"}
-        dominantBaseline={"Auto"}
+        textRendering={'optimizeLegibility'}
+        dominantBaseline={'Auto'}
       >
         High Readiness
       </text>
@@ -42,8 +42,8 @@ export const Axes = ({ x, y, width, height }: AxesProps) => {
         y={y - 37}
         fill="#ababab"
         fontSize={16}
-        textRendering={"optimizeLegibility"}
-        dominantBaseline={"Auto"}
+        textRendering={'optimizeLegibility'}
+        dominantBaseline={'Auto'}
       >
         &uarr;
       </text>
@@ -53,8 +53,8 @@ export const Axes = ({ x, y, width, height }: AxesProps) => {
         y={y + 15}
         fill="#ababab"
         fontSize={16}
-        textRendering={"optimizeLegibility"}
-        dominantBaseline={"Hanging"}
+        textRendering={'optimizeLegibility'}
+        dominantBaseline={'Hanging'}
       >
         Low Readiness
       </text>
@@ -63,8 +63,8 @@ export const Axes = ({ x, y, width, height }: AxesProps) => {
         y={y + 37}
         fill="#ababab"
         fontSize={16}
-        textRendering={"optimizeLegibility"}
-        dominantBaseline={"Hanging"}
+        textRendering={'optimizeLegibility'}
+        dominantBaseline={'Hanging'}
       >
         &darr;
       </text>

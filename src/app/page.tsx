@@ -1,13 +1,13 @@
-'use client'
+'use client';
 
-import { useState } from 'react';
-import { DataTable } from '@/components/Table'
-import styles from './page.module.css'
-import { Scatterplot } from '@/components/Scatterplot'
 import { EdgeBundling } from '@/components/EdgeBundling';
-import { mockedData } from './data'
-import { data } from '@/components/Scatterplot/data'
+import { Scatterplot } from '@/components/Scatterplot';
+import { data } from '@/components/Scatterplot/data';
+import { DataTable } from '@/components/Table';
 import { TrackContext } from '@/context';
+import { useState } from 'react';
+import { mockedData } from './data';
+import styles from './page.module.css';
 
 export default function Home() {
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
@@ -20,5 +20,5 @@ export default function Home() {
         <EdgeBundling data={mockedData} />
       </main>
     </TrackContext.Provider>
-  )
+  );
 }

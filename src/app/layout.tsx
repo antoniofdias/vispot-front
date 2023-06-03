@@ -1,21 +1,21 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'TCC',
   description: 'Eu só quero formar',
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="pt-br">
       <body className={inter.className}>{children}</body>
     </html>
-  )
+  );
 }
