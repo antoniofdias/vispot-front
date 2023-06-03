@@ -16,7 +16,19 @@ export type TrackItem = {
   valence: number,
   tempo: number,
   x: number,
-  y: number
+  y: number,
+  colors: {
+    duration_ms: string,
+    danceability: string,
+    energy: string,
+    loudness: string,
+    speechiness: string,
+    acousticness: string,
+    instrumentalness: string,
+    liveness: string,
+    valence: string,
+    tempo: string
+  }
 };
 
 export type DataTableProps = {

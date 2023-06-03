@@ -158,8 +158,7 @@ export const EdgeBundling = ({ data }: any) => {
             ],
             "fill": [
               {"test": "datum.id === active", "value": "black"},
-              {"test": "indata('selected', 'source', datum.id)", "signal": "colorIn"},
-              {"test": "indata('selected', 'target', datum.id)", "signal": "colorOut"},
+              {"test": "indata('selected', 'source', datum.id) || indata('selected', 'target', datum.id)", "signal": "colorOut"},
               {"value": "black"}
             ]
           }
@@ -186,8 +185,7 @@ export const EdgeBundling = ({ data }: any) => {
               },
               "update": {
                 "stroke": [
-                  {"test": "parent.source === active", "signal": "colorOut"},
-                  {"test": "parent.target === active", "signal": "colorIn"},
+                  {"test": "parent.source === active || parent.target === active", "signal": "colorOut"},
                   {"value": "steelblue"}
                 ],
                 "strokeOpacity": [
@@ -211,20 +209,11 @@ export const EdgeBundling = ({ data }: any) => {
         "domain": ["depends on", "imported by"],
         "range": [{"signal": "colorIn"}, {"signal": "colorOut"}]
       }
-    ],
-  
-    "legends": [
-      {
-        "stroke": "color",
-        "orient": "bottom-right",
-        "title": "Dependencies",
-        "symbolType": "stroke"
-      }
     ]
   })
 
   useEffect(() => {
-    const nodesHm = data.songs.map((track: any, index: number) => {
+    const nodesHm = data.songs.map((track: any) => {
       return {
         id: track.id,
         name: track.name,
