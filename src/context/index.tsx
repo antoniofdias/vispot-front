@@ -1,11 +1,11 @@
 import React from 'react';
 
 type TrackContextType = {
-  selectedTrack: string;
-  setSelectedTrack: (track: string) => void;
+  selectedTrack: number | null;
+  setSelectedTrack: (track: number | null) => void;
 };
 
 export const TrackContext = React.createContext<TrackContextType>({
-  selectedTrack: '',
+  selectedTrack: null,
   setSelectedTrack: () => {},
 });

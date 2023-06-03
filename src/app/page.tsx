@@ -10,7 +10,7 @@ import { data } from '@/components/Scatterplot/data'
 import { TrackContext } from '@/context';
 
 export default function Home() {
-  const [selectedTrack, setSelectedTrack] = useState('');
+  const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
 
   return (
     <TrackContext.Provider value={{ selectedTrack, setSelectedTrack }}>

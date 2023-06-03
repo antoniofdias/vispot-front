@@ -26,7 +26,7 @@ const columns: GridColDef[] = [
 ];
 
 export const DataTable = ({ rows }: DataTableProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+  const { setSelectedTrack } = useContext(TrackContext);
 
   return rows !== undefined ? (
     <div style={{ height: 400, width: '100%' }}>
@@ -40,7 +40,7 @@ export const DataTable = ({ rows }: DataTableProps) => {
           },
         }}
         pageSizeOptions={[5, 10]}
-        onRowClick={(params) => setSelectedTrack(params.row.uri)}
+        onRowClick={(params) => setSelectedTrack(params.row.id)}
       />
     </div>
   ) : <></>;

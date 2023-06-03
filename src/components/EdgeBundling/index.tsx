@@ -10,44 +10,11 @@ interface Edge {
 }
 
 export const EdgeBundling = ({ data }: any) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
-  const [ selectedTrackId, setSelectedTrackId ] = useState('');
-
-  const nodes = data.songs.map((track: any, index: number) => {
-    return {
-      id: index + 1,
-      name: track.name,
-      uri: track.uri,
-      parent: 0
-    }
-  });
-  const root = {
-    id: 0,
-    name: "root"
-  }
-  nodes.unshift(root);
-
-  useEffect(() => {
-    const kkk = nodes.find((node: any) => node.uri === selectedTrack);
-    console.log(kkk?.id)
-    setSelectedTrackId(kkk?.id + "")
-  }, [selectedTrack, nodes]);
-
-  const edges: Edge[] = [];
-  for (let i = 1; i < nodes.length; i++) {
-    for (let j = i + 1; j < nodes.length; j++) {
-      edges.push({
-        source: i,
-        target: j,
-        weight: data.correlation[i - 1][j - 1]
-      })
-    }
-  }
-
-  const filteredEdges = edges.filter((edge: Edge) => edge.weight > 0.05);
-
-  const testSpec = {
-    "$schema": "https://vega.github.io/schema/vega/v5.json",
+  const { selectedTrack } = useContext(TrackContext);
+  const [ nodes, setNodes ] = useState([]);
+  const [ filteredEdges, setFilteredEdges ] = useState([{}]);
+  const [ testSpec, setTestSpec ] = useState<any>({
+    // "$schema": "https://vega.github.io/schema/vega/v5.json",
     "description": "A network diagram of software dependencies, with edges grouped via hierarchical edge bundling.",
     "padding": 5,
     "width": 720,
@@ -88,10 +55,10 @@ export const EdgeBundling = ({ data }: any) => {
       { "name": "originX", "update": "width / 2" },
       { "name": "originY", "update": "height / 2" },
       {
-        "name": "active", "value": selectedTrackId,
+        "name": "active", "value": null,
         "on": [
           { "events": "text:mouseover", "update": "datum.id" },
-          { "events": "mouseover[!event.item]", "update": selectedTrackId }
+          { "events": "mouseover[!event.item]", "update": "null" }
         ]
       }
     ],
@@ -99,7 +66,7 @@ export const EdgeBundling = ({ data }: any) => {
     "data": [
       {
         "name": "tree",
-        "values": nodes,
+        "values": [{}],
         "transform": [
           {
             "type": "stratify",
@@ -146,7 +113,7 @@ export const EdgeBundling = ({ data }: any) => {
       },
       {
         "name": "dependencies",
-        "values": filteredEdges,
+        "values": [],
         "transform": [
           {
             "type": "formula",
@@ -254,11 +221,61 @@ export const EdgeBundling = ({ data }: any) => {
         "symbolType": "stroke"
       }
     ]
-  } as VisualizationSpec;
+  })
+
+  useEffect(() => {
+    const nodesHm = data.songs.map((track: any, index: number) => {
+      return {
+        id: track.id,
+        name: track.name,
+        uri: track.uri,
+        parent: 0,
+      }
+    });
+    const root = {
+      id: 0,
+      name: "root"
+    }
+    nodesHm.unshift(root);
+    setNodes(nodesHm);
+
+    const edges: Edge[] = [];
+    for (let i = 1; i < nodesHm.length; i++) {
+      for (let j = i + 1; j < nodesHm.length; j++) {
+        edges.push({
+          source: i,
+          target: j,
+          weight: data.correlation[i - 1][j - 1]
+        })
+      }
+    }
   
+    const edgesHm = edges.filter((edge: Edge) => edge.weight > 0.05);
+    setFilteredEdges(edgesHm);
+
+  }, [data.correlation, data.songs]);
+
+  useEffect(() => {
+    const newTestSpec = { ...testSpec };
+    newTestSpec.signals[newTestSpec.signals.length - 1] = {
+      "name": "active", "value": selectedTrack,
+      "on": [
+        { "events": "text:mouseover", "update": "datum.id" },
+        { "events": "mouseover[!event.item]", "update": selectedTrack + "" }
+      ]
+    };
+
+    newTestSpec.data[0].values = nodes;
+    newTestSpec.data[2].values = filteredEdges;
+    console.log(newTestSpec.signals.length, newTestSpec.signals[newTestSpec.signals.length - 1])
+
+    setTestSpec(newTestSpec);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTrack, nodes, filteredEdges]);
+
   const EdgeBundlingFromSpec = createClassFromSpec({
-    "mode": 'vega-lite',
-    "spec": testSpec
+    "mode": 'vega',
+    "spec": testSpec as VisualizationSpec
   });
 
   return (
