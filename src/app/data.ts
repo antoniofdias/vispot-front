@@ -3,6 +3,7 @@ import { ApiResponseType } from "@/components/Table/types";
 export const mockedData: ApiResponseType = {
   "songs": [
     {
+      "id": 1,
       "uri": "spotify:track:0yowbJnnbTLpr99f9l1uba",
       "name": "There\u2019d Better Be A Mirrorball",
       "duration_ms": 265798,
@@ -22,6 +23,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.6771929264068604
     },
     {
+      "id": 2,
       "uri": "spotify:track:11jRCxY01k9jvCdUru0EeP",
       "name": "Body Paint",
       "duration_ms": 290584,
@@ -41,6 +43,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.8141269087791443
     },
     {
+      "id": 3,
       "uri": "spotify:track:7DPhusadsTZ2VrXOGcuX2y",
       "name": "I Ain\u2019t Quite Where I Think I Am",
       "duration_ms": 191173,
@@ -60,6 +63,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.1830418109893799
     },
     {
+      "id": 4,
       "uri": "spotify:track:5XeFesFbtLpXzIVDNQP22n",
       "name": "I Wanna Be Yours",
       "duration_ms": 183956,
@@ -79,6 +83,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.0428436994552612
     },
     {
+      "id": 5,
       "uri": "spotify:track:0BxE4FqsDD1Ot4YuBXwAPp",
       "name": "505",
       "duration_ms": 253586,
@@ -98,6 +103,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.5553301572799683
     },
     {
+      "id": 6,
       "uri": "spotify:track:2fyIS6GXMgUcSv4oejx63f",
       "name": "Mardy Bum",
       "duration_ms": 175440,
@@ -117,6 +123,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.598499059677124
     },
     {
+      "id": 7,
       "uri": "spotify:track:2QUlMbvD9bL8wHqfsoqoet",
       "name": "Stop The World I Wanna Get Off With You",
       "duration_ms": 191040,
@@ -136,6 +143,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.8346925973892212
     },
     {
+      "id": 8,
       "uri": "spotify:track:086myS9r57YsLbJpU0TgK9",
       "name": "Why'd You Only Call Me When You're High?",
       "duration_ms": 161123,
@@ -155,6 +163,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.695464015007019
     },
     {
+      "id": 9,
       "uri": "spotify:track:2x8evxqUlF0eRabbW2JBJd",
       "name": "Fluorescent Adolescent",
       "duration_ms": 183893,
@@ -174,6 +183,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.4323384761810303
     },
     {
+      "id": 10,
       "uri": "spotify:track:2zzLRQ78kKfPTx8FJQCdC2",
       "name": "When The Sun Goes Down",
       "duration_ms": 202133,
@@ -193,6 +203,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.43780574202537537
     },
     {
+      "id": 11,
       "uri": "spotify:track:6wVWJl64yoTzU27EI8ep20",
       "name": "Crying Lightning",
       "duration_ms": 224826,
@@ -212,6 +223,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.08935204893350601
     },
     {
+      "id": 12,
       "uri": "spotify:track:5FVd6KXrgO9B3JPmC8OPst",
       "name": "Do I Wanna Know?",
       "duration_ms": 272394,
@@ -231,6 +243,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.7267349362373352
     },
     {
+      "id": 13,
       "uri": "spotify:track:5kxVyCgEUND7E2QKG7JmoF",
       "name": "Teddy Picker",
       "duration_ms": 165000,
@@ -250,6 +263,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.648042917251587
     },
     {
+      "id": 14,
       "uri": "spotify:track:3DQVgcqaP3iSMbaKsd57l5",
       "name": "I Bet You Look Good On The Dancefloor",
       "duration_ms": 173680,
@@ -269,6 +283,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.5980628728866577
     },
     {
+      "id": 15,
       "uri": "spotify:track:5hljqZrl0h7RcIhUnOPuve",
       "name": "Sculptures Of Anything Goes",
       "duration_ms": 239151,
@@ -288,6 +303,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.3663002848625183
     },
     {
+      "id": 16,
       "uri": "spotify:track:2AT8iROs4FQueDv2c8q2KE",
       "name": "R U Mine?",
       "duration_ms": 201726,
@@ -307,6 +323,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.7302748560905457
     },
     {
+      "id": 17,
       "uri": "spotify:track:7f9I5WdyXm5q1XqnSYgQZb",
       "name": "Brianstorm",
       "duration_ms": 172866,
@@ -326,6 +343,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.5962644815444946
     },
     {
+      "id": 18,
       "uri": "spotify:track:2vQQfWTanvD99OeHLAoyhW",
       "name": "From The Ritz To The Rubble",
       "duration_ms": 193426,
@@ -345,6 +363,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.0970149040222168
     },
     {
+      "id": 19,
       "uri": "spotify:track:5bsnLiT00hG37qd8p2jdVl",
       "name": "Cornerstone",
       "duration_ms": 197973,
@@ -364,6 +383,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.5803054571151733
     },
     {
+      "id": 20,
       "uri": "spotify:track:0NdTUS4UiNYCNn5FgVqKQY",
       "name": "Snap Out Of It",
       "duration_ms": 193030,
@@ -383,6 +403,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.7464765906333923
     },
     {
+      "id": 21,
       "uri": "spotify:track:2BqfIlpahcebJPeu1IUTEo",
       "name": "Do Me a Favour",
       "duration_ms": 209253,
@@ -402,6 +423,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.3264099061489105
     },
     {
+      "id": 22,
       "uri": "spotify:track:0SzvmWfOhoxZVGrmvb56YL",
       "name": "Baby I'm Yours",
       "duration_ms": 152613,
@@ -421,6 +443,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.7405133247375488
     },
     {
+      "id": 23,
       "uri": "spotify:track:7BuzJmV2h6eBbSDdRaDY7C",
       "name": "Fake Tales Of San Francisco",
       "duration_ms": 177946,
@@ -440,6 +463,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.211643934249878
     },
     {
+      "id": 24,
       "uri": "spotify:track:7nzsY8vlnKdvGOEE0rjAXZ",
       "name": "Arabella",
       "duration_ms": 207356,
@@ -459,6 +483,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.45006194710731506
     },
     {
+      "id": 25,
       "uri": "spotify:track:5KGbRvZyVyKP2AEJMHErB4",
       "name": "Old Yellow Bricks",
       "duration_ms": 193226,
@@ -478,6 +503,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.1052420139312744
     },
     {
+      "id": 26,
       "uri": "spotify:track:4KPi4VNvPOfKqIp1sx19Xf",
       "name": "Big Ideas",
       "duration_ms": 237984,
@@ -497,6 +523,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.34552472829818726
     },
     {
+      "id": 27,
       "uri": "spotify:track:0S6CXA5LpRDX6b4akgrOot",
       "name": "Love is a Laserquest",
       "duration_ms": 191426,
@@ -516,6 +543,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.8183246850967407
     },
     {
+      "id": 28,
       "uri": "spotify:track:6mOiT65GFmXgBAviM3lrsE",
       "name": "No Buses",
       "duration_ms": 197320,
@@ -535,6 +563,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.9243243932723999
     },
     {
+      "id": 29,
       "uri": "spotify:track:0hAMkY2kwdXPPDfQ1e3BmJ",
       "name": "Dancing Shoes",
       "duration_ms": 141133,
@@ -554,6 +583,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.786624789237976
     },
     {
+      "id": 30,
       "uri": "spotify:track:5ygEUpyZy5qtZ1423zymBW",
       "name": "Hello You",
       "duration_ms": 244932,
@@ -573,6 +603,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.44083043932914734
     },
     {
+      "id": 31,
       "uri": "spotify:track:4Ai0ANRDYwx6mCD4Uty1WS",
       "name": "Piledriver Waltz",
       "duration_ms": 203880,
@@ -592,6 +623,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.5487323999404907
     },
     {
+      "id": 32,
       "uri": "spotify:track:2amJsWuU8ohAth78f2QOLD",
       "name": "The Bakery",
       "duration_ms": 176520,
@@ -611,6 +643,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.2665222883224487
     },
     {
+      "id": 33,
       "uri": "spotify:track:4dtP86vkhzwNXCFpCtizce",
       "name": "Secret Door",
       "duration_ms": 223066,
@@ -630,6 +663,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.04472383111715317
     },
     {
+      "id": 34,
       "uri": "spotify:track:2HReNSxrMRcJ0cYMzKAJK6",
       "name": "Jet Skis On The Moat",
       "duration_ms": 197576,
@@ -649,6 +683,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.6008048057556152
     },
     {
+      "id": 35,
       "uri": "spotify:track:0LxeKwg9t7HOnyfv4bTALT",
       "name": "Suck It and See",
       "duration_ms": 225986,
@@ -668,6 +703,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.10977205634117126
     },
     {
+      "id": 36,
       "uri": "spotify:track:1LSwssG5oIAMXYcvpOoPLC",
       "name": "Too Much To Ask",
       "duration_ms": 183253,
@@ -687,6 +723,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.4530417919158936
     },
     {
+      "id": 37,
       "uri": "spotify:track:2hmHlBM0kPBm17Y7nVIW9f",
       "name": "My Propeller",
       "duration_ms": 205746,
@@ -706,6 +743,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.46809279918670654
     },
     {
+      "id": 38,
       "uri": "spotify:track:0C6dSPCqwKqwos6s1CrDrh",
       "name": "The Car",
       "duration_ms": 198554,
@@ -725,6 +763,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.8972306251525879
     },
     {
+      "id": 39,
       "uri": "spotify:track:3czdA0j4iaLDJJCoT5D8iP",
       "name": "Don't Sit Down 'Cause I've Moved Your Chair",
       "duration_ms": 183506,
@@ -744,6 +783,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.0576897859573364
     },
     {
+      "id": 40,
       "uri": "spotify:track:4TC0dnB5DxvoKcsalffFZe",
       "name": "Bigger Boys and Stolen Sweethearts",
       "duration_ms": 180640,
@@ -763,6 +803,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.534249186515808
     },
     {
+      "id": 41,
       "uri": "spotify:track:40DwUg5zPX8H23WpTdD2iW",
       "name": "You're So Dark",
       "duration_ms": 182751,
@@ -782,6 +823,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.0684949159622192
     },
     {
+      "id": 42,
       "uri": "spotify:track:5fClRRa7P9nPIpstj50veV",
       "name": "Mr Schwartz",
       "duration_ms": 210012,
@@ -801,6 +843,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.30247995257377625
     },
     {
+      "id": 43,
       "uri": "spotify:track:45n7uujqwmMyBMjBu9SwRu",
       "name": "Pretty Visitors",
       "duration_ms": 220506,
@@ -820,6 +863,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.02070985920727253
     },
     {
+      "id": 44,
       "uri": "spotify:track:4Du0BRUJvKybzxcRplp7HF",
       "name": "Leave Before The Lights Come On",
       "duration_ms": 233946,
@@ -839,6 +883,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.2744681239128113
     },
     {
+      "id": 45,
       "uri": "spotify:track:5Z5nbOXhsSbySVC7WUc6y9",
       "name": "Four Out Of Five",
       "duration_ms": 312346,
@@ -858,6 +903,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.8642770648002625
     },
     {
+      "id": 46,
       "uri": "spotify:track:7EUcOIbJSePmXGvAe7G79C",
       "name": "Black Treacle",
       "duration_ms": 217440,
@@ -877,6 +923,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.10944346338510513
     },
     {
+      "id": 47,
       "uri": "spotify:track:5IKz3HfzRT3EAhxCsrBqwf",
       "name": "7",
       "duration_ms": 128506,
@@ -896,6 +943,7 @@ export const mockedData: ApiResponseType = {
       "y": 1.802833080291748
     },
     {
+      "id": 48,
       "uri": "spotify:track:3u16Clmxz7dJpnQWXXynok",
       "name": "Dance Little Liar",
       "duration_ms": 283493,
@@ -915,6 +963,7 @@ export const mockedData: ApiResponseType = {
       "y": -0.7873510718345642
     },
     {
+      "id": 49,
       "uri": "spotify:track:2AKwcNHeGAqCpD6etK425X",
       "name": "One Point Perspective",
       "duration_ms": 208640,
@@ -934,6 +983,7 @@ export const mockedData: ApiResponseType = {
       "y": 0.3677370846271515
     },
     {
+      "id": 50,
       "uri": "spotify:track:5xw2cHVLw1rlDPp3cL9Zuv",
       "name": "She's Thunderstorms",
       "duration_ms": 234920,

@@ -1,4 +1,5 @@
 export type TrackItem = {
+  id: number,
   uri: string,
   name: string,
   duration_ms: number,
