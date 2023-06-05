@@ -276,10 +276,6 @@ export const EdgeBundling = ({ data }: any) => {
 
     newTestSpec.data[0].values = nodes;
     newTestSpec.data[2].values = filteredEdges;
-    console.log(
-      newTestSpec.signals.length,
-      newTestSpec.signals[newTestSpec.signals.length - 1]
-    );
 
     setTestSpec(newTestSpec);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -290,5 +286,5 @@ export const EdgeBundling = ({ data }: any) => {
     spec: testSpec as VisualizationSpec,
   });
 
-  return <EdgeBundlingFromSpec />;
+  return data ? <EdgeBundlingFromSpec /> : <></>;
 };
