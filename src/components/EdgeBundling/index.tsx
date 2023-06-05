@@ -10,7 +10,7 @@ interface Edge {
 }
 
 export const EdgeBundling = ({ data }: any) => {
-  const { selectedTrack } = useContext(TrackContext);
+  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
   const [nodes, setNodes] = useState([]);
   const [filteredEdges, setFilteredEdges] = useState([{}]);
   const [testSpec, setTestSpec] = useState<any>({
@@ -23,6 +23,11 @@ export const EdgeBundling = ({ data }: any) => {
     autosize: 'none',
 
     signals: [
+      {
+        name: 'click',
+        value: null,
+        on: [{ events: '*:mousedown', update: 'datum' }],
+      },
       {
         name: 'tension',
         value: 0.85,
@@ -286,5 +291,14 @@ export const EdgeBundling = ({ data }: any) => {
     spec: testSpec as VisualizationSpec,
   });
 
-  return data ? <EdgeBundlingFromSpec /> : <></>;
+  const handleClick = (...args: any) => {
+    setSelectedTrack(args[1].id || null);
+  };
+  const signalListeners = { click: handleClick };
+
+  return data ? (
+    <EdgeBundlingFromSpec signalListeners={signalListeners} />
+  ) : (
+    <></>
+  );
 };
