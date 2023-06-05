@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataTableProps } from '../Table/types';
 
-export const ScatterPlot = ({ rows }: DataTableProps) => {
+const ScatterPlot = ({ rows }: DataTableProps) => {
   const [selectedColor, setSelectedColor] = useState<
     | 'duration_ms'
     | 'danceability'
@@ -69,3 +69,5 @@ export const ScatterPlot = ({ rows }: DataTableProps) => {
     <></>
   );
 };
+
+export default ScatterPlot;
