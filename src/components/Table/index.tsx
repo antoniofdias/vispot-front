@@ -25,13 +25,19 @@ const columns: GridColDef[] = [
 ];
 
 export const DataTable = ({ rows }: DataTableProps) => {
-  const { setSelectedTrack } = useContext(TrackContext);
+  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
 
   return rows !== undefined ? (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
-        getRowId={(row) => row.uri}
+        rows={
+          selectedTrack === null
+            ? rows
+            : [
+                rows.find((row) => row.id === selectedTrack),
+                ...rows.filter((row) => row.id !== selectedTrack),
+              ]
+        }
         columns={columns}
         initialState={{
           pagination: {
@@ -40,6 +46,7 @@ export const DataTable = ({ rows }: DataTableProps) => {
         }}
         pageSizeOptions={[5, 10]}
         onRowClick={(params) => setSelectedTrack(params.row.id)}
+        hideFooterSelectedRowCount
       />
     </div>
   ) : (
