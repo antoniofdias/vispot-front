@@ -41,7 +41,7 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
               cmax: 1,
               cmin: 0,
               opacity: rows.map((_, index) =>
-                selectedTrack === null || index === selectedTrack ? 1 : 0.3
+                selectedTrack === null || index === selectedTrack - 1 ? 1 : 0.3
               ),
             },
           },
@@ -51,7 +51,7 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
             // hovermode: false,
           }
         }
-        onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber)}
+        onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
       />
       <div>
         <label>Select color:</label>
