@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { TrackContext } from '@/context';
+import { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataTableProps } from '../Table/types';
 
 const ScatterPlot = ({ rows }: DataTableProps) => {
+  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
   const [selectedColor, setSelectedColor] = useState<
     | 'duration_ms'
     | 'danceability'
@@ -28,7 +30,6 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
             y: rows.map((track) => track.y),
             mode: 'markers',
             type: 'scatter',
-            // name: 'Team A',
             text: rows.map((track) => track.name),
             marker: {
               size: 12,
@@ -39,15 +40,18 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
               },
               cmax: 1,
               cmin: 0,
+              opacity: rows.map((_, index) =>
+                selectedTrack === null || index === selectedTrack ? 1 : 0.3
+              ),
             },
           },
         ]}
         layout={
           {
-            // title: 'Data Labels Hover',
+            // hovermode: false,
           }
         }
-        onClick={(event) => console.log(event.points)}
+        onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber)}
       />
       <div>
         <label>Select color:</label>
