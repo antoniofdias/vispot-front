@@ -1,5 +1,6 @@
 'use client';
 import { TrackContext } from '@/context';
+import Slider from '@mui/material/Slider';
 import { useContext, useEffect, useState } from 'react';
 import { VisualizationSpec, createClassFromSpec } from 'react-vega';
 
@@ -10,9 +11,11 @@ interface Edge {
 }
 
 export const EdgeBundling = ({ data }: any) => {
+  const [value, setValue] = useState<number[]>([0.3, 0.7]);
   const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
   const [nodes, setNodes] = useState([]);
-  const [filteredEdges, setFilteredEdges] = useState([{}]);
+  const [edges, setEdges] = useState<Edge[]>();
+  const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
   const [testSpec, setTestSpec] = useState<any>({
     // "$schema": "https://vega.github.io/schema/vega/v5.json",
     description:
@@ -253,20 +256,31 @@ export const EdgeBundling = ({ data }: any) => {
     nodesHm.unshift(root);
     setNodes(nodesHm);
 
-    const edges: Edge[] = [];
+    const edgesHm: Edge[] = [];
     for (let i = 1; i < nodesHm.length; i++) {
       for (let j = i + 1; j < nodesHm.length; j++) {
-        edges.push({
+        edgesHm.push({
           source: i,
           target: j,
           weight: data.correlation[i - 1][j - 1],
         });
       }
     }
-
-    const edgesHm = edges.filter((edge: Edge) => edge.weight > 0.05);
-    setFilteredEdges(edgesHm);
+    setEdges(edgesHm);
+    const edgesHm2 = edgesHm.filter(
+      (edge) => edge.weight >= value[0] / 10 && edge.weight <= value[1] / 10
+    );
+    setFilteredEdges(edgesHm2);
   }, [data.correlation, data.songs]);
+
+  useEffect(() => {
+    if (edges !== undefined) {
+      const edgesHm = edges.filter(
+        (edge) => edge.weight >= value[0] / 10 && edge.weight <= value[1] / 10
+      );
+      setFilteredEdges(edgesHm);
+    }
+  }, [value]);
 
   useEffect(() => {
     const newTestSpec = { ...testSpec };
@@ -291,13 +305,30 @@ export const EdgeBundling = ({ data }: any) => {
     spec: testSpec as VisualizationSpec,
   });
 
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    setValue(newValue as number[]);
+  };
+
   const handleClick = (...args: any) => {
     setSelectedTrack(args[1].id || null);
   };
   const signalListeners = { click: handleClick };
 
   return data ? (
-    <EdgeBundlingFromSpec signalListeners={signalListeners} />
+    <>
+      <div style={{ width: 100 }}>
+        <Slider
+          getAriaLabel={() => 'Temperature range'}
+          value={value}
+          onChange={handleChange}
+          valueLabelDisplay="auto"
+          step={0.1}
+          max={1}
+          min={0}
+        />
+      </div>
+      <EdgeBundlingFromSpec signalListeners={signalListeners} />
+    </>
   ) : (
     <></>
   );
