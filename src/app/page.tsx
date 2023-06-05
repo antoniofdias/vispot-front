@@ -19,6 +19,7 @@ export default function Home() {
   return (
     <TrackContext.Provider value={{ selectedTrack, setSelectedTrack }}>
       <main className={styles.main}>
+        <button onClick={() => setSelectedTrack(null)}>Reset</button>
         <DataTable rows={mockedData.songs}></DataTable>
         <ScatterPlot rows={mockedData.songs} />
         <EdgeBundling data={mockedData} />
