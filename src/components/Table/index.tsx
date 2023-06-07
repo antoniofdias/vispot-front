@@ -1,5 +1,5 @@
 'use client';
-import { TrackContext } from '@/context';
+import { TrackContext } from '@/contexts/TrackContext';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext } from 'react';
 import { DataTableProps } from './types';
