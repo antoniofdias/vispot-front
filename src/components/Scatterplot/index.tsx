@@ -1,4 +1,4 @@
-import { TrackContext } from '@/context';
+import { TrackContext } from '@/contexts/TrackContext';
 import { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataTableProps } from '../Table/types';

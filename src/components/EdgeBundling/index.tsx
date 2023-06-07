@@ -1,5 +1,5 @@
 'use client';
-import { TrackContext } from '@/context';
+import { TrackContext } from '@/contexts/TrackContext';
 import Slider from '@mui/material/Slider';
 import { useContext, useEffect, useState } from 'react';
 import { VisualizationSpec, createClassFromSpec } from 'react-vega';
