@@ -12,6 +12,7 @@ export const NetworkGraph = ({ data }: any) => {
   const [value, setValue] = useState<number[]>([0.3, 0.7]);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState<Edge[]>();
+  const [graph, setGraph] = useState();
   const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
 
   const networkRef = useRef<any>(null);
@@ -56,27 +57,42 @@ export const NetworkGraph = ({ data }: any) => {
     }
   }, [value]);
 
-  const graph = {
-    // nodes: [
-    //   { id: 1, label: '1', title: 'node 1 tootip text' },
-    //   { id: 2, label: '2', title: 'node 2 tootip text' },
-    //   { id: 3, label: '3', title: 'node 3 tootip text' },
-    //   { id: 4, label: '4', title: 'node 4 tootip text' },
-    //   { id: 5, label: '5', title: 'node 5 tootip text' },
-    //   { id: 6, label: '6', title: 'node 6 tootip text' },
-    // ],
-    // edges: [
-    //   { from: 1, to: 2, title: 'hmm' },
-    //   { from: 1, to: 3 },
-    //   { from: 2, to: 4 },
-    //   { from: 2, to: 5 },
-    //   { from: 2, to: 6 },
-    //   { from: 6, to: 1 },
-    //   { from: 5, to: 6 },
-    // ],
-    nodes,
-    edges: filteredEdges,
-  };
+  useEffect(() => {
+    if (networkRef.current !== null && selectedTrack !== null) {
+      networkRef.current.selectNodes([selectedTrack]);
+    }
+  }, [selectedTrack]);
+
+  useEffect(() => {
+    setGraph({
+      // nodes: [
+      //   { id: 1, label: '1', title: 'node 1 tootip text' },
+      //   { id: 2, label: '2', title: 'node 2 tootip text' },
+      //   { id: 3, label: '3', title: 'node 3 tootip text' },
+      //   { id: 4, label: '4', title: 'node 4 tootip text' },
+      //   { id: 5, label: '5', title: 'node 5 tootip text' },
+      //   { id: 6, label: '6', title: 'node 6 tootip text' },
+      // ],
+      // edges: [
+      //   { from: 1, to: 2, title: 'hmm' },
+      //   { from: 1, to: 3 },
+      //   { from: 2, to: 4 },
+      //   { from: 2, to: 5 },
+      //   { from: 2, to: 6 },
+      //   { from: 6, to: 1 },
+      //   { from: 5, to: 6 },
+      // ],
+      nodes: nodes.map((node) => {
+        return {
+          ...node,
+          opacity:
+            selectedTrack === null || node.id === selectedTrack ? 1 : 0.3,
+        };
+      }),
+      edges: filteredEdges,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTrack, nodes, filteredEdges]);
 
   const options = {
     layout: {
@@ -94,6 +110,9 @@ export const NetworkGraph = ({ data }: any) => {
       var { nodes, edges } = event;
       console.log(edges);
       console.log(nodes);
+      if (nodes.length) {
+        setSelectedTrack(nodes[0]);
+      }
     },
     doubleClick: ({ pointer: { canvas } }) => {
       if (
