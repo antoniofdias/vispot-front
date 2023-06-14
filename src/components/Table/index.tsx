@@ -1,5 +1,5 @@
 'use client';
-import { TrackContext } from '@/contexts/TrackContext';
+import { AppContext } from '@/contexts/AppContext';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext } from 'react';
 import { DataTableProps } from './types';
@@ -25,7 +25,7 @@ const columns: GridColDef[] = [
 ];
 
 export const DataTable = ({ rows }: DataTableProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
 
   return rows !== undefined ? (
     <div style={{ height: 400, width: '100%' }}>

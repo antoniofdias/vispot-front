@@ -1,10 +1,10 @@
-import { TrackContext } from '@/contexts/TrackContext';
+import { AppContext } from '@/contexts/AppContext';
 import { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataTableProps } from '../Table/types';
 
 const ScatterPlot = ({ rows }: DataTableProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
   const [selectedColor, setSelectedColor] = useState<
     | 'duration_ms'
     | 'danceability'

@@ -1,5 +1,5 @@
 'use client';
-import { TrackContext } from '@/contexts/TrackContext';
+import { AppContext } from '@/contexts/AppContext';
 import Slider from '@mui/material/Slider';
 import { useContext, useEffect, useState } from 'react';
 import { VisualizationSpec, createClassFromSpec } from 'react-vega';
@@ -12,7 +12,7 @@ interface Edge {
 
 export const EdgeBundling = ({ data }: any) => {
   const [value, setValue] = useState<number[]>([0.3, 0.7]);
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState<Edge[]>();
   const [filteredEdges, setFilteredEdges] = useState<Edge[]>();

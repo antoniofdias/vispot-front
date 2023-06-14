@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { TrackContext } from '@/contexts/TrackContext';
+import { AppContext } from '@/contexts/AppContext';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Graph from 'react-vis-network-graph';
 
@@ -8,7 +8,7 @@ import Graph from 'react-vis-network-graph';
 // import "./network.css";
 
 export const NetworkGraph = ({ data }: any) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
   const [value, setValue] = useState<number[]>([0.3, 0.7]);
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState<Edge[]>();
