@@ -31,8 +31,8 @@ export const NetworkGraph = ({ data }: any) => {
     setNodes(nodesHm);
 
     const edgesHm: Edge[] = [];
-    for (let i = 1; i < nodesHm.length; i++) {
-      for (let j = i + 1; j < nodesHm.length; j++) {
+    for (let i = 1; i <= nodesHm.length; i++) {
+      for (let j = i + 1; j <= nodesHm.length; j++) {
         edgesHm.push({
           from: i,
           to: j,
@@ -83,7 +83,7 @@ export const NetworkGraph = ({ data }: any) => {
       hierarchical: false,
     },
     edges: {
-      color: 'red',
+      color: 'blue',
       arrows: { to: { enabled: false }, from: { enabled: false } },
     },
     height: '500px',
