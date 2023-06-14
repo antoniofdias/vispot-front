@@ -1,8 +1,8 @@
 'use client';
 import { AppContext } from '@/contexts/AppProvider';
+import { DataContext } from '@/contexts/DataProvider';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext } from 'react';
-import { DataTableProps } from './types';
 
 const columns: GridColDef[] = [
   { field: 'uri', headerName: 'uri', width: 70 },
@@ -24,8 +24,11 @@ const columns: GridColDef[] = [
   { field: 'y', headerName: 'y', width: 70 },
 ];
 
-export const DataTable = ({ rows }: DataTableProps) => {
+export const DataTable = () => {
+  const { data } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
+
+  const rows = data.songs;
 
   return rows !== undefined ? (
     <div style={{ height: 400, width: '100%' }}>

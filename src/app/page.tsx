@@ -1,13 +1,11 @@
 'use client';
 
 import { GraphRow } from '@/components/GraphRow';
-import { SearchBar } from '@/components/SearchBar';
+import { Navbar } from '@/components/Navbar';
 import { DataTable } from '@/components/Table';
 import { AppProvider } from '@/contexts/AppProvider';
-import { DataContext, DataProvider } from '@/contexts/DataProvider';
-import { Stack } from '@mui/material';
+import { DataProvider } from '@/contexts/DataProvider';
 import dynamic from 'next/dynamic';
-import { useContext } from 'react';
 import styles from './page.module.css';
 const ScatterPlot = dynamic(() => import('@/components/Scatterplot'), {
   ssr: false,
@@ -15,25 +13,14 @@ const ScatterPlot = dynamic(() => import('@/components/Scatterplot'), {
 });
 
 export default function Home() {
-  const { data } = useContext(DataContext);
-
   return (
     <DataProvider>
       <AppProvider>
+        <Navbar />
         <main className={styles.main}>
-          <Stack direction="row" spacing={2}>
-            <SearchBar />
-            {/* <Button
-              onClick={() => setSelectedTrack(null)}
-              variant="outlined"
-              endIcon={<Replay />}
-            >
-              Reset
-            </Button> */}
-          </Stack>
-          <DataTable rows={data.songs}></DataTable>
-          <ScatterPlot rows={data.songs} />
-          <GraphRow data={data} />
+          <DataTable />
+          <ScatterPlot />
+          <GraphRow />
         </main>
       </AppProvider>
     </DataProvider>

@@ -1,4 +1,6 @@
 'use client';
+import { DataContext } from '@/contexts/DataProvider';
+import { backendApi } from '@/services/api';
 import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -17,7 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -62,7 +64,35 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const Navbar = () => {
+  const { setData, loading, setLoading } = useContext(DataContext);
+
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
+  async function handlePlaylistRequest(playlistUrl: string) {
+    const res = await backendApi.get('/playlist', {
+      params: {
+        playlist_url: playlistUrl,
+      },
+    });
+
+    console.log(res.data);
+    setData(res.data);
+    setLoading(false);
+    setDisabled(false);
+  }
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      const playlistUrl = (event.target as HTMLInputElement).value;
+
+      // validate
+
+      setLoading(true);
+      setDisabled(true);
+      handlePlaylistRequest(playlistUrl);
+    }
+  };
 
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -136,6 +166,8 @@ export const Navbar = () => {
               <StyledInputBase
                 placeholder="SEARCH"
                 inputProps={{ 'aria-label': 'search' }}
+                onKeyPress={handleKeyPress}
+                disabled={disabled}
               />
             </Search>
           </Toolbar>

@@ -1,4 +1,3 @@
-import { Navbar } from '@/components/Navbar';
 import { ThemeContext as ThemeProvider } from '@/contexts/ThemeProvider';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -18,10 +17,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body className={inter.className}>
-        <ThemeProvider>
-          <Navbar />
-          {children}
-        </ThemeProvider>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
