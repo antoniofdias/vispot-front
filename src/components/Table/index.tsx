@@ -1,6 +1,7 @@
 'use client';
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
+import { Skeleton } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext } from 'react';
 
@@ -25,8 +26,12 @@ const columns: GridColDef[] = [
 ];
 
 export const DataTable = () => {
-  const { data } = useContext(DataContext);
+  const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
+
+  if (loading) {
+    return <Skeleton variant="rectangular" width={40} height={40} />;
+  }
 
   const rows = data.songs;
 

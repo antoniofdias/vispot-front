@@ -1,10 +1,11 @@
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
+import { Skeleton } from '@mui/material';
 import { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 
 const ScatterPlot = () => {
-  const { data } = useContext(DataContext);
+  const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
   const [selectedColor, setSelectedColor] = useState<
     | 'duration_ms'
@@ -18,6 +19,10 @@ const ScatterPlot = () => {
     | 'valence'
     | 'tempo'
   >('acousticness');
+
+  if (loading) {
+    return <Skeleton variant="rectangular" width={40} height={40} />;
+  }
 
   const tracks = data.songs;
 
