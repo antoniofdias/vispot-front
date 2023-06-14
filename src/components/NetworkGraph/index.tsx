@@ -99,22 +99,25 @@ export const NetworkGraph = ({ data }: any) => {
       hierarchical: false,
     },
     edges: {
-      color: 'blue',
+      color: {
+        color: 'blue',
+        highlight: 'green',
+      },
       arrows: { to: { enabled: false }, from: { enabled: false } },
     },
     height: '500px',
   };
 
   const events = {
-    select: function (event) {
-      var { nodes, edges } = event;
+    select: (event) => {
+      let { nodes, edges } = event;
       console.log(edges);
       console.log(nodes);
       if (nodes.length) {
         setSelectedTrack(nodes[0]);
       }
     },
-    doubleClick: ({ pointer: { canvas } }) => {
+    doubleClick: () => {
       if (
         networkRef.current !== null &&
         networkRef.current.view !== undefined
