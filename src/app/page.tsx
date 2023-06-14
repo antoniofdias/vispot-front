@@ -1,7 +1,6 @@
 'use client';
 
-import { EdgeBundling } from '@/components/EdgeBundling';
-import { NetworkGraph } from '@/components/NetworkGraph';
+import { GraphRow } from '@/components/GraphRow';
 import { SearchBar } from '@/components/SearchBar';
 import { DataTable } from '@/components/Table';
 import { ApiResponseType } from '@/components/Table/types';
@@ -36,8 +35,7 @@ export default function Home() {
           </Stack>
           <DataTable rows={data.songs}></DataTable>
           <ScatterPlot rows={data.songs} />
-          <NetworkGraph data={data} />
-          <EdgeBundling data={data} />
+          <GraphRow data={data} />
         </main>
       </AppProvider>
     </DataContext.Provider>
