@@ -20,6 +20,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
 import { useContext, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -64,29 +66,57 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export const Navbar = () => {
-  const { setData, loading, setLoading } = useContext(DataContext);
+  const { setData, setLoading } = useContext(DataContext);
 
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
   async function handlePlaylistRequest(playlistUrl: string) {
-    const res = await backendApi.get('/playlist', {
-      params: {
-        playlist_url: playlistUrl,
-      },
-    });
+    const errorMessage = 'An error has occurred. Please try again later';
+    try {
+      const res = await backendApi.get('/playlist', {
+        params: {
+          playlist_url: playlistUrl,
+        },
+      });
 
-    console.log(res.data);
-    setData(res.data);
-    setLoading(false);
-    setDisabled(false);
+      if (res.status === 200) {
+        setData(res.data);
+      } else {
+        toast.error(errorMessage);
+      }
+      setLoading(false);
+      setDisabled(false);
+    } catch (error) {
+      toast.error(errorMessage);
+    }
   }
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const playlistUrl = (event.target as HTMLInputElement).value;
 
-      // validate
+      let errorString = '';
+      if (playlistUrl.trim() === '') {
+        errorString += ' the url cannot be empty';
+      } else {
+        const hasQueryParams =
+          playlistUrl.includes('?') || playlistUrl.includes('&');
+        if (
+          !playlistUrl.includes('https://open.spotify.com/playlist/') ||
+          hasQueryParams
+        ) {
+          errorString += ' please provide a valid Spotify url';
+          if (hasQueryParams) {
+            errorString += " (check if no '?' or '&' have been pasted)";
+          }
+        }
+      }
+
+      if (errorString !== '') {
+        toast.error('Invalid input:' + errorString + '.');
+        return;
+      }
 
       setLoading(true);
       setDisabled(true);
@@ -176,6 +206,7 @@ export const Navbar = () => {
       <Drawer anchor={'left'} open={drawerOpen} onClose={toggleDrawer(false)}>
         {list()}
       </Drawer>
+      <ToastContainer />
     </>
   );
 };
