@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { TrackContext } from '@/contexts/TrackContext';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Graph from 'react-vis-network-graph';
 
 // import "./styles.css";
@@ -14,6 +14,8 @@ export const NetworkGraph = ({ data }: any) => {
   const [edges, setEdges] = useState<Edge[]>();
   const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
 
+  const networkRef = useRef<any>(null);
+
   useEffect(() => {
     const nodesHm = data.songs.map((track: any) => {
       return {
@@ -21,14 +23,11 @@ export const NetworkGraph = ({ data }: any) => {
         label: track.id,
         title: track.name,
         uri: track.uri,
+        color: track.colors.acousticness,
         parent: 0,
+        // opacity: 0.3,
       };
     });
-    const root = {
-      id: 0,
-      name: 'root',
-    };
-    nodesHm.unshift(root);
     setNodes(nodesHm);
 
     const edgesHm: Edge[] = [];
@@ -85,6 +84,7 @@ export const NetworkGraph = ({ data }: any) => {
     },
     edges: {
       color: 'red',
+      arrows: { to: { enabled: false }, from: { enabled: false } },
     },
     height: '500px',
   };
@@ -95,6 +95,14 @@ export const NetworkGraph = ({ data }: any) => {
       console.log(edges);
       console.log(nodes);
     },
+    doubleClick: ({ pointer: { canvas } }) => {
+      if (
+        networkRef.current !== null &&
+        networkRef.current.view !== undefined
+      ) {
+        networkRef.current.view.fit();
+      }
+    },
   };
   return (
     <Graph
@@ -102,7 +110,7 @@ export const NetworkGraph = ({ data }: any) => {
       options={options}
       events={events}
       getNetwork={(network) => {
-        //  if you want access to vis.js network api you can set the state in a parent component using this property
+        networkRef.current = network;
       }}
     />
   );
