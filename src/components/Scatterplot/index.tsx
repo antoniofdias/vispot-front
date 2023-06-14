@@ -1,4 +1,4 @@
-import { AppContext } from '@/contexts/AppContext';
+import { AppContext } from '@/contexts/AppProvider';
 import { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
 import { DataTableProps } from '../Table/types';

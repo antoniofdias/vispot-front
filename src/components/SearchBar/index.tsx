@@ -1,4 +1,4 @@
-import { DataContext } from '@/contexts/DataContext';
+import { DataContext } from '@/contexts/DataProvider';
 import { backendApi } from '@/services/api';
 import { Search } from '@mui/icons-material';
 import { Button, Input, Stack } from '@mui/material';

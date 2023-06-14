@@ -3,13 +3,11 @@
 import { GraphRow } from '@/components/GraphRow';
 import { SearchBar } from '@/components/SearchBar';
 import { DataTable } from '@/components/Table';
-import { ApiResponseType } from '@/components/Table/types';
-import { AppProvider } from '@/contexts/AppContext';
-import { DataContext } from '@/contexts/DataContext';
+import { AppProvider } from '@/contexts/AppProvider';
+import { DataContext, DataProvider } from '@/contexts/DataProvider';
 import { Stack } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import { mockedData } from './data';
+import { useContext } from 'react';
 import styles from './page.module.css';
 const ScatterPlot = dynamic(() => import('@/components/Scatterplot'), {
   ssr: false,
@@ -17,10 +15,10 @@ const ScatterPlot = dynamic(() => import('@/components/Scatterplot'), {
 });
 
 export default function Home() {
-  const [data, setData] = useState<ApiResponseType>(mockedData);
+  const { data } = useContext(DataContext);
 
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DataProvider>
       <AppProvider>
         <main className={styles.main}>
           <Stack direction="row" spacing={2}>
@@ -38,6 +36,6 @@ export default function Home() {
           <GraphRow data={data} />
         </main>
       </AppProvider>
-    </DataContext.Provider>
+    </DataProvider>
   );
 }

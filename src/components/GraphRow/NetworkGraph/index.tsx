@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { AppContext } from '@/contexts/AppContext';
+import { AppContext } from '@/contexts/AppProvider';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Graph from 'react-vis-network-graph';
 

@@ -1,5 +1,5 @@
 'use client';
-import { AppContext } from '@/contexts/AppContext';
+import { AppContext } from '@/contexts/AppProvider';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext } from 'react';
 import { DataTableProps } from './types';

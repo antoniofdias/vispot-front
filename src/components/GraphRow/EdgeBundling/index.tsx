@@ -1,5 +1,5 @@
 'use client';
-import { AppContext } from '@/contexts/AppContext';
+import { AppContext } from '@/contexts/AppProvider';
 import Slider from '@mui/material/Slider';
 import { useContext, useEffect, useState } from 'react';
 import { VisualizationSpec, createClassFromSpec } from 'react-vega';
