@@ -1,11 +1,13 @@
+import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
-import { Skeleton } from '@mui/material';
+import { Skeleton, Slider } from '@mui/material';
 import { useContext } from 'react';
 import { EdgeBundling } from './EdgeBundling';
 import { NetworkGraph } from './NetworkGraph';
 
 export const GraphRow = () => {
   const { data, loading } = useContext(DataContext);
+  const { correlationRange, setCorrelationRange } = useContext(AppContext);
 
   if (loading) {
     return (
@@ -16,10 +18,23 @@ export const GraphRow = () => {
     );
   }
 
+  const handleChange = (_: Event, newRange: number | number[]) => {
+    setCorrelationRange(newRange as number[]);
+  };
+
   return data ? (
     <>
-      <NetworkGraph data={data} />
-      <EdgeBundling data={data} />
+      <Slider
+        getAriaLabel={() => 'Temperature range'}
+        value={correlationRange}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+        step={0.1}
+        max={1}
+        min={0}
+      />
+      <NetworkGraph />
+      <EdgeBundling />
     </>
   ) : (
     <></>
