@@ -1,27 +1,19 @@
 'use client';
 import { DataContext } from '@/contexts/DataProvider';
 import { backendApi } from '@/services/api';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import SearchIcon from '@mui/icons-material/Search';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CustomDrawer } from './CustomDrawer';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -137,35 +129,6 @@ export const Navbar = () => {
       setDrawerOpen(open);
     };
 
-  const list = () => (
-    <Box role="presentation">
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -203,9 +166,7 @@ export const Navbar = () => {
           </Toolbar>
         </AppBar>
       </Box>
-      <Drawer anchor={'left'} open={drawerOpen} onClose={toggleDrawer(false)}>
-        {list()}
-      </Drawer>
+      <CustomDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
       <ToastContainer />
     </>
   );
