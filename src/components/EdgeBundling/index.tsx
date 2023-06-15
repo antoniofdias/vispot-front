@@ -28,10 +28,6 @@ export const EdgeBundling = () => {
   const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
   const [testSpec, setTestSpec] = useState<any>(baseSpec);
 
-  if (loading) {
-    return <Skeleton variant="circular" width={40} height={40} />;
-  }
-
   useEffect(() => {
     const newNodes: Node[] = data.songs.map((track: any) => {
       return {
@@ -93,6 +89,10 @@ export const EdgeBundling = () => {
     setTestSpec(newTestSpec);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTrack, nodes, filteredEdges]);
+
+  if (loading) {
+    return <Skeleton variant="circular" width={40} height={40} />;
+  }
 
   const EdgeBundlingFromSpec = createClassFromSpec({
     mode: 'vega',

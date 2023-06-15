@@ -33,10 +33,6 @@ export const NetworkGraph = () => {
 
   const networkRef = useRef<any>(null);
 
-  if (loading) {
-    return <Skeleton variant="circular" width={40} height={40} />;
-  }
-
   useEffect(() => {
     const newNodes = data.songs.map((track: any) => {
       return {
@@ -99,6 +95,10 @@ export const NetworkGraph = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTrack, nodes, filteredEdges]);
 
+  if (loading) {
+    return <Skeleton variant="circular" width={40} height={40} />;
+  }
+
   const options = {
     layout: {
       hierarchical: false,
@@ -131,6 +131,7 @@ export const NetworkGraph = () => {
       }
     },
   };
+
   return (
     <Graph
       graph={graph}
