@@ -1,10 +1,12 @@
-import { TrackContext } from '@/contexts/TrackContext';
+import { AppContext } from '@/contexts/AppProvider';
+import { DataContext } from '@/contexts/DataProvider';
+import { Skeleton } from '@mui/material';
 import { useContext, useState } from 'react';
 import Plot from 'react-plotly.js';
-import { DataTableProps } from '../Table/types';
 
-const ScatterPlot = ({ rows }: DataTableProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+const ScatterPlot = () => {
+  const { data, loading } = useContext(DataContext);
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
   const [selectedColor, setSelectedColor] = useState<
     | 'duration_ms'
     | 'danceability'
@@ -18,7 +20,13 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
     | 'tempo'
   >('acousticness');
 
-  return rows ? (
+  if (loading) {
+    return <Skeleton variant="rectangular" width={40} height={40} />;
+  }
+
+  const tracks = data.songs;
+
+  return tracks ? (
     <div>
       <Plot
         config={{
@@ -26,21 +34,21 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
         }}
         data={[
           {
-            x: rows.map((track) => track.x),
-            y: rows.map((track) => track.y),
+            x: tracks.map((track) => track.x),
+            y: tracks.map((track) => track.y),
             mode: 'markers',
             type: 'scatter',
-            text: rows.map((track) => track.name),
+            text: tracks.map((track) => track.name),
             marker: {
               size: 12,
-              color: rows.map((track) => track.colors[selectedColor]),
+              color: tracks.map((track) => track.colors[selectedColor]),
               colorscale: 'Viridis',
               colorbar: {
                 title: selectedColor,
               },
               cmax: 1,
               cmin: 0,
-              opacity: rows.map((_, index) =>
+              opacity: tracks.map((_, index) =>
                 selectedTrack === null || index === selectedTrack - 1 ? 1 : 0.3
               ),
             },
@@ -61,7 +69,7 @@ const ScatterPlot = ({ rows }: DataTableProps) => {
             setSelectedColor(e.target.value as typeof selectedColor)
           }
         >
-          {Object.keys(rows[0].colors).map((color, index) => (
+          {Object.keys(tracks[0].colors).map((color, index) => (
             <option key={index} value={color}>
               {color}
             </option>

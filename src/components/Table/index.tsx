@@ -1,8 +1,9 @@
 'use client';
-import { TrackContext } from '@/contexts/TrackContext';
+import { AppContext } from '@/contexts/AppProvider';
+import { DataContext } from '@/contexts/DataProvider';
+import { Skeleton } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useContext } from 'react';
-import { DataTableProps } from './types';
 
 const columns: GridColDef[] = [
   { field: 'uri', headerName: 'uri', width: 70 },
@@ -24,11 +25,18 @@ const columns: GridColDef[] = [
   { field: 'y', headerName: 'y', width: 70 },
 ];
 
-export const DataTable = ({ rows }: DataTableProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(TrackContext);
+export const DataTable = () => {
+  const { data, loading } = useContext(DataContext);
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
+
+  if (loading) {
+    return <Skeleton variant="rectangular" width={40} height={40} />;
+  }
+
+  const rows = data.songs;
 
   return rows !== undefined ? (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: 500 }}>
       <DataGrid
         rows={
           selectedTrack === null
