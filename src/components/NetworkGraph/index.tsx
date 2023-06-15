@@ -24,8 +24,12 @@ type Edge = {
 
 export const NetworkGraph = () => {
   const { data, loading } = useContext(DataContext);
-  const { selectedTrack, setSelectedTrack, correlationRange } =
-    useContext(AppContext);
+  const {
+    selectedTrack,
+    setSelectedTrack,
+    correlationRange,
+    selectedAttribute,
+  } = useContext(AppContext);
 
   const [nodes, setNodes] = useState<Node[]>();
   const [edges, setEdges] = useState<Edge[]>();
@@ -40,8 +44,7 @@ export const NetworkGraph = () => {
         id: track.id,
         label: track.id,
         title: track.name,
-        // TODO select correct attribute
-        color: track.colors.acousticness,
+        color: track.colors[selectedAttribute],
       };
     });
     setNodes(newNodes);
@@ -63,7 +66,7 @@ export const NetworkGraph = () => {
         edge.title <= correlationRange[1] / 10
     );
     setFilteredEdges(currentFilteredEdges);
-  }, [data.correlation, data.songs]);
+  }, [data, selectedAttribute]);
 
   useEffect(() => {
     if (edges !== undefined) {

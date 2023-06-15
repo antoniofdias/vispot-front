@@ -1,24 +1,14 @@
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Plot from 'react-plotly.js';
+import { SelectColor } from '../SelectColor';
 
 const ScatterPlot = () => {
   const { data, loading } = useContext(DataContext);
-  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
-  const [selectedColor, setSelectedColor] = useState<
-    | 'duration_ms'
-    | 'danceability'
-    | 'energy'
-    | 'loudness'
-    | 'speechiness'
-    | 'acousticness'
-    | 'instrumentalness'
-    | 'liveness'
-    | 'valence'
-    | 'tempo'
-  >('acousticness');
+  const { selectedTrack, setSelectedTrack, selectedAttribute } =
+    useContext(AppContext);
 
   if (loading) {
     return <Skeleton variant="rectangular" width={40} height={40} />;
@@ -41,10 +31,10 @@ const ScatterPlot = () => {
             text: tracks.map((track) => track.name),
             marker: {
               size: 12,
-              color: tracks.map((track) => track.colors[selectedColor]),
+              color: tracks.map((track) => track.colors[selectedAttribute]),
               colorscale: 'Viridis',
               colorbar: {
-                title: selectedColor,
+                title: selectedAttribute,
               },
               cmax: 1,
               cmin: 0,
@@ -61,21 +51,7 @@ const ScatterPlot = () => {
         }
         onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
       />
-      <div>
-        <label>Select color:</label>
-        <select
-          value={selectedColor}
-          onChange={(e) =>
-            setSelectedColor(e.target.value as typeof selectedColor)
-          }
-        >
-          {Object.keys(tracks[0].colors).map((color, index) => (
-            <option key={index} value={color}>
-              {color}
-            </option>
-          ))}
-        </select>
-      </div>
+      <SelectColor />
     </div>
   ) : (
     <></>
