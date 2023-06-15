@@ -36,7 +36,7 @@ export const DataTable = () => {
   const rows = data.songs;
 
   return rows !== undefined ? (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: 500 }}>
       <DataGrid
         rows={
           selectedTrack === null

@@ -111,6 +111,7 @@ export const NetworkGraph = () => {
       arrows: { to: { enabled: false }, from: { enabled: false } },
     },
     height: '500px',
+    width: '500px',
   };
 
   const events = {
@@ -133,13 +134,15 @@ export const NetworkGraph = () => {
   };
 
   return (
-    <Graph
-      graph={graph}
-      options={options}
-      events={events}
-      getNetwork={(network) => {
-        networkRef.current = network;
-      }}
-    />
+    <div style={{ width: '500px' }}>
+      <Graph
+        graph={graph}
+        options={options}
+        events={events}
+        getNetwork={(network) => {
+          networkRef.current = network;
+        }}
+      />
+    </div>
   );
 };
