@@ -4,7 +4,9 @@ import Typography from '@mui/material/Typography';
 
 interface SettingsModalProps {
   open: boolean;
-  toggleOpen: (openState: boolean) => void;
+  toggleOpen: (
+    open: boolean
+  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
 }
 
 const style = {
@@ -23,9 +25,7 @@ export const SettingsModal = ({ open, toggleOpen }: SettingsModalProps) => {
   return (
     <Modal
       open={open}
-      onClose={() => {
-        toggleOpen(false);
-      }}
+      onClose={toggleOpen(false)}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
