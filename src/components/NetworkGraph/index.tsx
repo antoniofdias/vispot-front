@@ -1,6 +1,7 @@
 //@ts-nocheck
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
+import { Skeleton } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Graph from 'react-vis-network-graph';
 
@@ -21,7 +22,7 @@ type Edge = {
 // import "./network.css";
 
 export const NetworkGraph = () => {
-  const { data } = useContext(DataContext);
+  const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack, correlationRange } =
     useContext(AppContext);
 
@@ -31,6 +32,10 @@ export const NetworkGraph = () => {
   const [graph, setGraph] = useState();
 
   const networkRef = useRef<any>(null);
+
+  if (loading) {
+    return <Skeleton variant="circular" width={40} height={40} />;
+  }
 
   useEffect(() => {
     const newNodes = data.songs.map((track: any) => {

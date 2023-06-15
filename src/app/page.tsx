@@ -1,7 +1,9 @@
 'use client';
 
-import { GraphRow } from '@/components/GraphRow';
+import { CorrelationSlider } from '@/components/CorrelationSlider';
+import { EdgeBundling } from '@/components/EdgeBundling';
 import { Navbar } from '@/components/Navbar';
+import { NetworkGraph } from '@/components/NetworkGraph';
 import { DataTable } from '@/components/Table';
 import { AppProvider } from '@/contexts/AppProvider';
 import { DataProvider } from '@/contexts/DataProvider';
@@ -20,7 +22,9 @@ export default function Home() {
         <main className={styles.main}>
           <DataTable />
           <ScatterPlot />
-          <GraphRow />
+          <CorrelationSlider />
+          <NetworkGraph />
+          <EdgeBundling />
         </main>
       </AppProvider>
     </DataProvider>

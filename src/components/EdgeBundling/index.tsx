@@ -1,6 +1,7 @@
 'use client';
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
+import { Skeleton } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import { VisualizationSpec, createClassFromSpec } from 'react-vega';
 import { baseSpec } from './baseSpec';
@@ -18,7 +19,7 @@ type Edge = {
 };
 
 export const EdgeBundling = () => {
-  const { data } = useContext(DataContext);
+  const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack, correlationRange } =
     useContext(AppContext);
 
@@ -26,6 +27,10 @@ export const EdgeBundling = () => {
   const [edges, setEdges] = useState<Edge[]>();
   const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
   const [testSpec, setTestSpec] = useState<any>(baseSpec);
+
+  if (loading) {
+    return <Skeleton variant="circular" width={40} height={40} />;
+  }
 
   useEffect(() => {
     const newNodes: Node[] = data.songs.map((track: any) => {
