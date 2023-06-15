@@ -10,14 +10,16 @@ export const CorrelationSlider = () => {
   };
 
   return (
-    <Slider
-      getAriaLabel={() => 'Correlation range'}
-      value={correlationRange}
-      onChange={handleChange}
-      valueLabelDisplay="auto"
-      step={0.1}
-      max={1}
-      min={0}
-    />
+    <div style={{ width: 500 }}>
+      <Slider
+        getAriaLabel={() => 'Correlation range'}
+        value={correlationRange}
+        onChange={handleChange}
+        valueLabelDisplay="auto"
+        step={0.1}
+        max={1}
+        min={0}
+      />
+    </div>
   );
 };

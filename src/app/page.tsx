@@ -1,6 +1,5 @@
 'use client';
 
-import { CorrelationSlider } from '@/components/CorrelationSlider';
 import { EdgeBundling } from '@/components/EdgeBundling';
 import { Navbar } from '@/components/Navbar';
 import { NetworkGraph } from '@/components/NetworkGraph';
@@ -22,7 +21,6 @@ export default function Home() {
         <main className={styles.main}>
           <DataTable />
           <ScatterPlot />
-          <CorrelationSlider />
           <NetworkGraph />
           <EdgeBundling />
         </main>

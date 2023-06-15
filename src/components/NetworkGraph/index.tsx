@@ -4,6 +4,7 @@ import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Graph from 'react-vis-network-graph';
+import { CorrelationSlider } from '../CorrelationSlider';
 
 type Node = {
   id: string | number;
@@ -135,6 +136,7 @@ export const NetworkGraph = () => {
 
   return (
     <div style={{ width: '500px' }}>
+      <CorrelationSlider />
       <Graph
         graph={graph}
         options={options}
