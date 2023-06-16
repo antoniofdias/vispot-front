@@ -1,8 +1,7 @@
 'use client';
 import { DataContext } from '@/contexts/DataProvider';
 import { backendApi } from '@/services/api';
-import MenuIcon from '@mui/icons-material/Menu';
-import SearchIcon from '@mui/icons-material/Search';
+import { Search as SearchIcon, Settings } from '@mui/icons-material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
@@ -142,7 +141,7 @@ export const Navbar = () => {
               sx={{ mr: 2 }}
               onClick={toggleOpen(true)}
             >
-              <MenuIcon />
+              <Settings />
             </IconButton>
             <Typography
               variant="h6"
