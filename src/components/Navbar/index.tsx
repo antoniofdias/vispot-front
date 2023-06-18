@@ -1,27 +1,18 @@
 'use client';
 import { DataContext } from '@/contexts/DataProvider';
 import { backendApi } from '@/services/api';
-import MailIcon from '@mui/icons-material/Mail';
-import MenuIcon from '@mui/icons-material/Menu';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import SearchIcon from '@mui/icons-material/Search';
+import { Search as SearchIcon, Settings } from '@mui/icons-material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { alpha, styled } from '@mui/material/styles';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { SettingsModal } from './SettingsModal';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -68,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const Navbar = () => {
   const { setData, setLoading } = useContext(DataContext);
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
   async function handlePlaylistRequest(playlistUrl: string) {
@@ -124,7 +115,7 @@ export const Navbar = () => {
     }
   };
 
-  const toggleDrawer =
+  const toggleOpen =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
         event.type === 'keydown' &&
@@ -134,38 +125,9 @@ export const Navbar = () => {
         return;
       }
 
-      setDrawerOpen(open);
+      setModalOpen(open);
     };
 
-  const list = () => (
-    <Box role="presentation">
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -177,9 +139,9 @@ export const Navbar = () => {
               color="inherit"
               aria-label="open drawer"
               sx={{ mr: 2 }}
-              onClick={toggleDrawer(true)}
+              onClick={toggleOpen(true)}
             >
-              <MenuIcon />
+              <Settings />
             </IconButton>
             <Typography
               variant="h6"
@@ -189,23 +151,23 @@ export const Navbar = () => {
             >
               {/* name may go here later, idk */}
             </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="SEARCH"
-                inputProps={{ 'aria-label': 'search' }}
-                onKeyPress={handleKeyPress}
-                disabled={disabled}
-              />
-            </Search>
+            <Box>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="SEARCH"
+                  inputProps={{ 'aria-label': 'search' }}
+                  onKeyPress={handleKeyPress}
+                  disabled={disabled}
+                />
+              </Search>
+            </Box>
           </Toolbar>
         </AppBar>
       </Box>
-      <Drawer anchor={'left'} open={drawerOpen} onClose={toggleDrawer(false)}>
-        {list()}
-      </Drawer>
+      <SettingsModal open={modalOpen} toggleOpen={toggleOpen} />
       <ToastContainer />
     </>
   );
