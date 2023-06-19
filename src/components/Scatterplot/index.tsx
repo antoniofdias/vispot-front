@@ -3,7 +3,6 @@ import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
 import { useContext } from 'react';
 import Plot from 'react-plotly.js';
-import { SelectColor } from '../SelectColor';
 
 const ScatterPlot = () => {
   const { data, loading } = useContext(DataContext);
@@ -21,6 +20,7 @@ const ScatterPlot = () => {
       <Plot
         config={{
           displayModeBar: false,
+          responsive: true,
         }}
         data={[
           {
@@ -51,7 +51,6 @@ const ScatterPlot = () => {
         }
         onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
       />
-      <SelectColor />
     </div>
   ) : (
     <></>
