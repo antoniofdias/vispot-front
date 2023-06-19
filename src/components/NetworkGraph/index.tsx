@@ -4,7 +4,6 @@ import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import Graph from 'react-vis-network-graph';
-import { CorrelationSlider } from '../CorrelationSlider';
 
 type Node = {
   id: string | number;
@@ -17,10 +16,6 @@ type Edge = {
   to: number;
   title: number;
 };
-
-// import "./styles.css";
-// need to import the vis network css in order to show tooltip
-// import "./network.css";
 
 export const NetworkGraph = () => {
   const { data, loading } = useContext(DataContext);
@@ -139,7 +134,6 @@ export const NetworkGraph = () => {
 
   return (
     <div style={{ width: '500px' }}>
-      <CorrelationSlider />
       <Graph
         graph={graph}
         options={options}
