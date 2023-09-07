@@ -1,8 +1,26 @@
 .main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2fr 2fr;
+  gap: 10px;
+  /* align-items: center;
+  padding: 6rem;
+  min-height: 100vh; */
+}
+
+.gridItem {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  justify-content: center;
+  /* background-color: #e0e0e0; */
+  /* padding: 20px; */
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  }
 }

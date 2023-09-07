@@ -20,7 +20,7 @@ const ScatterPlot = () => {
       <Plot
         config={{
           displayModeBar: false,
-          responsive: true,
+          // responsive: true,
         }}
         data={[
           {
