@@ -44,11 +44,15 @@ const ScatterPlot = () => {
             },
           },
         ]}
-        layout={
-          {
-            // hovermode: false,
-          }
-        }
+        layout={{
+          xaxis: {
+            visible: false,
+          },
+          yaxis: {
+            visible: false,
+          },
+          // hovermode: false,
+        }}
         onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
       />
     </div>
