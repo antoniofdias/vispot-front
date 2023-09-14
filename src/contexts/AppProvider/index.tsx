@@ -1,36 +1,26 @@
 'use client';
 import React, { createContext, useState } from 'react';
 
+type Attribute =
+  | 'duration_ms'
+  | 'danceability'
+  | 'energy'
+  | 'loudness'
+  | 'speechiness'
+  | 'acousticness'
+  | 'instrumentalness'
+  | 'liveness'
+  | 'valence'
+  | 'tempo';
+
 type AppContextType = {
   selectedTrack: number | null;
   selectedPalette: 'viridis' | 'inferno' | 'winter';
-  selectedAttribute:
-    | 'duration_ms'
-    | 'danceability'
-    | 'energy'
-    | 'loudness'
-    | 'speechiness'
-    | 'acousticness'
-    | 'instrumentalness'
-    | 'liveness'
-    | 'valence'
-    | 'tempo';
+  selectedAttribute: Attribute;
   correlationRange: number[];
   setSelectedTrack: (track: number | null) => void;
   setSelectedPalette: (palette: 'viridis' | 'inferno' | 'winter') => void;
-  setSelectedAttribute: (
-    attribute:
-      | 'duration_ms'
-      | 'danceability'
-      | 'energy'
-      | 'loudness'
-      | 'speechiness'
-      | 'acousticness'
-      | 'instrumentalness'
-      | 'liveness'
-      | 'valence'
-      | 'tempo'
-  ) => void;
+  setSelectedAttribute: (attribute: Attribute) => void;
   setCorrelationRange: (range: number[]) => void;
 };
 
@@ -56,18 +46,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     'viridis' | 'inferno' | 'winter'
   >('inferno');
 
-  const [selectedAttribute, setSelectedAttribute] = useState<
-    | 'duration_ms'
-    | 'danceability'
-    | 'energy'
-    | 'loudness'
-    | 'speechiness'
-    | 'acousticness'
-    | 'instrumentalness'
-    | 'liveness'
-    | 'valence'
-    | 'tempo'
-  >('acousticness');
+  const [selectedAttribute, setSelectedAttribute] =
+    useState<Attribute>('acousticness');
 
   const [correlationRange, setCorrelationRange] = useState<number[]>([
     0.3, 0.7,
