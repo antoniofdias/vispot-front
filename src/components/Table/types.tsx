@@ -1,3 +1,16 @@
+type Color = {
+  duration_ms: string;
+  danceability: string;
+  energy: string;
+  loudness: string;
+  speechiness: string;
+  acousticness: string;
+  instrumentalness: string;
+  liveness: string;
+  valence: string;
+  tempo: string;
+};
+
 export type TrackItem = {
   id: number;
   uri: string;
@@ -18,16 +31,9 @@ export type TrackItem = {
   x: number;
   y: number;
   colors: {
-    duration_ms: string;
-    danceability: string;
-    energy: string;
-    loudness: string;
-    speechiness: string;
-    acousticness: string;
-    instrumentalness: string;
-    liveness: string;
-    valence: string;
-    tempo: string;
+    viridis: Color;
+    inferno: Color;
+    winter: Color;
   };
 };
 

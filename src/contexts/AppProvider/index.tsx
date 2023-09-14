@@ -3,6 +3,7 @@ import React, { createContext, useState } from 'react';
 
 type AppContextType = {
   selectedTrack: number | null;
+  selectedPalette: 'viridis' | 'inferno' | 'winter';
   selectedAttribute:
     | 'duration_ms'
     | 'danceability'
@@ -16,6 +17,7 @@ type AppContextType = {
     | 'tempo';
   correlationRange: number[];
   setSelectedTrack: (track: number | null) => void;
+  setSelectedPalette: (palette: 'viridis' | 'inferno' | 'winter') => void;
   setSelectedAttribute: (
     attribute:
       | 'duration_ms'
@@ -38,8 +40,10 @@ type AppProviderProps = {
 
 export const AppContext = createContext<AppContextType>({
   selectedTrack: null,
+  selectedPalette: 'viridis',
   selectedAttribute: 'acousticness',
   correlationRange: [0.3, 0.7],
+  setSelectedPalette: () => {},
   setSelectedTrack: () => {},
   setSelectedAttribute: () => {},
   setCorrelationRange: () => {},
@@ -47,6 +51,11 @@ export const AppContext = createContext<AppContextType>({
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
+
+  const [selectedPalette, setSelectedPalette] = useState<
+    'viridis' | 'inferno' | 'winter'
+  >('inferno');
+
   const [selectedAttribute, setSelectedAttribute] = useState<
     | 'duration_ms'
     | 'danceability'
@@ -59,6 +68,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     | 'valence'
     | 'tempo'
   >('acousticness');
+
   const [correlationRange, setCorrelationRange] = useState<number[]>([
     0.3, 0.7,
   ]);
@@ -67,9 +77,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     <AppContext.Provider
       value={{
         selectedTrack,
+        selectedPalette,
         selectedAttribute,
         correlationRange,
         setSelectedTrack,
+        setSelectedPalette,
         setSelectedAttribute,
         setCorrelationRange,
       }}

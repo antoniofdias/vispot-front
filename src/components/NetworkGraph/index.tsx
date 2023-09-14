@@ -23,6 +23,7 @@ export const NetworkGraph = () => {
     selectedTrack,
     setSelectedTrack,
     correlationRange,
+    selectedPalette,
     selectedAttribute,
   } = useContext(AppContext);
 
@@ -39,7 +40,7 @@ export const NetworkGraph = () => {
         id: track.id,
         label: track.id,
         title: track.name,
-        color: track.colors[selectedAttribute],
+        color: track.colors[selectedPalette][selectedAttribute],
       };
     });
     setNodes(newNodes);
