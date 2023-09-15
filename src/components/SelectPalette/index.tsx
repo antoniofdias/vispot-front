@@ -6,7 +6,7 @@ import { useContext } from 'react';
 export const SelectPalette = () => {
   const { selectedPalette, setSelectedPalette } = useContext(AppContext);
 
-  const palettes = ['viridis', 'inferno', 'winter'];
+  const palettes = ['viridis', 'cividis', 'jet'];
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedPalette(event.target.value as typeof selectedPalette);

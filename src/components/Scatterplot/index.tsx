@@ -38,7 +38,9 @@ const ScatterPlot = () => {
               color: tracks.map(
                 (track) => track.colors[selectedPalette][selectedAttribute]
               ),
-              colorscale: selectedPalette,
+              colorscale:
+                selectedPalette.charAt(0).toUpperCase() +
+                selectedPalette.slice(1),
               colorbar: {
                 title: selectedAttribute,
               },

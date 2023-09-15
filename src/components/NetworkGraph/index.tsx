@@ -62,7 +62,7 @@ export const NetworkGraph = () => {
         edge.title <= correlationRange[1] / 10
     );
     setFilteredEdges(currentFilteredEdges);
-  }, [data, selectedAttribute]);
+  }, [data, selectedAttribute, selectedPalette]);
 
   useEffect(() => {
     if (edges !== undefined) {

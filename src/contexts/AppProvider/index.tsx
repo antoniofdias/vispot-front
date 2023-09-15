@@ -15,11 +15,11 @@ type Attribute =
 
 type AppContextType = {
   selectedTrack: number | null;
-  selectedPalette: 'viridis' | 'inferno' | 'winter';
+  selectedPalette: 'viridis' | 'cividis' | 'jet';
   selectedAttribute: Attribute;
   correlationRange: number[];
   setSelectedTrack: (track: number | null) => void;
-  setSelectedPalette: (palette: 'viridis' | 'inferno' | 'winter') => void;
+  setSelectedPalette: (palette: 'viridis' | 'cividis' | 'jet') => void;
   setSelectedAttribute: (attribute: Attribute) => void;
   setCorrelationRange: (range: number[]) => void;
 };
@@ -43,8 +43,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
 
   const [selectedPalette, setSelectedPalette] = useState<
-    'viridis' | 'inferno' | 'winter'
-  >('inferno');
+    'viridis' | 'cividis' | 'jet'
+  >('viridis');
 
   const [selectedAttribute, setSelectedAttribute] =
     useState<Attribute>('acousticness');

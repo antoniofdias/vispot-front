@@ -32,8 +32,8 @@ export type TrackItem = {
   y: number;
   colors: {
     viridis: Color;
-    inferno: Color;
-    winter: Color;
+    cividis: Color;
+    jet: Color;
   };
 };
 
