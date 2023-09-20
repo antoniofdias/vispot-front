@@ -50,7 +50,7 @@ export const NetworkGraph = () => {
         newEdges.push({
           from: i,
           to: j,
-          title: data.correlation[i - 1][j - 1],
+          title: data.correlation[i - 1][j - 1].toFixed(3),
         });
       }
     }
