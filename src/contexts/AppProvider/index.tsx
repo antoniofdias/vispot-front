@@ -15,11 +15,11 @@ type Attribute =
 
 type AppContextType = {
   selectedTrack: number | null;
-  selectedPalette: 'viridis' | 'cividis' | 'jet';
+  selectedPalette: 'viridis' | 'cividis' | 'jet' | 'hot';
   selectedAttribute: Attribute;
   correlationRange: number[];
   setSelectedTrack: (track: number | null) => void;
-  setSelectedPalette: (palette: 'viridis' | 'cividis' | 'jet') => void;
+  setSelectedPalette: (palette: 'viridis' | 'cividis' | 'jet' | 'hot') => void;
   setSelectedAttribute: (attribute: Attribute) => void;
   setCorrelationRange: (range: number[]) => void;
 };
@@ -43,7 +43,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
 
   const [selectedPalette, setSelectedPalette] = useState<
-    'viridis' | 'cividis' | 'jet'
+    'viridis' | 'cividis' | 'jet' | 'hot'
   >('viridis');
 
   const [selectedAttribute, setSelectedAttribute] =
