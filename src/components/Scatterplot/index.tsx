@@ -24,7 +24,7 @@ const ScatterPlot = () => {
       <Plot
         config={{
           displayModeBar: false,
-          // responsive: true,
+          responsive: true,
         }}
         data={[
           {
@@ -59,9 +59,11 @@ const ScatterPlot = () => {
           yaxis: {
             visible: false,
           },
-          // hovermode: false,
+          autosize: true,
         }}
+        useResizeHandler
         onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
+        style={{ width: '100%', height: '100%' }}
       />
     </div>
   ) : (

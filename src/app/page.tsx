@@ -22,9 +22,15 @@ export default function Home() {
           <div className={styles.gridContainer}>
             <DataTable className={styles.fullItem} />
             <div className={styles.splitRow}>
-              <ScatterPlot />
-              <NetworkGraph />
-              <EdgeBundling />
+              <div className={styles.splitItem}>
+                <ScatterPlot />
+              </div>
+              <div className={styles.splitItem}>
+                <NetworkGraph />
+              </div>
+              <div className={styles.splitItem}>
+                <EdgeBundling />
+              </div>
             </div>
           </div>
         </main>

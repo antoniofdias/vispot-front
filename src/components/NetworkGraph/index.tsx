@@ -111,7 +111,7 @@ export const NetworkGraph = () => {
       arrows: { to: { enabled: false }, from: { enabled: false } },
     },
     height: '500px',
-    width: '500px',
+    width: '33vw',
   };
 
   const events = {

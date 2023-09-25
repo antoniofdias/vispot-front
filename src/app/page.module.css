@@ -1,7 +1,7 @@
 .main {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .gridContainer {
@@ -23,10 +23,18 @@
   grid-gap: 10px; /* Adjust the gap as needed */
 }
 
+.splitItem {
+  max-width: 30vw;
+}
+
 @media (max-width: 1024px) {
   .splitRow {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .splitItem {
+    max-width: 90vw;
   }
 }
