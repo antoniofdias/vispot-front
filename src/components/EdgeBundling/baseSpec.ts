@@ -2,8 +2,8 @@ export const baseSpec = {
   description:
     'A network diagram of lyrical simmilarity, with edges grouped via hierarchical edge bundling.',
   padding: 5,
-  width: 720,
-  height: 720,
+  width: 500,
+  height: 500,
   autosize: 'none',
 
   signals: [
@@ -19,7 +19,7 @@ export const baseSpec = {
     },
     {
       name: 'radius',
-      value: 280,
+      value: 190,
       bind: { input: 'range', min: 20, max: 400 },
     },
     {

@@ -3,7 +3,7 @@ import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { useContext } from 'react';
+import { HTMLAttributes, useContext } from 'react';
 
 const columns: GridColDef[] = [
   { field: 'uri', headerName: 'uri', width: 70 },
@@ -25,7 +25,7 @@ const columns: GridColDef[] = [
   { field: 'y', headerName: 'y', width: 70 },
 ];
 
-export const DataTable = () => {
+export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
 
@@ -36,7 +36,10 @@ export const DataTable = () => {
   const rows = data.songs;
 
   return rows !== undefined ? (
-    <div style={{ height: 400, width: 500 }}>
+    <div
+      style={{ height: 400, maxWidth: '95vw', padding: 10 }}
+      className={className}
+    >
       <DataGrid
         rows={
           selectedTrack === null

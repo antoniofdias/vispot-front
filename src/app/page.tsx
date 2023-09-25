@@ -19,17 +19,13 @@ export default function Home() {
       <AppProvider>
         <Navbar />
         <main className={styles.main}>
-          <div className={styles.gridItem}>
-            <DataTable />
-          </div>
-          <div className={styles.gridItem}>
-            <ScatterPlot />
-          </div>
-          <div className={styles.gridItem}>
-            <NetworkGraph />
-          </div>
-          <div className={styles.gridItem}>
-            <EdgeBundling />
+          <div className={styles.gridContainer}>
+            <DataTable className={styles.fullItem} />
+            <div className={styles.splitRow}>
+              <ScatterPlot />
+              <NetworkGraph />
+              <EdgeBundling />
+            </div>
           </div>
         </main>
       </AppProvider>
