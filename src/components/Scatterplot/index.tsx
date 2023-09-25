@@ -6,8 +6,12 @@ import Plot from 'react-plotly.js';
 
 const ScatterPlot = () => {
   const { data, loading } = useContext(DataContext);
-  const { selectedTrack, setSelectedTrack, selectedAttribute } =
-    useContext(AppContext);
+  const {
+    selectedTrack,
+    setSelectedTrack,
+    selectedPalette,
+    selectedAttribute,
+  } = useContext(AppContext);
 
   if (loading) {
     return <Skeleton variant="rectangular" width={40} height={40} />;
@@ -31,8 +35,12 @@ const ScatterPlot = () => {
             text: tracks.map((track) => track.name),
             marker: {
               size: 12,
-              color: tracks.map((track) => track.colors[selectedAttribute]),
-              colorscale: 'Viridis',
+              color: tracks.map(
+                (track) => track.colors[selectedPalette][selectedAttribute]
+              ),
+              colorscale:
+                selectedPalette.charAt(0).toUpperCase() +
+                selectedPalette.slice(1),
               colorbar: {
                 title: selectedAttribute,
               },

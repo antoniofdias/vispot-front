@@ -1,5 +1,6 @@
 import { CorrelationSlider } from '@/components/CorrelationSlider';
 import { SelectColor } from '@/components/SelectColor';
+import { SelectPalette } from '@/components/SelectPalette';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -40,6 +41,7 @@ export const SettingsModal = ({ open, toggleOpen }: SettingsModalProps) => {
         <Typography id="select-color-label" variant="h6" component="h2">
           Color elements by
         </Typography>
+        <SelectPalette />
         <SelectColor />
         <Typography
           id="lyric-slider-label"

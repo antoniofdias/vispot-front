@@ -1,34 +1,26 @@
 'use client';
 import React, { createContext, useState } from 'react';
 
+type Attribute =
+  | 'duration_ms'
+  | 'danceability'
+  | 'energy'
+  | 'loudness'
+  | 'speechiness'
+  | 'acousticness'
+  | 'instrumentalness'
+  | 'liveness'
+  | 'valence'
+  | 'tempo';
+
 type AppContextType = {
   selectedTrack: number | null;
-  selectedAttribute:
-    | 'duration_ms'
-    | 'danceability'
-    | 'energy'
-    | 'loudness'
-    | 'speechiness'
-    | 'acousticness'
-    | 'instrumentalness'
-    | 'liveness'
-    | 'valence'
-    | 'tempo';
+  selectedPalette: 'viridis' | 'cividis' | 'jet' | 'hot';
+  selectedAttribute: Attribute;
   correlationRange: number[];
   setSelectedTrack: (track: number | null) => void;
-  setSelectedAttribute: (
-    attribute:
-      | 'duration_ms'
-      | 'danceability'
-      | 'energy'
-      | 'loudness'
-      | 'speechiness'
-      | 'acousticness'
-      | 'instrumentalness'
-      | 'liveness'
-      | 'valence'
-      | 'tempo'
-  ) => void;
+  setSelectedPalette: (palette: 'viridis' | 'cividis' | 'jet' | 'hot') => void;
+  setSelectedAttribute: (attribute: Attribute) => void;
   setCorrelationRange: (range: number[]) => void;
 };
 
@@ -38,8 +30,10 @@ type AppProviderProps = {
 
 export const AppContext = createContext<AppContextType>({
   selectedTrack: null,
+  selectedPalette: 'viridis',
   selectedAttribute: 'acousticness',
   correlationRange: [0.3, 0.7],
+  setSelectedPalette: () => {},
   setSelectedTrack: () => {},
   setSelectedAttribute: () => {},
   setCorrelationRange: () => {},
@@ -47,18 +41,14 @@ export const AppContext = createContext<AppContextType>({
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
-  const [selectedAttribute, setSelectedAttribute] = useState<
-    | 'duration_ms'
-    | 'danceability'
-    | 'energy'
-    | 'loudness'
-    | 'speechiness'
-    | 'acousticness'
-    | 'instrumentalness'
-    | 'liveness'
-    | 'valence'
-    | 'tempo'
-  >('acousticness');
+
+  const [selectedPalette, setSelectedPalette] = useState<
+    'viridis' | 'cividis' | 'jet' | 'hot'
+  >('viridis');
+
+  const [selectedAttribute, setSelectedAttribute] =
+    useState<Attribute>('acousticness');
+
   const [correlationRange, setCorrelationRange] = useState<number[]>([
     0.3, 0.7,
   ]);
@@ -67,9 +57,11 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     <AppContext.Provider
       value={{
         selectedTrack,
+        selectedPalette,
         selectedAttribute,
         correlationRange,
         setSelectedTrack,
+        setSelectedPalette,
         setSelectedAttribute,
         setCorrelationRange,
       }}
