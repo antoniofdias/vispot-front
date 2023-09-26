@@ -15,37 +15,37 @@ export const baseSpec = {
     {
       name: 'tension',
       value: 0.85,
-      bind: { input: 'range', min: 0, max: 1, step: 0.01 },
+      // bind: { input: 'range', min: 0, max: 1, step: 0.01 },
     },
     {
       name: 'radius',
       value: 190,
-      bind: { input: 'range', min: 20, max: 400 },
+      // bind: { input: 'range', min: 20, max: 400 },
     },
     {
       name: 'extent',
       value: 360,
-      bind: { input: 'range', min: 0, max: 360, step: 1 },
+      // bind: { input: 'range', min: 0, max: 360, step: 1 },
     },
     {
       name: 'rotate',
       value: 0,
-      bind: { input: 'range', min: 0, max: 360, step: 1 },
+      // bind: { input: 'range', min: 0, max: 360, step: 1 },
     },
     {
       name: 'textSize',
       value: 8,
-      bind: { input: 'range', min: 2, max: 20, step: 1 },
+      // bind: { input: 'range', min: 2, max: 20, step: 1 },
     },
     {
       name: 'textOffset',
       value: 2,
-      bind: { input: 'range', min: 0, max: 10, step: 1 },
+      // bind: { input: 'range', min: 0, max: 10, step: 1 },
     },
     {
       name: 'layout',
       value: 'cluster',
-      // "bind": {"input": "radio", "options": ["tidy", "cluster"]}
+      // bind: { input: 'radio', options: ['tidy', 'cluster'] },
     },
     { name: 'colorIn', value: 'firebrick' },
     { name: 'colorOut', value: 'forestgreen' },

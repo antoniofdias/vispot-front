@@ -14,7 +14,7 @@ const ScatterPlot = () => {
   } = useContext(AppContext);
 
   if (loading) {
-    return <Skeleton variant="rectangular" width={40} height={40} />;
+    return <Skeleton variant="rectangular" />;
   }
 
   const tracks = data.songs;

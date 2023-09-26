@@ -91,7 +91,7 @@ export const EdgeBundling = () => {
   }, [selectedTrack, nodes, filteredEdges]);
 
   if (loading) {
-    return <Skeleton variant="circular" width={40} height={40} />;
+    return <Skeleton variant="circular" />;
   }
 
   const EdgeBundlingFromSpec = createClassFromSpec({

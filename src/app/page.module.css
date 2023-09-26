@@ -25,6 +25,7 @@
 
 .splitItem {
   max-width: 30vw;
+  min-height: 510px;
 }
 
 @media (max-width: 1024px) {
