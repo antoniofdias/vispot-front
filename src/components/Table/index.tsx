@@ -2,8 +2,13 @@
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { HTMLAttributes, useContext } from 'react';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowId,
+  useGridApiRef,
+} from '@mui/x-data-grid';
+import { HTMLAttributes, useContext, useEffect } from 'react';
 
 const columns: GridColDef[] = [
   // { field: 'uri', headerName: 'uri' },
@@ -28,6 +33,14 @@ const columns: GridColDef[] = [
 export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
+  const apiRef = useGridApiRef();
+
+  useEffect(() => {
+    apiRef.current.setPage(
+      Math.floor((selectedTrack ? selectedTrack - 1 : 0) / 5)
+    );
+    apiRef.current.selectRow(selectedTrack as GridRowId, true, true);
+  }, [selectedTrack]);
 
   if (loading) {
     return <Skeleton variant="rectangular" />;
@@ -41,14 +54,8 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
       className={className}
     >
       <DataGrid
-        rows={
-          selectedTrack === null
-            ? rows
-            : [
-                rows.find((row) => row.id === selectedTrack),
-                ...rows.filter((row) => row.id !== selectedTrack),
-              ]
-        }
+        apiRef={apiRef}
+        rows={rows}
         columns={columns}
         initialState={{
           pagination: {
@@ -58,6 +65,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
         pageSizeOptions={[5, 10]}
         onRowClick={(params) => setSelectedTrack(params.row.id)}
         hideFooterSelectedRowCount
+        autoHeight
       />
     </div>
   ) : (
