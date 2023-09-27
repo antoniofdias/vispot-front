@@ -105,7 +105,7 @@ export const EdgeBundling = () => {
   const signalListeners = { click: handleClick };
 
   return data ? (
-    <EdgeBundlingFromSpec signalListeners={signalListeners} />
+    <EdgeBundlingFromSpec signalListeners={signalListeners} actions={false} />
   ) : (
     <></>
   );

@@ -20,18 +20,24 @@ export default function Home() {
         <Navbar />
         <main className={styles.main}>
           <div className={styles.gridContainer}>
-            <DataTable className={styles.fullItem} />
             <div className={styles.splitRow}>
               <div className={styles.splitItem}>
+                <h2>Scatter Plot</h2>
+                <hr />
                 <ScatterPlot />
               </div>
               <div className={styles.splitItem}>
+                <h2>Network Graph</h2>
+                <hr />
                 <NetworkGraph />
               </div>
               <div className={styles.splitItem}>
+                <h2>Edge Bundling</h2>
+                <hr />
                 <EdgeBundling />
               </div>
             </div>
+            <DataTable className={styles.fullItem} />
           </div>
         </main>
       </AppProvider>
