@@ -7,7 +7,7 @@
 
 .gridContainer {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: repeat(2, auto) 1fr;
   width: 100%;
   max-width: 1720px;
   grid-gap: 10px;
@@ -15,8 +15,14 @@
   margin-bottom: 2rem;
 }
 
+.settingsRow {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(4, auto);
+}
+
 .fullItem {
-  grid-row: 2 / 3;
+  grid-row: 3 / 3;
   background-color: white;
   border: 0.2rem solid silver;
   border-radius: 0.5rem;
@@ -45,6 +51,6 @@
     align-items: center;
   }
   .splitItem {
-    max-width: 90vw;
+    min-width: 90vw;
   }
 }

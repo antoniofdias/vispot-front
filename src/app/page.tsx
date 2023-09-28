@@ -1,8 +1,11 @@
 'use client';
 
+import { CorrelationSlider } from '@/components/CorrelationSlider';
 import { EdgeBundling } from '@/components/EdgeBundling';
 import { Navbar } from '@/components/Navbar';
 import { NetworkGraph } from '@/components/NetworkGraph';
+import { SelectColor } from '@/components/SelectColor';
+import { SelectPalette } from '@/components/SelectPalette';
 import { DataTable } from '@/components/Table';
 import { AppProvider } from '@/contexts/AppProvider';
 import { DataProvider } from '@/contexts/DataProvider';
@@ -20,6 +23,11 @@ export default function Home() {
         <Navbar />
         <main className={styles.main}>
           <div className={styles.gridContainer}>
+            <div className={styles.settingsRow}>
+              <SelectColor />
+              <SelectPalette />
+              <CorrelationSlider />
+            </div>
             <div className={styles.splitRow}>
               <div className={styles.splitItem}>
                 <h2>Scatter Plot</h2>
