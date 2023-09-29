@@ -76,10 +76,11 @@ export const Navbar = () => {
       } else {
         toast.error(errorMessage);
       }
-      setLoading(false);
-      setDisabled(false);
     } catch (error) {
       toast.error(errorMessage);
+    } finally {
+      setLoading(false);
+      setDisabled(false);
     }
   }
 
@@ -112,6 +113,7 @@ export const Navbar = () => {
       setLoading(true);
       setDisabled(true);
       handlePlaylistRequest(playlistUrl);
+      (event.target as HTMLInputElement).value = '';
     }
   };
 
