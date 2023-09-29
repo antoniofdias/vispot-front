@@ -91,7 +91,7 @@ export const EdgeBundling = () => {
   }, [selectedTrack, nodes, filteredEdges]);
 
   if (loading) {
-    return <Skeleton variant="circular" />;
+    return <Skeleton variant="circular" height="100%" />;
   }
 
   const EdgeBundlingFromSpec = createClassFromSpec({
@@ -105,7 +105,7 @@ export const EdgeBundling = () => {
   const signalListeners = { click: handleClick };
 
   return data ? (
-    <EdgeBundlingFromSpec signalListeners={signalListeners} />
+    <EdgeBundlingFromSpec signalListeners={signalListeners} actions={false} />
   ) : (
     <></>
   );

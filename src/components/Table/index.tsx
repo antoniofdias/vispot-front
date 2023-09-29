@@ -43,7 +43,11 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   }, [selectedTrack]);
 
   if (loading) {
-    return <Skeleton variant="rectangular" />;
+    return (
+      <div className={className}>
+        <Skeleton variant="rectangular" height="100%" />
+      </div>
+    );
   }
 
   const rows = data.songs;
