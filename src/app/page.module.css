@@ -1,7 +1,6 @@
 .main {
   display: flex;
   justify-content: center;
-  background-color: #ebe8e2;
   /* align-items: center; */
 }
 
@@ -26,6 +25,8 @@
   background-color: white;
   border: 0.2rem solid silver;
   border-radius: 0.5rem;
+  min-height: 400px;
+  padding: 1rem;
 }
 
 .splitRow {
