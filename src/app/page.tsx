@@ -24,9 +24,18 @@ export default function Home() {
         <main className={styles.main}>
           <div className={styles.gridContainer}>
             <div className={styles.settingsRow}>
-              <SelectColor />
-              <SelectPalette />
-              <CorrelationSlider />
+              <div className={styles.settingsItem}>
+                <h2>Color by</h2>
+                <SelectColor />
+              </div>
+              <div className={styles.settingsItem}>
+                <h2>Palette</h2>
+                <SelectPalette />
+              </div>
+              <div className={`${styles.settingsItem} ${styles.slider}`}>
+                <h2>Correlation</h2>
+                <CorrelationSlider />
+              </div>
             </div>
             <div className={styles.splitRow}>
               <div className={styles.splitItem}>
