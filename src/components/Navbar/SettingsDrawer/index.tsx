@@ -39,7 +39,12 @@ export const SettingsDrawer = ({
       open={drawerOpen}
       onClose={toggleDrawer(false)}
       PaperProps={{
-        sx: { width: '20%' },
+        sx: {
+          width: {
+            xs: '90%', // Set width to 100% for screens smaller than 1024px
+            sm: '20%', // Set width to 20% for screens larger than or equal to 1024px
+          },
+        },
       }}
     >
       {list()}
