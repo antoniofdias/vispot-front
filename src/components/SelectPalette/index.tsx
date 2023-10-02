@@ -3,6 +3,7 @@ import { Circle } from '@mui/icons-material';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
+import styles from './styles.module.css';
 
 const PaletteCircle = ({ palette }: any) => (
   <>
@@ -40,7 +41,7 @@ const PaletteCircle = ({ palette }: any) => (
         <stop offset="100%" stop-color="rgb(188, 55, 84)" />
       </linearGradient>
     </svg>
-    <Circle sx={{ fill: `url(#${palette})` }} />
+    <Circle sx={{ fill: `url(#${palette})`, fontSize: 18 }} />
   </>
 );
 
@@ -64,8 +65,10 @@ export const SelectPalette = () => {
       {palettes.map((palette) => {
         return (
           <MenuItem value={palette}>
-            <PaletteCircle palette={palette} />
-            {' ' + palette}
+            <div className={styles.menuItem}>
+              <PaletteCircle palette={palette} />
+              {' ' + palette}
+            </div>
           </MenuItem>
         );
       })}
