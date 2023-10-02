@@ -1,0 +1,17 @@
+.settingsRow {
+  display: grid;
+  grid-gap: 4rem;
+  grid-template-columns: repeat(4, auto);
+  margin: 0 4rem;
+}
+
+.settingsItem {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 1rem;
+}
+
+.slider {
+  grid-column: 2 / 4;
+}

@@ -1,11 +1,9 @@
 'use client';
 
-import { CorrelationSlider } from '@/components/CorrelationSlider';
 import { EdgeBundling } from '@/components/EdgeBundling';
 import { Navbar } from '@/components/Navbar';
 import { NetworkGraph } from '@/components/NetworkGraph';
-import { SelectColor } from '@/components/SelectColor';
-import { SelectPalette } from '@/components/SelectPalette';
+import { SettingsAccordion } from '@/components/SettingsAccordion';
 import { DataTable } from '@/components/Table';
 import { AppProvider } from '@/contexts/AppProvider';
 import { DataProvider } from '@/contexts/DataProvider';
@@ -23,20 +21,7 @@ export default function Home() {
         <Navbar />
         <main className={styles.main}>
           <div className={styles.gridContainer}>
-            <div className={styles.settingsRow}>
-              <div className={styles.settingsItem}>
-                <h2>Color by</h2>
-                <SelectColor />
-              </div>
-              <div className={styles.settingsItem}>
-                <h2>Palette</h2>
-                <SelectPalette />
-              </div>
-              <div className={`${styles.settingsItem} ${styles.slider}`}>
-                <h2>Correlation</h2>
-                <CorrelationSlider />
-              </div>
-            </div>
+            <SettingsAccordion />
             <div className={styles.splitRow}>
               <div className={styles.splitItem}>
                 <h2>Scatter Plot</h2>
