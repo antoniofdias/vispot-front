@@ -12,7 +12,7 @@ import { alpha, styled } from '@mui/material/styles';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { CustomDrawer } from './CustomDrawer';
+import { SettingsDrawer } from './SettingsDrawer';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -167,7 +167,7 @@ export const Navbar = () => {
           </Toolbar>
         </AppBar>
       </Box>
-      <CustomDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
+      <SettingsDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
       <ToastContainer />
     </>
   );
