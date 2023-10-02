@@ -61,6 +61,7 @@ export const SelectPalette = () => {
       value={selectedPalette}
       label="Color by"
       onChange={handleChange}
+      fullWidth
     >
       {palettes.map((palette) => {
         return (
