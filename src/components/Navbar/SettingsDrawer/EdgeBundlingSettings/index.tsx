@@ -1,5 +1,5 @@
 import CustomSlider from '@/components/CustomSlider';
-import { AppContext } from '@/contexts/AppProvider';
+import { AppContext, EdgeBundlingSignalsType } from '@/contexts/AppProvider';
 import { useContext } from 'react';
 
 const formatLabel = (label: string) => {
@@ -13,7 +13,7 @@ export const EdgeBundlingSettings = () => {
     useContext(AppContext);
 
   const handleChange =
-    (parameter: keyof typeof edgeBundlingSignals) =>
+    (parameter: keyof EdgeBundlingSignalsType) =>
     (_event: Event, newValue: number | number[]) => {
       setEdgeBundlingSignals({ [parameter]: newValue as number });
     };
@@ -35,14 +35,14 @@ export const EdgeBundlingSettings = () => {
           label={formatLabel(parameter.name)}
           value={
             edgeBundlingSignals[
-              parameter.name as keyof typeof edgeBundlingSignals
+              parameter.name as keyof EdgeBundlingSignalsType
             ] as number
           }
           min={parameter.min}
           max={parameter.max}
           step={parameter.step}
           onChange={handleChange(
-            parameter.name as keyof typeof edgeBundlingSignals
+            parameter.name as keyof EdgeBundlingSignalsType
           )}
         />
       ))}
