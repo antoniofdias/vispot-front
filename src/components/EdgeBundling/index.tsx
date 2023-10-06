@@ -1,5 +1,5 @@
 'use client';
-import { AppContext } from '@/contexts/AppProvider';
+import { AppContext, EdgeBundlingSignalsType } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
@@ -20,8 +20,12 @@ type Edge = {
 
 export const EdgeBundling = () => {
   const { data, loading } = useContext(DataContext);
-  const { selectedTrack, setSelectedTrack, correlationRange } =
-    useContext(AppContext);
+  const {
+    selectedTrack,
+    setSelectedTrack,
+    correlationRange,
+    edgeBundlingSignals,
+  } = useContext(AppContext);
 
   const [nodes, setNodes] = useState<Node[]>();
   const [edges, setEdges] = useState<Edge[]>();
@@ -96,7 +100,24 @@ export const EdgeBundling = () => {
 
   const EdgeBundlingFromSpec = createClassFromSpec({
     mode: 'vega',
-    spec: testSpec as VisualizationSpec,
+    spec: {
+      ...testSpec,
+      signals: [
+        ...testSpec.signals,
+        ...[
+          'tension',
+          'radius',
+          'extent',
+          'rotate',
+          'textSize',
+          'textOffset',
+          'layout',
+        ].map((name) => ({
+          name,
+          value: edgeBundlingSignals[name as keyof EdgeBundlingSignalsType],
+        })),
+      ],
+    } as VisualizationSpec,
   });
 
   const handleClick = (...args: any) => {

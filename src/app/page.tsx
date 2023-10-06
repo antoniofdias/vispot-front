@@ -3,7 +3,6 @@
 import { EdgeBundling } from '@/components/EdgeBundling';
 import { Navbar } from '@/components/Navbar';
 import { NetworkGraph } from '@/components/NetworkGraph';
-import { SettingsAccordion } from '@/components/SettingsAccordion';
 import { DataTable } from '@/components/Table';
 import { AppProvider } from '@/contexts/AppProvider';
 import { DataProvider } from '@/contexts/DataProvider';
@@ -21,7 +20,6 @@ export default function Home() {
         <Navbar />
         <main className={styles.main}>
           <div className={styles.gridContainer}>
-            <SettingsAccordion />
             <div className={styles.splitRow}>
               <div className={styles.splitItem}>
                 <h2>Scatter Plot</h2>
