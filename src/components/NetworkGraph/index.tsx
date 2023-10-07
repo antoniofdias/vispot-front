@@ -78,6 +78,8 @@ export const NetworkGraph = () => {
   useEffect(() => {
     if (networkRef.current !== null && selectedTrack !== null) {
       networkRef.current.selectNodes([selectedTrack]);
+    } else if (networkRef.current !== null && selectedTrack === null) {
+      networkRef.current.selectEdges([]);
     }
   }, [selectedTrack]);
 
@@ -116,9 +118,7 @@ export const NetworkGraph = () => {
 
   const events = {
     select: (event) => {
-      let { nodes, edges } = event;
-      console.log(edges);
-      console.log(nodes);
+      let { nodes } = event;
       if (nodes.length) {
         setSelectedTrack(nodes[0]);
       }

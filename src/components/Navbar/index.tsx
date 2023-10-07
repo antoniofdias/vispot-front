@@ -1,174 +1,100 @@
 'use client';
-import { DataContext } from '@/contexts/DataProvider';
-import { backendApi } from '@/services/api';
-import { Search as SearchIcon, Settings } from '@mui/icons-material';
-import AppBar from '@mui/material/AppBar';
+import { SettingsDrawer } from '@/components/Navbar/SettingsDrawer';
+import { drawerWidth } from '@/constants';
+import { AppContext } from '@/contexts/AppProvider';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Button } from '@mui/material';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InputBase from '@mui/material/InputBase';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { alpha, styled } from '@mui/material/styles';
-import { useContext, useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { styled } from '@mui/material/styles';
+import { useContext } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { SettingsDrawer } from './SettingsDrawer';
 
-const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(1),
-    width: 'auto',
-  },
-}));
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
-    },
-  },
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})<AppBarProps>(({ theme, open }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: `${drawerWidth}px`,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
 }));
 
 export const Navbar = () => {
-  const { setData, setLoading } = useContext(DataContext);
+  const { selectedTrack, setSelectedTrack, drawerOpen, setDrawerOpen } =
+    useContext(AppContext);
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [disabled, setDisabled] = useState(false);
-
-  async function handlePlaylistRequest(playlistUrl: string) {
-    const errorMessage = 'An error has occurred. Please try again later';
-    try {
-      const res = await backendApi.get('/playlist', {
-        params: {
-          playlist_url: playlistUrl,
-        },
-      });
-
-      if (res.status === 200) {
-        setData(res.data);
-      } else {
-        toast.error(errorMessage);
-      }
-    } catch (error) {
-      toast.error(errorMessage);
-    } finally {
-      setLoading(false);
-      setDisabled(false);
-    }
-  }
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      const playlistUrl = (event.target as HTMLInputElement).value;
-
-      let errorString = '';
-      if (playlistUrl.trim() === '') {
-        errorString += ' the url cannot be empty';
-      } else {
-        const hasQueryParams =
-          playlistUrl.includes('?') || playlistUrl.includes('&');
-        if (
-          !playlistUrl.includes('https://open.spotify.com/playlist/') ||
-          hasQueryParams
-        ) {
-          errorString += ' please provide a valid Spotify url';
-          if (hasQueryParams) {
-            errorString += " (check if no '?' or '&' have been pasted)";
-          }
-        }
-      }
-
-      if (errorString !== '') {
-        toast.error('Invalid input:' + errorString + '.');
-        return;
-      }
-
-      setLoading(true);
-      setDisabled(true);
-      handlePlaylistRequest(playlistUrl);
-      (event.target as HTMLInputElement).value = '';
-    }
+  const handleDrawerOpen = () => {
+    setDrawerOpen(!drawerOpen);
   };
-
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-
-      setDrawerOpen(open);
-    };
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              sx={{ mr: 2 }}
-              onClick={toggleDrawer(true)}
-            >
-              <Settings />
-            </IconButton>
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-            >
-              {/* name may go here later, idk */}
-            </Typography>
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="SEARCH"
-                inputProps={{ 'aria-label': 'search' }}
-                onKeyPress={handleKeyPress}
-                disabled={disabled}
-              />
-            </Search>
-          </Toolbar>
-        </AppBar>
-      </Box>
-      <SettingsDrawer drawerOpen={drawerOpen} toggleDrawer={toggleDrawer} />
-      <ToastContainer />
+      <AppBar
+        position="fixed"
+        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+            vispot
+          </Typography>
+          <Button
+            disabled={selectedTrack === null}
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              setSelectedTrack(null);
+            }}
+          >
+            Reset selection
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        sx={{
+          width: drawerWidth,
+          flexShrink: 0,
+          [`& .MuiDrawer-paper`]: {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+          },
+        }}
+        variant="persistent"
+        anchor="left"
+        open={drawerOpen}
+      >
+        <Box
+          sx={{
+            marginTop: 5,
+          }}
+        >
+          <SettingsDrawer />
+        </Box>
+      </Drawer>
     </>
   );
 };

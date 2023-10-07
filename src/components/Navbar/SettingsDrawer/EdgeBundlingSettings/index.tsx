@@ -1,4 +1,4 @@
-import CustomSlider from '@/components/CustomSlider';
+import CustomSlider from '@/components/Navbar/SettingsDrawer/CustomSlider';
 import { AppContext, EdgeBundlingSignalsType } from '@/contexts/AppProvider';
 import { useContext } from 'react';
 
@@ -12,7 +12,7 @@ export const EdgeBundlingSettings = () => {
   const { edgeBundlingSignals, setEdgeBundlingSignals } =
     useContext(AppContext);
 
-  const handleChange =
+  const handleSliderChange =
     (parameter: keyof EdgeBundlingSignalsType) =>
     (_event: Event, newValue: number | number[]) => {
       setEdgeBundlingSignals({ [parameter]: newValue as number });
@@ -41,7 +41,7 @@ export const EdgeBundlingSettings = () => {
           min={parameter.min}
           max={parameter.max}
           step={parameter.step}
-          onChange={handleChange(
+          onChange={handleSliderChange(
             parameter.name as keyof EdgeBundlingSignalsType
           )}
         />
