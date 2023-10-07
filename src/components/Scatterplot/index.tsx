@@ -23,7 +23,7 @@ const ScatterPlot = () => {
     <div>
       <Plot
         config={{
-          displayModeBar: false,
+          displayModeBar: true,
           responsive: true,
         }}
         data={[
@@ -38,12 +38,6 @@ const ScatterPlot = () => {
               color: tracks.map(
                 (track) => track.colors[selectedPalette][selectedAttribute]
               ),
-              // colorscale:
-              //   selectedPalette.charAt(0).toUpperCase() +
-              //   selectedPalette.slice(1),
-              // colorbar: {
-              //   title: selectedAttribute,
-              // },
               cmax: 1,
               cmin: 0,
               opacity: tracks.map((_, index) =>
