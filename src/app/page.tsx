@@ -136,7 +136,7 @@ export const PersistentDrawerLeft = () => {
             <SettingsDrawer />
           </Box>
         </Drawer>
-        <Main open={open}>
+        <Main open={open} className={styles.main}>
           <div className={styles.gridContainer}>
             <div className={styles.splitRow}>
               <div className={styles.splitItem}>
