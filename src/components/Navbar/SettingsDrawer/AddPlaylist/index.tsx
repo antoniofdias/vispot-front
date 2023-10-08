@@ -81,14 +81,9 @@ export const AddPlaylist = () => {
       return;
     }
 
-    //TODO integrate with multiple playlist requests
-    if (joinedValues.includes('+')) {
-      alert(`Joined values: ${joinedValues}`);
-    } else {
-      setLoading(true);
-      setSelectedTrack(null);
-      handlePlaylistRequest(joinedValues);
-    }
+    setLoading(true);
+    setSelectedTrack(null);
+    handlePlaylistRequest(joinedValues);
   };
 
   return (
