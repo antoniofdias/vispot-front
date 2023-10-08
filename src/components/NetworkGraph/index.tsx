@@ -102,6 +102,7 @@ export const NetworkGraph = () => {
   }
 
   const options = {
+    autoResize: true,
     layout: {
       hierarchical: false,
     },
@@ -112,8 +113,6 @@ export const NetworkGraph = () => {
       },
       arrows: { to: { enabled: false }, from: { enabled: false } },
     },
-    height: '500px',
-    width: '33vw',
   };
 
   const events = {
@@ -134,7 +133,7 @@ export const NetworkGraph = () => {
   };
 
   return (
-    <div style={{ width: '500px' }}>
+    <div style={{ height: 510 }}>
       <Graph
         graph={graph}
         options={options}
