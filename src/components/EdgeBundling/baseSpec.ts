@@ -2,50 +2,14 @@ export const baseSpec = {
   description:
     'A network diagram of lyrical simmilarity, with edges grouped via hierarchical edge bundling.',
   padding: 5,
-  width: 720,
-  height: 720,
+  width: 500,
+  height: 500,
   autosize: 'none',
-
   signals: [
     {
       name: 'click',
       value: null,
       on: [{ events: '*:mousedown', update: 'datum' }],
-    },
-    {
-      name: 'tension',
-      value: 0.85,
-      bind: { input: 'range', min: 0, max: 1, step: 0.01 },
-    },
-    {
-      name: 'radius',
-      value: 280,
-      bind: { input: 'range', min: 20, max: 400 },
-    },
-    {
-      name: 'extent',
-      value: 360,
-      bind: { input: 'range', min: 0, max: 360, step: 1 },
-    },
-    {
-      name: 'rotate',
-      value: 0,
-      bind: { input: 'range', min: 0, max: 360, step: 1 },
-    },
-    {
-      name: 'textSize',
-      value: 8,
-      bind: { input: 'range', min: 2, max: 20, step: 1 },
-    },
-    {
-      name: 'textOffset',
-      value: 2,
-      bind: { input: 'range', min: 0, max: 10, step: 1 },
-    },
-    {
-      name: 'layout',
-      value: 'cluster',
-      // "bind": {"input": "radio", "options": ["tidy", "cluster"]}
     },
     { name: 'colorIn', value: 'firebrick' },
     { name: 'colorOut', value: 'forestgreen' },
@@ -53,7 +17,6 @@ export const baseSpec = {
     { name: 'originY', update: 'height / 2' },
     {
       name: 'active',
-      value: null,
       on: [
         { events: 'text:mouseover', update: 'datum.id' },
         { events: 'mouseover[!event.item]', update: 'null' },

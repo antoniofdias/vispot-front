@@ -1,26 +1,59 @@
 .main {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 2fr 2fr;
-  gap: 10px;
-  /* align-items: center;
-  padding: 6rem;
-  min-height: 100vh; */
+  display: flex;
+  justify-content: center;
+  background-color: #ebe8e2;
 }
 
-.gridItem {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  /* background-color: #e0e0e0; */
-  /* padding: 20px; */
-  text-align: center;
+.gridContainer {
+  display: grid;
+  grid-template-rows: repeat(2, auto) 1fr;
+  width: 100%;
+  max-width: 1720px;
+  grid-gap: 10px;
+  margin-top: 100px;
+  margin-bottom: 2rem;
+}
+
+.settingsItem > h2 {
+  margin-top: -4rem;
+  margin-bottom: 2rem;
+  height: 2rem;
+  padding: 1rem;
+}
+
+.fullItem {
+  grid-row: 3 / 3;
+  background-color: white;
+  border: 0.2rem solid silver;
+  border-radius: 0.5rem;
+  min-height: 400px;
+  padding: 1rem;
+}
+
+.splitRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+
+.splitItem {
+  max-width: 30vw;
+  min-height: 510px;
+  background-color: white;
+  border: 0.2rem solid silver;
+  border-radius: 0.5rem;
+  padding: 2rem;
 }
 
 @media (max-width: 1024px) {
-  .main {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
+  .splitRow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .splitItem {
+    min-width: 90vw;
+    margin: 0.5rem;
+    padding: 0.5rem;
   }
 }

@@ -14,7 +14,7 @@ const ScatterPlot = () => {
   } = useContext(AppContext);
 
   if (loading) {
-    return <Skeleton variant="rectangular" width={40} height={40} />;
+    return <Skeleton variant="rectangular" height="100%" />;
   }
 
   const tracks = data.songs;
@@ -23,8 +23,8 @@ const ScatterPlot = () => {
     <div>
       <Plot
         config={{
-          displayModeBar: false,
-          // responsive: true,
+          displayModeBar: true,
+          responsive: true,
         }}
         data={[
           {
@@ -38,12 +38,6 @@ const ScatterPlot = () => {
               color: tracks.map(
                 (track) => track.colors[selectedPalette][selectedAttribute]
               ),
-              colorscale:
-                selectedPalette.charAt(0).toUpperCase() +
-                selectedPalette.slice(1),
-              colorbar: {
-                title: selectedAttribute,
-              },
               cmax: 1,
               cmin: 0,
               opacity: tracks.map((_, index) =>
@@ -59,9 +53,11 @@ const ScatterPlot = () => {
           yaxis: {
             visible: false,
           },
-          // hovermode: false,
+          autosize: true,
         }}
+        useResizeHandler
         onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
+        style={{ width: '100%', height: '100%' }}
       />
     </div>
   ) : (

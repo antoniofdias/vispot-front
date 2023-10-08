@@ -1,12 +1,15 @@
 'use client';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { green } from '@mui/material/colors';
+import { green, yellow } from '@mui/material/colors';
 
 const greenTheme = createTheme({
   palette: {
     primary: {
       main: green[500],
       contrastText: '#fff',
+    },
+    secondary: {
+      main: yellow[500],
     },
   },
 });

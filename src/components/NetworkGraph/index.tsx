@@ -78,6 +78,8 @@ export const NetworkGraph = () => {
   useEffect(() => {
     if (networkRef.current !== null && selectedTrack !== null) {
       networkRef.current.selectNodes([selectedTrack]);
+    } else if (networkRef.current !== null && selectedTrack === null) {
+      networkRef.current.selectEdges([]);
     }
   }, [selectedTrack]);
 
@@ -96,10 +98,11 @@ export const NetworkGraph = () => {
   }, [selectedTrack, nodes, filteredEdges]);
 
   if (loading) {
-    return <Skeleton variant="circular" width={40} height={40} />;
+    return <Skeleton variant="circular" height="100%" />;
   }
 
   const options = {
+    autoResize: true,
     layout: {
       hierarchical: false,
     },
@@ -110,15 +113,11 @@ export const NetworkGraph = () => {
       },
       arrows: { to: { enabled: false }, from: { enabled: false } },
     },
-    height: '500px',
-    width: '500px',
   };
 
   const events = {
     select: (event) => {
-      let { nodes, edges } = event;
-      console.log(edges);
-      console.log(nodes);
+      let { nodes } = event;
       if (nodes.length) {
         setSelectedTrack(nodes[0]);
       }
@@ -134,7 +133,7 @@ export const NetworkGraph = () => {
   };
 
   return (
-    <div style={{ width: '500px' }}>
+    <div style={{ height: 510 }}>
       <Graph
         graph={graph}
         options={options}

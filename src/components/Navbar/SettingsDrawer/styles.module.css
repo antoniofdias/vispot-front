@@ -1,0 +1,7 @@
+.box {
+  padding: 2rem;
+}
+
+.settingsItem + .settingsItem {
+  margin-top: 1rem;
+}

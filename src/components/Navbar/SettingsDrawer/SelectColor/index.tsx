@@ -30,9 +30,14 @@ export const SelectColor = () => {
       value={selectedAttribute}
       label="Color by"
       onChange={handleChange}
+      fullWidth
     >
-      {attributes.map((elem) => {
-        return <MenuItem value={elem}>{elem}</MenuItem>;
+      {attributes.map((attribute) => {
+        return (
+          <MenuItem key={attribute} value={attribute}>
+            {attribute}
+          </MenuItem>
+        );
       })}
     </Select>
   );
