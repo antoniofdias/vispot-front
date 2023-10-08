@@ -16,6 +16,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
+  handleOpen?: () => void;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -35,13 +36,8 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-export const Navbar = () => {
-  const { selectedTrack, setSelectedTrack, drawerOpen, setDrawerOpen } =
-    useContext(AppContext);
-
-  const handleDrawerOpen = () => {
-    setDrawerOpen(!drawerOpen);
-  };
+export const Navbar = ({ open, handleOpen }: AppBarProps) => {
+  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
 
   return (
     <>
@@ -53,7 +49,7 @@ export const Navbar = () => {
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            onClick={handleOpen}
             edge="start"
             sx={{ mr: 2 }}
           >
@@ -85,7 +81,7 @@ export const Navbar = () => {
         }}
         variant="persistent"
         anchor="left"
-        open={drawerOpen}
+        open={open}
       >
         <Box
           sx={{

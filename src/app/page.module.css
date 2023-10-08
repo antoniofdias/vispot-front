@@ -32,8 +32,8 @@
 
 .splitRow {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Three equal columns */
-  grid-gap: 10px; /* Adjust the gap as needed */
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
 }
 
 .splitItem {
