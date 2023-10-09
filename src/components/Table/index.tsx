@@ -1,6 +1,7 @@
 'use client';
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
+import { msToMinutes } from '@/utils';
 import { Skeleton } from '@mui/material';
 import {
   DataGrid,
@@ -11,9 +12,12 @@ import {
 import { HTMLAttributes, useContext, useEffect } from 'react';
 
 const columns: GridColDef[] = [
-  // { field: 'uri', headerName: 'uri' },
   { field: 'name', headerName: 'name' },
-  { field: 'duration_ms', headerName: 'duration' },
+  {
+    field: 'duration_ms',
+    headerName: 'duration',
+    valueFormatter: (params) => msToMinutes(params.value),
+  },
   { field: 'explicit', headerName: 'explicit' },
   { field: 'artist', headerName: 'artist' },
   { field: 'danceability', headerName: 'danceability' },
@@ -26,8 +30,6 @@ const columns: GridColDef[] = [
   { field: 'liveness', headerName: 'liveness' },
   { field: 'valence', headerName: 'valence' },
   { field: 'tempo', headerName: 'tempo' },
-  // { field: 'x', headerName: 'x' },
-  // { field: 'y', headerName: 'y' },
 ];
 
 export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
