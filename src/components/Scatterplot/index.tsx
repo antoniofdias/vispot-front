@@ -30,6 +30,7 @@ const ScatterPlot = () => {
           {
             x: tracks.map((track) => track.x),
             y: tracks.map((track) => track.y),
+            hoverinfo: 'text',
             mode: 'markers',
             type: 'scatter',
             text: tracks.map((track) => track.name),
@@ -38,8 +39,6 @@ const ScatterPlot = () => {
               color: tracks.map(
                 (track) => track.colors[selectedPalette][selectedAttribute]
               ),
-              cmax: 1,
-              cmin: 0,
               opacity: tracks.map((_, index) =>
                 selectedTrack === null || index === selectedTrack - 1 ? 1 : 0.3
               ),
