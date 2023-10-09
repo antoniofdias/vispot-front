@@ -13,23 +13,28 @@ import styles from './styles.module.css';
 export const AddPlaylist = () => {
   const { setData, loading, setLoading } = useContext(DataContext);
   const { setSelectedTrack } = useContext(AppContext);
-  const [inputs, setInputs] = useState(['']);
+  const [inputs, setInputs] = useState([
+    {
+      key: 'This is Arctic Monkeys',
+      value: 'https://open.spotify.com/playlist/37i9dQZF1DZ06evO4BaAkp',
+    },
+  ]);
 
   const handleAddInput = () => {
-    setInputs([...inputs, '']);
+    setInputs([...inputs, { key: '', value: '' }]);
   };
 
   const handleRemoveInput = () => {
     if (inputs.length > 1) {
       const updatedInputs = [...inputs];
-      updatedInputs.pop(); // Remove the last input field
+      updatedInputs.pop();
       setInputs(updatedInputs);
     }
   };
 
   const handleInputChange = (value: string, index: number) => {
     const updatedInputs = [...inputs];
-    updatedInputs[index] = value;
+    updatedInputs[index].value = value;
     setInputs(updatedInputs);
   };
 
@@ -56,6 +61,7 @@ export const AddPlaylist = () => {
 
   const handleSubmit = () => {
     const joinedValues = inputs
+      .map((input) => input.value)
       .filter((input) => input.trim() !== '')
       .join('+');
 
@@ -91,8 +97,8 @@ export const AddPlaylist = () => {
       {inputs.map((input, index) => (
         <TextField
           key={index}
-          label={`Playlist ${index + 1}`}
-          value={input}
+          label={input.key === '' ? `Playlist ${index + 1}` : input.key}
+          value={input.value}
           disabled={loading}
           onChange={(e) => handleInputChange(e.target.value, index)}
           className={styles.textField}
