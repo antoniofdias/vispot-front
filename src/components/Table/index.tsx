@@ -115,10 +115,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const rows = data.songs;
 
   return rows !== undefined ? (
-    <div
-      style={{ height: 400, maxWidth: '95vw', padding: 10 }}
-      className={className}
-    >
+    <div style={{ maxWidth: '95vw', padding: 10 }} className={className}>
       <DataGrid
         apiRef={apiRef}
         rows={rows}
