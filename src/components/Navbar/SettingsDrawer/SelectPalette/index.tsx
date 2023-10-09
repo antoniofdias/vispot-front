@@ -3,42 +3,75 @@ import { Circle } from '@mui/icons-material';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
+import { DiscreteColorBar } from '../DiscreteColorbar';
 import styles from './styles.module.css';
 
-const PaletteCircle = ({ palette }: any) => (
+const palettes = {
+  viridis: [
+    '#440154',
+    '#482878',
+    '#3e4989',
+    '#31688e',
+    '#26828e',
+    '#1f9e89',
+    '#35b779',
+    '#6ece58',
+    '#b5de2b',
+    '#fde725',
+  ],
+  cividis: [
+    '#00224e',
+    '#123570',
+    '#3b496c',
+    '#575d6d',
+    '#707173',
+    '#8a8678',
+    '#a59c74',
+    '#c3b369',
+    '#e1cc55',
+    '#fee838',
+  ],
+  jet: [
+    '#00007F',
+    '#0000FF',
+    '#007FFF',
+    '#00FFFF',
+    '#7FFF7F',
+    '#FFFF00',
+    '#FF7F00',
+    '#FF0000',
+    '#7F0000',
+  ],
+  hot: [
+    '#0a0101',
+    '#0a0101',
+    '#9d0706',
+    '#e82204',
+    '#f2620c',
+    '#fba60a',
+    '#ffd214',
+    '#ffe06f',
+    '#ffeba9',
+    '#fffdf7',
+  ],
+};
+
+const PaletteCircle = ({ palette }: { palette: string }) => (
   <>
     <svg width={0} height={0}>
-      <linearGradient id="viridis" x1={1} y1={0} x2={1} y2={1}>
-        <stop offset="0%" stopColor="rgb(253, 231, 37)" />
-        <stop offset="25%" stopColor="#fde725" />
-        <stop offset="50%" stopColor="rgb(94, 201, 98)" />
-        <stop offset="75%" stopColor="#5ec962" />
-        <stop offset="100%" stopColor="rgb(33, 145, 140)" />
-      </linearGradient>
-      <linearGradient id="cividis" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="rgb(33, 145, 140)" />
-        <stop offset="25%" stopColor="#21918c" />
-        <stop offset="50%" stopColor="rgb(59, 82, 139)" />
-        <stop offset="75%" stopColor="#3b528b" />
-        <stop offset="100%" stopColor="rgb(68, 1, 84)" />
-      </linearGradient>
-      <linearGradient id="jet" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="#00007F" />
-        <stop offset="12.5%" stopColor="#0000FF" />
-        <stop offset="25%" stopColor="#007FFF" />
-        <stop offset="37.5%" stopColor="#00FFFF" />
-        <stop offset="50%" stopColor="#7FFF7F" />
-        <stop offset="62.5%" stopColor="#FFFF00" />
-        <stop offset="75%" stopColor="#FF7F00" />
-        <stop offset="87.5%" stopColor="#FF0000" />
-        <stop offset="100%" stopColor="#7F0000" />
-      </linearGradient>
-      <linearGradient id="hot" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stopColor="rgb(252, 255, 164)" />
-        <stop offset="25%" stopColor="#fcffa4" />
-        <stop offset="50%" stopColor="rgb(249, 142, 9)" />
-        <stop offset="75%" stopColor="#f98e09" />
-        <stop offset="100%" stopColor="rgb(188, 55, 84)" />
+      <linearGradient id={palette} x1={1} y1={0} x2={1} y2={1}>
+        {palettes[palette as 'viridis' | 'cividis' | 'jet' | 'hot'].map(
+          (color, index) => (
+            <stop
+              offset={`${
+                (100 * (index + 1)) /
+                palettes[palette as 'viridis' | 'cividis' | 'jet' | 'hot']
+                  .length
+              }%`}
+              stopColor={color}
+            />
+          )
+        )}
       </linearGradient>
     </svg>
     <Circle sx={{ fill: `url(#${palette})`, fontSize: 18 }} />
@@ -48,31 +81,36 @@ const PaletteCircle = ({ palette }: any) => (
 export const SelectPalette = () => {
   const { selectedPalette, setSelectedPalette } = useContext(AppContext);
 
-  const palettes = ['viridis', 'cividis', 'jet', 'hot'];
-
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedPalette(event.target.value as typeof selectedPalette);
   };
 
   return (
-    <Select
-      labelId="color-label"
-      id="select-color"
-      value={selectedPalette}
-      label="Color by"
-      onChange={handleChange}
-      fullWidth
-    >
-      {palettes.map((palette) => {
-        return (
-          <MenuItem key={palette} value={palette}>
-            <div className={styles.menuItem}>
-              <PaletteCircle palette={palette} />
-              {' ' + palette}
-            </div>
-          </MenuItem>
-        );
-      })}
-    </Select>
+    <>
+      <Select
+        labelId="color-label"
+        id="select-color"
+        value={selectedPalette}
+        label="Color by"
+        onChange={handleChange}
+        fullWidth
+      >
+        {Object.keys(palettes).map((palette) => {
+          return (
+            <MenuItem key={palette} value={palette}>
+              <div className={styles.menuItem}>
+                <PaletteCircle palette={palette} />
+                {' ' + palette}
+              </div>
+            </MenuItem>
+          );
+        })}
+      </Select>
+      <DiscreteColorBar
+        colors={
+          palettes[selectedPalette as 'viridis' | 'cividis' | 'jet' | 'hot']
+        }
+      />
+    </>
   );
 };
