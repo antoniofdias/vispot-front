@@ -15,6 +15,7 @@ export type TrackItem = {
   id: number;
   uri: string;
   name: string;
+  playlist: string;
   duration_ms: number;
   explicit: boolean;
   artist: string;

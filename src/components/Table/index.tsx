@@ -9,9 +9,14 @@ import {
   GridRowId,
   useGridApiRef,
 } from '@mui/x-data-grid';
-import { HTMLAttributes, useContext, useEffect } from 'react';
+import { HTMLAttributes, useContext, useEffect, useState } from 'react';
 
 const columns: GridColDef[] = [
+  {
+    field: 'playlist',
+    headerName: 'playlist',
+    description: 'The name of the playlist containing the track.',
+  },
   { field: 'name', headerName: 'name', description: 'The name of the track.' },
   {
     field: 'duration_ms',
@@ -95,14 +100,23 @@ const columns: GridColDef[] = [
 export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
+  const [showPlaylistCol, setShowPlaylistCol] = useState(false);
   const apiRef = useGridApiRef();
 
   useEffect(() => {
-    apiRef.current.setPage(
-      Math.floor((selectedTrack ? selectedTrack - 1 : 0) / 5)
-    );
-    apiRef.current.selectRow(selectedTrack as GridRowId, true, true);
+    if (selectedTrack !== null) {
+      apiRef.current.setPage(
+        Math.floor((selectedTrack ? selectedTrack - 1 : 0) / 5)
+      );
+      apiRef.current.selectRow(selectedTrack as GridRowId, true, true);
+    }
   }, [selectedTrack]);
+
+  useEffect(() => {
+    setShowPlaylistCol(
+      !data.songs.every((track) => track.playlist === data.songs[0].playlist)
+    );
+  }, [data]);
 
   if (loading) {
     return (
@@ -128,6 +142,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
         pageSizeOptions={[5, 10]}
         onRowClick={(params) => setSelectedTrack(params.row.id)}
         hideFooterSelectedRowCount
+        columnVisibilityModel={{ playlist: showPlaylistCol }}
         autoHeight
       />
     </div>
