@@ -63,6 +63,7 @@ const PaletteCircle = ({ palette }: { palette: string }) => (
         {palettes[palette as 'viridis' | 'cividis' | 'jet' | 'hot'].map(
           (color, index) => (
             <stop
+              key={index}
               offset={`${
                 (100 * (index + 1)) /
                 palettes[palette as 'viridis' | 'cividis' | 'jet' | 'hot']
