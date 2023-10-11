@@ -1,9 +1,7 @@
 'use client';
 import { SettingsDrawer } from '@/components/Navbar/SettingsDrawer';
 import { drawerWidth } from '@/constants';
-import { AppContext } from '@/contexts/AppProvider';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Button } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -11,8 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import { useContext } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import { ResetButton } from './ResetButton';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -37,8 +35,6 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export const Navbar = ({ open, handleOpen }: AppBarProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
-
   return (
     <>
       <AppBar
@@ -58,16 +54,7 @@ export const Navbar = ({ open, handleOpen }: AppBarProps) => {
           <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
             vispot
           </Typography>
-          <Button
-            disabled={selectedTrack === null}
-            variant="outlined"
-            color="secondary"
-            onClick={() => {
-              setSelectedTrack(null);
-            }}
-          >
-            Reset selection
-          </Button>
+          <ResetButton />
         </Toolbar>
       </AppBar>
       <Drawer

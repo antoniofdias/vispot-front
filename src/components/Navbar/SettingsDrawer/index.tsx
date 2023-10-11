@@ -4,6 +4,7 @@ import { SelectPalette } from '@/components/Navbar/SettingsDrawer/SelectPalette'
 import { Chip, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
 import { ReactNode } from 'react';
+import { ResetButton } from '../ResetButton';
 import { AddPlaylist } from './AddPlaylist';
 import { EdgeBundlingSettings } from './EdgeBundlingSettings';
 import styles from './styles.module.css';
@@ -38,6 +39,7 @@ const list = () => (
     </div>
     <CustomDivider>EDGE BUNDLING</CustomDivider>
     <EdgeBundlingSettings />
+    <ResetButton variant="contained" color="primary" fullWidth={true} />
   </Box>
 );
 
