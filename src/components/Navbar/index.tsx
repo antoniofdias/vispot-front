@@ -2,14 +2,15 @@
 import { SettingsDrawer } from '@/components/Navbar/SettingsDrawer';
 import { drawerWidth } from '@/constants';
 import MenuIcon from '@mui/icons-material/Menu';
+import {
+  Box,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+  styled,
+} from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
-import 'react-toastify/dist/ReactToastify.css';
 import { ResetButton } from './ResetButton';
 
 interface AppBarProps extends MuiAppBarProps {

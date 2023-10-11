@@ -6,15 +6,19 @@ import React, { useState } from 'react';
 type DataContextType = {
   data: ApiResponseType;
   loading: boolean;
+  error: string;
   setData: (newData: ApiResponseType) => void;
   setLoading: (loadingState: boolean) => void;
+  setError: (errorMessage: string) => void;
 };
 
 export const DataContext = React.createContext<DataContextType>({
   data: mockedData,
-  setData: () => {},
   loading: false,
+  error: '',
+  setData: () => {},
   setLoading: () => {},
+  setError: () => {},
 });
 
 type DataProviderProps = {
@@ -23,15 +27,18 @@ type DataProviderProps = {
 
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
   const [data, setData] = useState<ApiResponseType>(mockedData);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   return (
     <DataContext.Provider
       value={{
         data,
-        setData,
         loading,
+        error,
+        setData,
         setLoading,
+        setError,
       }}
     >
       {children}

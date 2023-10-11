@@ -5,12 +5,11 @@ import { NetworkGraph } from '@/components/NetworkGraph';
 import { DataTable } from '@/components/Table';
 import { drawerWidth } from '@/constants';
 import { AppProvider } from '@/contexts/AppProvider';
-import { DataProvider } from '@/contexts/DataProvider';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
+import { DataContext, DataProvider } from '@/contexts/DataProvider';
+import { Alert, Box, CssBaseline, Snackbar } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './page.module.css';
 const ScatterPlot = dynamic(() => import('@/components/Scatterplot'), {
   ssr: false,
@@ -37,16 +36,41 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
 }));
 
 const Body = () => {
+  const { error, setError } = useContext(DataContext);
   const [drawerOpen, setDrawerOpen] = useState(true);
+  const [snackBarOpen, setSnackBarOpen] = useState(false);
+
+  useEffect(() => {
+    setSnackBarOpen(error !== '');
+  }, [error]);
 
   const toggleDrawerOpen = () => {
     setDrawerOpen(!drawerOpen);
+  };
+
+  const handleClose = (_?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackBarOpen(false);
+    setError('');
   };
 
   return (
     <>
       <Navbar open={drawerOpen} handleOpen={toggleDrawerOpen} />
       <Main open={drawerOpen} className={styles.main}>
+        <Snackbar
+          open={snackBarOpen}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          autoHideDuration={6000}
+          onClose={handleClose}
+        >
+          <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+            {error}
+          </Alert>
+        </Snackbar>
         <div className={styles.gridContainer}>
           <div className={styles.splitRow}>
             <div className={styles.splitItem}>

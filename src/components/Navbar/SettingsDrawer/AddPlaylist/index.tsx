@@ -7,11 +7,11 @@ import { useContext, useState } from 'react';
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { backendApi } from '@/services/api';
-import { toast } from 'react-toastify';
 import styles from './styles.module.css';
 
 export const AddPlaylist = () => {
-  const { setData, loading, setLoading } = useContext(DataContext);
+  const { setData, loading, setLoading, error, setError } =
+    useContext(DataContext);
   const { setSelectedTrack } = useContext(AppContext);
   const [inputs, setInputs] = useState([
     {
@@ -39,7 +39,9 @@ export const AddPlaylist = () => {
   };
 
   const handlePlaylistRequest = async (playlistUrl: string) => {
-    const errorMessage = 'An error has occurred. Please try again later';
+    const errorString = 'An error has occurred. Please try again later';
+    setError('');
+
     try {
       const res = await backendApi.get('/playlist', {
         params: {
@@ -50,10 +52,10 @@ export const AddPlaylist = () => {
       if (res.status === 200) {
         setData(res.data);
       } else {
-        toast.error(errorMessage);
+        setError(errorString + res.status);
       }
     } catch (error) {
-      toast.error(errorMessage);
+      setError(errorString);
     } finally {
       setLoading(false);
     }
@@ -66,6 +68,7 @@ export const AddPlaylist = () => {
       .join('+');
 
     let errorString = '';
+
     if (joinedValues.trim() === '') {
       errorString += ' the url cannot be empty';
     } else {
@@ -83,7 +86,7 @@ export const AddPlaylist = () => {
     }
 
     if (errorString !== '') {
-      toast.error('Invalid input:' + errorString + '.');
+      setError('Invalid input:' + errorString + '.');
       return;
     }
 

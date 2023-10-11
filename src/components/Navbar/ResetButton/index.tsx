@@ -12,7 +12,7 @@ interface ResetButtonProps {
     | 'error'
     | 'info'
     | 'warning';
-  fullWidth: boolean;
+  fullWidth?: boolean;
 }
 
 export const ResetButton = ({
