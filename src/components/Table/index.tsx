@@ -2,7 +2,8 @@
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { msToMinutes } from '@/utils';
-import { Skeleton } from '@mui/material';
+import { Search } from '@mui/icons-material';
+import { Skeleton, TextField } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -101,6 +102,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const { data, loading } = useContext(DataContext);
   const { selectedTrack, setSelectedTrack } = useContext(AppContext);
   const [showPlaylistCol, setShowPlaylistCol] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
   const apiRef = useGridApiRef();
 
   useEffect(() => {
@@ -126,13 +128,28 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
     );
   }
 
-  const rows = data.songs;
+  const filteredRows = data.songs.filter(
+    (row) =>
+      row.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
-  return rows !== undefined ? (
+  return filteredRows !== undefined ? (
     <div style={{ maxWidth: '95vw', padding: 10 }} className={className}>
+      <TextField
+        label="Filter"
+        variant="outlined"
+        fullWidth
+        InputProps={{
+          endAdornment: <Search />,
+        }}
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        sx={{ marginBottom: 1 }}
+      />
       <DataGrid
         apiRef={apiRef}
-        rows={rows}
+        rows={filteredRows}
         columns={columns}
         initialState={{
           pagination: {
