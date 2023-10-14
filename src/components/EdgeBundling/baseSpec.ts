@@ -17,9 +17,10 @@ export const baseSpec = {
     { name: 'originY', update: 'height / 2' },
     {
       name: 'active',
+      value: [],
       on: [
-        { events: 'text:mouseover', update: 'datum.id' },
-        { events: 'mouseover[!event.item]', update: 'null' },
+        { events: 'text:mouseover', update: '[datum.id]' },
+        { events: 'mouseover[!event.item]', update: '[]' },
       ],
     },
   ],
@@ -90,7 +91,7 @@ export const baseSpec = {
       transform: [
         {
           type: 'filter',
-          expr: 'datum.source === active || datum.target === active',
+          expr: 'indexof(active, datum.source) !== -1 || indexof(active, datum.target) !== -1',
         },
       ],
     },
@@ -120,7 +121,7 @@ export const baseSpec = {
             { value: null },
           ],
           fill: [
-            { test: 'datum.id === active', value: 'black' },
+            { test: 'indexof(active, datum.id) !== -1', value: 'black' },
             {
               test: "indata('selected', 'source', datum.id) || indata('selected', 'target', datum.id)",
               signal: 'colorOut',

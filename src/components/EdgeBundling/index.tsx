@@ -78,13 +78,17 @@ export const EdgeBundling = () => {
 
   useEffect(() => {
     const newTestSpec = { ...testSpec };
-    const selectedTrack = selectedTracks !== null ? selectedTracks[0] : null;
+    const tracks = selectedTracks === null ? [] : selectedTracks;
+
     newTestSpec.signals[newTestSpec.signals.length - 1] = {
       name: 'active',
-      value: selectedTrack,
+      value: tracks,
       on: [
-        { events: 'text:mouseover', update: 'datum.id' },
-        { events: 'mouseover[!event.item]', update: selectedTrack + '' },
+        { events: 'text:mouseover', update: '[datum.id]' },
+        {
+          events: 'mouseover[!event.item]',
+          update: `[${tracks.join()}]`,
+        },
       ],
     };
 
@@ -122,7 +126,7 @@ export const EdgeBundling = () => {
   });
 
   const handleClick = (...args: any) => {
-    setSelectedTracks(args[1].id || null);
+    setSelectedTracks([args[1].id] || null);
   };
   const signalListeners = { click: handleClick };
 
