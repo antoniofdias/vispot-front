@@ -7,11 +7,20 @@ import Plot from 'react-plotly.js';
 const ScatterPlot = () => {
   const { data, loading } = useContext(DataContext);
   const {
-    selectedTrack,
-    setSelectedTrack,
+    selectedTracks,
+    setSelectedTracks,
     selectedPalette,
     selectedAttribute,
   } = useContext(AppContext);
+
+  const handleSelect = (event: any) => {
+    const selectedPoints = event.points.map(
+      (point: any) => point.pointNumber + 1
+    );
+    if (selectedPoints.length > 0) {
+      setSelectedTracks(selectedPoints);
+    }
+  };
 
   if (loading) {
     return <Skeleton variant="rectangular" height="100%" />;
@@ -40,7 +49,9 @@ const ScatterPlot = () => {
                 (track) => track.colors[selectedPalette][selectedAttribute]
               ),
               opacity: tracks.map((_, index) =>
-                selectedTrack === null || index === selectedTrack - 1 ? 1 : 0.3
+                selectedTracks === null || selectedTracks?.includes(index + 1)
+                  ? 1
+                  : 0.3
               ),
             },
           },
@@ -55,7 +66,10 @@ const ScatterPlot = () => {
           autosize: true,
         }}
         useResizeHandler
-        onClick={(event) => setSelectedTrack(event.points[0]?.pointNumber + 1)}
+        onClick={(event) =>
+          setSelectedTracks([event.points[0]?.pointNumber + 1])
+        }
+        onSelected={handleSelect}
         style={{ width: '100%', height: '100%' }}
       />
     </div>

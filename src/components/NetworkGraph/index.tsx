@@ -20,8 +20,8 @@ type Edge = {
 export const NetworkGraph = () => {
   const { data, loading } = useContext(DataContext);
   const {
-    selectedTrack,
-    setSelectedTrack,
+    selectedTracks,
+    setSelectedTracks,
     correlationRange,
     selectedPalette,
     selectedAttribute,
@@ -76,12 +76,12 @@ export const NetworkGraph = () => {
   }, [correlationRange]);
 
   useEffect(() => {
-    if (networkRef.current !== null && selectedTrack !== null) {
-      networkRef.current.selectNodes([selectedTrack]);
-    } else if (networkRef.current !== null && selectedTrack === null) {
+    if (networkRef.current !== null && selectedTracks !== null) {
+      networkRef.current.selectNodes(selectedTracks);
+    } else if (networkRef.current !== null && selectedTracks === null) {
       networkRef.current.selectEdges([]);
     }
-  }, [selectedTrack]);
+  }, [selectedTracks]);
 
   useEffect(() => {
     setGraph({
@@ -89,13 +89,15 @@ export const NetworkGraph = () => {
         return {
           ...node,
           opacity:
-            selectedTrack === null || node.id === selectedTrack ? 1 : 0.3,
+            selectedTracks === null || selectedTracks.includes(node.id)
+              ? 1
+              : 0.3,
         };
       }),
       edges: filteredEdges,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTrack, nodes, filteredEdges]);
+  }, [selectedTracks, nodes, filteredEdges]);
 
   if (loading) {
     return <Skeleton variant="circular" height="100%" />;
@@ -119,7 +121,7 @@ export const NetworkGraph = () => {
     select: (event) => {
       let { nodes } = event;
       if (nodes.length) {
-        setSelectedTrack(nodes[0]);
+        setSelectedTracks([nodes[0]]);
       }
     },
     doubleClick: () => {

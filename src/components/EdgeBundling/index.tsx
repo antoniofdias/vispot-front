@@ -21,8 +21,8 @@ type Edge = {
 export const EdgeBundling = () => {
   const { data, loading } = useContext(DataContext);
   const {
-    selectedTrack,
-    setSelectedTrack,
+    selectedTracks,
+    setSelectedTracks,
     correlationRange,
     edgeBundlingSignals,
   } = useContext(AppContext);
@@ -78,6 +78,7 @@ export const EdgeBundling = () => {
 
   useEffect(() => {
     const newTestSpec = { ...testSpec };
+    const selectedTrack = selectedTracks !== null ? selectedTracks[0] : null;
     newTestSpec.signals[newTestSpec.signals.length - 1] = {
       name: 'active',
       value: selectedTrack,
@@ -92,7 +93,7 @@ export const EdgeBundling = () => {
 
     setTestSpec(newTestSpec);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTrack, nodes, filteredEdges]);
+  }, [selectedTracks, nodes, filteredEdges]);
 
   if (loading) {
     return <Skeleton variant="circular" height="100%" />;
@@ -121,7 +122,7 @@ export const EdgeBundling = () => {
   });
 
   const handleClick = (...args: any) => {
-    setSelectedTrack(args[1].id || null);
+    setSelectedTracks(args[1].id || null);
   };
   const signalListeners = { click: handleClick };
 

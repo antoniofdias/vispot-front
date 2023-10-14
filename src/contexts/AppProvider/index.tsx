@@ -24,12 +24,12 @@ export type EdgeBundlingSignalsType = {
 };
 
 type AppContextType = {
-  selectedTrack: number | null;
+  selectedTracks: number[] | null;
   selectedPalette: 'viridis' | 'cividis' | 'jet' | 'hot';
   selectedAttribute: Attribute;
   correlationRange: number[];
   edgeBundlingSignals: EdgeBundlingSignalsType;
-  setSelectedTrack: (track: number | null) => void;
+  setSelectedTracks: (tracks: number[] | null) => void;
   setSelectedPalette: (palette: 'viridis' | 'cividis' | 'jet' | 'hot') => void;
   setSelectedAttribute: (attribute: Attribute) => void;
   setCorrelationRange: (range: number[]) => void;
@@ -43,7 +43,7 @@ type AppProviderProps = {
 };
 
 export const AppContext = createContext<AppContextType>({
-  selectedTrack: null,
+  selectedTracks: null,
   selectedPalette: 'viridis',
   selectedAttribute: 'acousticness',
   correlationRange: [0.3, 0.7],
@@ -57,14 +57,14 @@ export const AppContext = createContext<AppContextType>({
     layout: 'cluster',
   },
   setSelectedPalette: () => {},
-  setSelectedTrack: () => {},
+  setSelectedTracks: () => {},
   setSelectedAttribute: () => {},
   setCorrelationRange: () => {},
   setEdgeBundlingSignals: () => {},
 });
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const [selectedTrack, setSelectedTrack] = useState<number | null>(null);
+  const [selectedTracks, setSelectedTracks] = useState<number[] | null>(null);
 
   const [selectedPalette, setSelectedPalette] = useState<
     'viridis' | 'cividis' | 'jet' | 'hot'
@@ -100,12 +100,12 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
-        selectedTrack,
+        selectedTracks,
         selectedPalette,
         selectedAttribute,
         correlationRange,
         edgeBundlingSignals,
-        setSelectedTrack,
+        setSelectedTracks,
         setSelectedPalette,
         setSelectedAttribute,
         setCorrelationRange,

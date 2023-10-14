@@ -12,7 +12,7 @@ import styles from './styles.module.css';
 export const AddPlaylist = () => {
   const { setData, loading, setLoading, error, setError } =
     useContext(DataContext);
-  const { setSelectedTrack } = useContext(AppContext);
+  const { setSelectedTracks } = useContext(AppContext);
   const [inputs, setInputs] = useState([
     {
       key: 'This is Arctic Monkeys',
@@ -91,7 +91,7 @@ export const AddPlaylist = () => {
     }
 
     setLoading(true);
-    setSelectedTrack(null);
+    setSelectedTracks(null);
     handlePlaylistRequest(joinedValues);
   };
 

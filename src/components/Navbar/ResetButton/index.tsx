@@ -20,16 +20,16 @@ export const ResetButton = ({
   color = 'secondary',
   fullWidth,
 }: ResetButtonProps) => {
-  const { selectedTrack, setSelectedTrack } = useContext(AppContext);
+  const { selectedTracks, setSelectedTracks } = useContext(AppContext);
 
   return (
     <Button
-      disabled={selectedTrack === null}
+      disabled={selectedTracks === null}
       variant={variant}
       color={color}
       fullWidth={fullWidth}
       onClick={() => {
-        setSelectedTrack(null);
+        setSelectedTracks(null);
       }}
     >
       Reset selection
