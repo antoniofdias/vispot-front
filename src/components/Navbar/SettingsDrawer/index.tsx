@@ -26,15 +26,15 @@ const list = () => (
     <AddPlaylist />
     <CustomDivider>VISUAL ATTRIBUTES</CustomDivider>
     <div className={styles.settingsItem}>
-      <h4>Color by</h4>
+      <h5>Color by</h5>
       <SelectColor />
     </div>
     <div className={styles.settingsItem}>
-      <h4>Palette</h4>
+      <h5>Palette</h5>
       <SelectPalette />
     </div>
     <div className={styles.settingsItem}>
-      <h4>Correlation</h4>
+      <h5>Correlation</h5>
       <CorrelationSlider />
     </div>
     <CustomDivider>EDGE BUNDLING</CustomDivider>

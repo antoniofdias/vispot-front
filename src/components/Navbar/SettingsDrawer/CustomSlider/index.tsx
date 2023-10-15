@@ -19,7 +19,7 @@ export default function CustomSlider({
 }: CustomSliderProps) {
   return (
     <>
-      <h4>{label}</h4>
+      <h5>{label}</h5>
       <Slider
         aria-label={label}
         value={value}
