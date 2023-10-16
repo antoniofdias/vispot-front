@@ -106,7 +106,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const apiRef = useGridApiRef();
 
   useEffect(() => {
-    if (selectedTracks !== null) {
+    if (selectedTracks !== null && selectedTracks.length === 1) {
       apiRef.current.setPage(
         Math.floor((selectedTracks ? selectedTracks[0] - 1 : 0) / 5)
       );
@@ -128,11 +128,17 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
     );
   }
 
-  const filteredRows = data.songs.filter(
-    (row) =>
-      row.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      row.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredRows = data.songs
+    .filter(
+      (row) =>
+        row.artist.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        row.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((rowDeNovo) =>
+      selectedTracks !== null && selectedTracks.length > 1
+        ? selectedTracks.includes(rowDeNovo.id)
+        : true
+    );
 
   return filteredRows !== undefined ? (
     <div style={{ maxWidth: '95vw', padding: 10 }} className={className}>
