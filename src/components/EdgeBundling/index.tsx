@@ -103,14 +103,12 @@ export const EdgeBundling = () => {
     return <Skeleton variant="circular" height="100%" />;
   }
 
-  const frameSize =
-    typeof window !== 'undefined' && window.innerWidth > 992 ? 500 : 300;
   const EdgeBundlingFromSpec = createClassFromSpec({
     mode: 'vega',
     spec: {
       ...testSpec,
-      width: frameSize,
-      height: frameSize,
+      width:
+        typeof window !== 'undefined' && window.innerWidth > 992 ? 500 : 300,
       signals: [
         ...testSpec.signals,
         ...[
