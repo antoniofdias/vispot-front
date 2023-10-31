@@ -89,6 +89,7 @@ const Body = () => {
             {splitItems.map((item) => (
               <div
                 className={`${styles.splitItem} ${hasFullWidthWithDrawer()}`}
+                key={item.title}
               >
                 <h2>{item.title}</h2>
                 <hr />
