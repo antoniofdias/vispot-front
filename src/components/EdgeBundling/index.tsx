@@ -107,6 +107,10 @@ export const EdgeBundling = () => {
     mode: 'vega',
     spec: {
       ...testSpec,
+      width:
+        typeof window !== 'undefined' && window.innerWidth > 992 ? 500 : 400,
+      height:
+        typeof window !== 'undefined' && window.innerWidth > 992 ? 500 : 400,
       signals: [
         ...testSpec.signals,
         ...[

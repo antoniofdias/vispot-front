@@ -53,9 +53,9 @@
   }
 
   .splitItemFullWidth {
-    min-width: 95vw;
+    min-width: 90vw;
   }
   .splitItemFullWidthDrawer {
-    min-width: calc(95vw - 300px);
+    min-width: calc(90vw - 300px);
   }
 }
