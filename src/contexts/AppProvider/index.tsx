@@ -80,7 +80,8 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [edgeBundlingSignals, setEdgeBundlingSignals] =
     useState<EdgeBundlingSignalsType>({
       tension: 0.85,
-      radius: 190,
+      radius:
+        typeof window !== 'undefined' && window.innerWidth > 992 ? 190 : 100,
       extent: 360,
       rotate: 0,
       textSize: 8,
