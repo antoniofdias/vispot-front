@@ -26,18 +26,22 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: `-${drawerWidth}px`,
+  width: '100vw',
   ...(open && {
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
+    width: `calc(100vw - ${drawerWidth}px)`,
   }),
 }));
 
 const Body = () => {
   const { error, setError } = useContext(DataContext);
-  const [drawerOpen, setDrawerOpen] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(
+    typeof window !== 'undefined' && window.innerWidth > 992
+  );
   const [snackBarOpen, setSnackBarOpen] = useState(false);
 
   useEffect(() => {
@@ -57,6 +61,15 @@ const Body = () => {
     setError('');
   };
 
+  const splitItems = [
+    { title: 'Scatter Plot', component: <ScatterPlot /> },
+    { title: 'Network Graph', component: <NetworkGraph /> },
+    { title: 'Edge Bundling', component: <EdgeBundling /> },
+  ];
+
+  const hasFullWidthWithDrawer = () =>
+    drawerOpen ? styles.splitItemFullWidthDrawer : styles.splitItemFullWidth;
+
   return (
     <>
       <Navbar open={drawerOpen} handleOpen={toggleDrawerOpen} />
@@ -73,23 +86,19 @@ const Body = () => {
         </Snackbar>
         <div className={styles.gridContainer}>
           <div className={styles.splitRow}>
-            <div className={styles.splitItem}>
-              <h2>Scatter Plot</h2>
-              <hr />
-              <ScatterPlot />
-            </div>
-            <div className={styles.splitItem}>
-              <h2>Network Graph</h2>
-              <hr />
-              <NetworkGraph />
-            </div>
-            <div className={styles.splitItem}>
-              <h2>Edge Bundling</h2>
-              <hr />
-              <EdgeBundling />
-            </div>
+            {splitItems.map((item) => (
+              <div
+                className={`${styles.splitItem} ${hasFullWidthWithDrawer()}`}
+              >
+                <h2>{item.title}</h2>
+                <hr />
+                {item.component}
+              </div>
+            ))}
           </div>
-          <DataTable className={styles.fullItem} />
+          <DataTable
+            className={`${styles.fullItem} ${hasFullWidthWithDrawer()}`}
+          />
         </div>
       </Main>
     </>

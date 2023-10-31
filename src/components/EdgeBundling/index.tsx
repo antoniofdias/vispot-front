@@ -131,7 +131,11 @@ export const EdgeBundling = () => {
   const signalListeners = { click: handleClick };
 
   return data ? (
-    <EdgeBundlingFromSpec signalListeners={signalListeners} actions={false} />
+    <EdgeBundlingFromSpec
+      signalListeners={signalListeners}
+      actions={false}
+      style={{ display: 'flex', justifyContent: 'center' }}
+    />
   ) : (
     <></>
   );

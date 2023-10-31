@@ -45,15 +45,17 @@
   padding: 2rem;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1700px) {
   .splitRow {
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
-  .splitItem {
-    min-width: 90vw;
-    margin: 0.5rem;
-    padding: 0.5rem;
+
+  .splitItemFullWidth {
+    min-width: 95vw;
+  }
+  .splitItemFullWidthDrawer {
+    min-width: calc(95vw - 300px);
   }
 }
