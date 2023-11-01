@@ -17,6 +17,7 @@ export const SelectColor = () => {
     'liveness',
     'valence',
     'tempo',
+    'playlist',
   ];
 
   const handleChange = (event: SelectChangeEvent) => {

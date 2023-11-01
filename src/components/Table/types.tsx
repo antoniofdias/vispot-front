@@ -9,6 +9,7 @@ type Color = {
   liveness: string;
   valence: string;
   tempo: string;
+  playlist: string;
 };
 
 export type TrackItem = {

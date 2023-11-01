@@ -80,7 +80,8 @@ const PaletteCircle = ({ palette }: { palette: string }) => (
 );
 
 export const SelectPalette = () => {
-  const { selectedPalette, setSelectedPalette } = useContext(AppContext);
+  const { selectedAttribute, selectedPalette, setSelectedPalette } =
+    useContext(AppContext);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedPalette(event.target.value as typeof selectedPalette);
@@ -88,30 +89,34 @@ export const SelectPalette = () => {
 
   return (
     <>
-      <Select
-        labelId="color-label"
-        id="select-color"
-        value={selectedPalette}
-        label="Color by"
-        onChange={handleChange}
-        fullWidth
-      >
-        {Object.keys(palettes).map((palette) => {
-          return (
-            <MenuItem key={palette} value={palette}>
-              <div className={styles.menuItem}>
-                <PaletteCircle palette={palette} />
-                {' ' + palette}
-              </div>
-            </MenuItem>
-          );
-        })}
-      </Select>
-      <DiscreteColorBar
-        colors={
-          palettes[selectedPalette as 'viridis' | 'cividis' | 'jet' | 'hot']
-        }
-      />
+      {selectedAttribute !== 'playlist' && (
+        <>
+          <Select
+            labelId="color-label"
+            id="select-color"
+            value={selectedPalette}
+            label="Color by"
+            onChange={handleChange}
+            fullWidth
+          >
+            {Object.keys(palettes).map((palette) => {
+              return (
+                <MenuItem key={palette} value={palette}>
+                  <div className={styles.menuItem}>
+                    <PaletteCircle palette={palette} />
+                    {' ' + palette}
+                  </div>
+                </MenuItem>
+              );
+            })}
+          </Select>
+          <DiscreteColorBar
+            colors={
+              palettes[selectedPalette as 'viridis' | 'cividis' | 'jet' | 'hot']
+            }
+          />
+        </>
+      )}
     </>
   );
 };

@@ -11,7 +11,8 @@ type Attribute =
   | 'instrumentalness'
   | 'liveness'
   | 'valence'
-  | 'tempo';
+  | 'tempo'
+  | 'playlist';
 
 export type EdgeBundlingSignalsType = {
   tension: number;
