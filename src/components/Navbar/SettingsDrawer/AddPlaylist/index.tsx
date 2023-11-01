@@ -2,7 +2,7 @@ import { Add, Remove } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
@@ -10,8 +10,7 @@ import { backendApi } from '@/services/api';
 import styles from './styles.module.css';
 
 export const AddPlaylist = () => {
-  const { setData, loading, setLoading, error, setError } =
-    useContext(DataContext);
+  const { setData, loading, setLoading, setError } = useContext(DataContext);
   const { setSelectedTracks } = useContext(AppContext);
   const [inputs, setInputs] = useState([
     {
@@ -19,6 +18,7 @@ export const AddPlaylist = () => {
       value: 'https://open.spotify.com/playlist/37i9dQZF1DZ06evO4BaAkp',
     },
   ]);
+  const [debounceTimers, setDebounceTimers] = useState<NodeJS.Timeout[]>([]);
 
   const handleAddInput = () => {
     setInputs([...inputs, { key: '', value: '' }]);
@@ -32,10 +32,74 @@ export const AddPlaylist = () => {
     }
   };
 
+  const validatePath = (path: string) => {
+    let errorString = '';
+
+    if (path.trim() === '') {
+      errorString += ' the url cannot be empty';
+    } else if (!path.includes('https://open.spotify.com/playlist/')) {
+      errorString += ' please provide a valid Spotify url';
+    }
+
+    return errorString;
+  };
+
   const handleInputChange = (value: string, index: number) => {
     const updatedInputs = [...inputs];
     updatedInputs[index].value = value;
     setInputs(updatedInputs);
+
+    if (debounceTimers[index]) {
+      clearTimeout(debounceTimers[index]);
+    }
+
+    const timerId = setTimeout(async () => {
+      const updatedInputsWithName = [...inputs];
+      let nameRes = '';
+
+      if (validatePath(updatedInputs[index].value) === '') {
+        nameRes = await handlePlaylistNameRequest(
+          updatedInputsWithName[index].value
+        );
+      }
+
+      updatedInputsWithName[index].key =
+        nameRes !== '' ? nameRes : `Playlist ${index + 1}`;
+      setInputs(updatedInputsWithName);
+    }, 3000);
+
+    const newTimers = [...debounceTimers];
+    newTimers[index] = timerId;
+    setDebounceTimers(newTimers);
+  };
+
+  useEffect(() => {
+    return () => {
+      debounceTimers.forEach((timerId) => {
+        if (timerId) {
+          clearTimeout(timerId);
+        }
+      });
+    };
+  }, []);
+
+  const handlePlaylistNameRequest = async (playlistUrl: string) => {
+    let playlistName = '';
+
+    try {
+      const res = await backendApi.get('/playlist_name', {
+        params: {
+          playlist_url: playlistUrl,
+        },
+      });
+
+      if (res.status === 200) {
+        playlistName = res.data.name;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return playlistName;
   };
 
   const handlePlaylistRequest = async (playlistUrl: string) => {
@@ -63,27 +127,11 @@ export const AddPlaylist = () => {
 
   const handleSubmit = () => {
     const joinedValues = inputs
-      .map((input) => input.value)
+      .map((input) => input.value.split('?')[0])
       .filter((input) => input.trim() !== '')
       .join('+');
 
-    let errorString = '';
-
-    if (joinedValues.trim() === '') {
-      errorString += ' the url cannot be empty';
-    } else {
-      const hasQueryParams =
-        joinedValues.includes('?') || joinedValues.includes('&');
-      if (
-        !joinedValues.includes('https://open.spotify.com/playlist/') ||
-        hasQueryParams
-      ) {
-        errorString += ' please provide a valid Spotify url';
-        if (hasQueryParams) {
-          errorString += " (check if no '?' or '&' have been pasted)";
-        }
-      }
-    }
+    const errorString = validatePath(joinedValues);
 
     if (errorString !== '') {
       setError('Invalid input:' + errorString + '.');
@@ -109,7 +157,7 @@ export const AddPlaylist = () => {
         />
       ))}
       <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-        <IconButton onClick={handleAddInput}>
+        <IconButton onClick={handleAddInput} disabled={inputs.length > 4}>
           <Add />
         </IconButton>
         <IconButton onClick={handleRemoveInput} disabled={inputs.length < 2}>
