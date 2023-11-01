@@ -100,8 +100,12 @@ const columns: GridColDef[] = [
 
 export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   const { data, loading } = useContext(DataContext);
-  const { selectedTracks, setSelectedTracks } = useContext(AppContext);
-  const [showPlaylistCol, setShowPlaylistCol] = useState(false);
+  const {
+    selectedTracks,
+    hasMoreThanOnePlaylist,
+    setSelectedTracks,
+    setHasMoreThanOnePlaylist,
+  } = useContext(AppContext);
   const [searchTerm, setSearchTerm] = useState('');
   const apiRef = useGridApiRef();
 
@@ -115,7 +119,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
   }, [selectedTracks]);
 
   useEffect(() => {
-    setShowPlaylistCol(
+    setHasMoreThanOnePlaylist(
       !data.songs.every((track) => track.playlist === data.songs[0].playlist)
     );
   }, [data]);
@@ -165,7 +169,7 @@ export const DataTable = ({ className }: HTMLAttributes<HTMLDivElement>) => {
         pageSizeOptions={[5, 10]}
         onRowClick={(params) => setSelectedTracks([params.row.id])}
         hideFooterSelectedRowCount
-        columnVisibilityModel={{ playlist: showPlaylistCol }}
+        columnVisibilityModel={{ playlist: hasMoreThanOnePlaylist }}
         autoHeight
       />
     </div>

@@ -29,11 +29,13 @@ type AppContextType = {
   selectedPalette: 'viridis' | 'cividis' | 'jet' | 'hot';
   selectedAttribute: Attribute;
   correlationRange: number[];
+  hasMoreThanOnePlaylist: boolean;
   edgeBundlingSignals: EdgeBundlingSignalsType;
   setSelectedTracks: (tracks: number[] | null) => void;
   setSelectedPalette: (palette: 'viridis' | 'cividis' | 'jet' | 'hot') => void;
   setSelectedAttribute: (attribute: Attribute) => void;
   setCorrelationRange: (range: number[]) => void;
+  setHasMoreThanOnePlaylist: (multiples: boolean) => void;
   setEdgeBundlingSignals: (
     newSignals: Partial<EdgeBundlingSignalsType>
   ) => void;
@@ -48,6 +50,7 @@ export const AppContext = createContext<AppContextType>({
   selectedPalette: 'viridis',
   selectedAttribute: 'acousticness',
   correlationRange: [0.3, 0.7],
+  hasMoreThanOnePlaylist: false,
   edgeBundlingSignals: {
     tension: 0.85,
     radius: 190,
@@ -61,6 +64,7 @@ export const AppContext = createContext<AppContextType>({
   setSelectedTracks: () => {},
   setSelectedAttribute: () => {},
   setCorrelationRange: () => {},
+  setHasMoreThanOnePlaylist: () => {},
   setEdgeBundlingSignals: () => {},
 });
 
@@ -77,6 +81,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   const [correlationRange, setCorrelationRange] = useState<number[]>([
     0.3, 0.7,
   ]);
+
+  const [hasMoreThanOnePlaylist, setHasMoreThanOnePlaylist] =
+    useState<boolean>(false);
 
   const [edgeBundlingSignals, setEdgeBundlingSignals] =
     useState<EdgeBundlingSignalsType>({
@@ -106,11 +113,13 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
         selectedPalette,
         selectedAttribute,
         correlationRange,
+        hasMoreThanOnePlaylist,
         edgeBundlingSignals,
         setSelectedTracks,
         setSelectedPalette,
         setSelectedAttribute,
         setCorrelationRange,
+        setHasMoreThanOnePlaylist,
         setEdgeBundlingSignals: updateEdgeBundlingSignals,
       }}
     >

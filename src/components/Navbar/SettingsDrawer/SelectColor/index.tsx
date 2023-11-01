@@ -4,7 +4,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
 
 export const SelectColor = () => {
-  const { selectedAttribute, setSelectedAttribute } = useContext(AppContext);
+  const { selectedAttribute, hasMoreThanOnePlaylist, setSelectedAttribute } =
+    useContext(AppContext);
 
   const attributes = [
     'duration_ms',
@@ -17,8 +18,11 @@ export const SelectColor = () => {
     'liveness',
     'valence',
     'tempo',
-    'playlist',
   ];
+
+  if (hasMoreThanOnePlaylist) {
+    attributes.push('playlist');
+  }
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedAttribute(event.target.value as typeof selectedAttribute);

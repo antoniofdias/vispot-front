@@ -11,6 +11,7 @@ const ScatterPlot = () => {
     setSelectedTracks,
     selectedPalette,
     selectedAttribute,
+    hasMoreThanOnePlaylist,
   } = useContext(AppContext);
 
   const handleSelect = (event: any) => {
@@ -42,7 +43,12 @@ const ScatterPlot = () => {
             hoverinfo: 'text',
             mode: 'markers',
             type: 'scatter',
-            text: tracks.map((track) => track.name),
+            text: tracks.map(
+              (track) =>
+                track.name +
+                '<br>' +
+                (hasMoreThanOnePlaylist ? `[${track.playlist}]` : '')
+            ),
             marker: {
               size: 12,
               color: tracks.map(

@@ -25,6 +25,7 @@ export const NetworkGraph = () => {
     correlationRange,
     selectedPalette,
     selectedAttribute,
+    hasMoreThanOnePlaylist,
   } = useContext(AppContext);
 
   const [nodes, setNodes] = useState<Node[]>();
@@ -39,7 +40,10 @@ export const NetworkGraph = () => {
       return {
         id: track.id,
         label: track.id,
-        title: track.name,
+        title:
+          track.name +
+          '<br>' +
+          (hasMoreThanOnePlaylist ? `[${track.playlist}]` : ''),
         color: track.colors[selectedPalette][selectedAttribute],
       };
     });
@@ -62,7 +66,7 @@ export const NetworkGraph = () => {
         edge.title <= correlationRange[1] / 10
     );
     setFilteredEdges(currentFilteredEdges);
-  }, [data, selectedAttribute, selectedPalette]);
+  }, [data, selectedAttribute, selectedPalette, hasMoreThanOnePlaylist]);
 
   useEffect(() => {
     if (edges !== undefined) {
@@ -82,6 +86,22 @@ export const NetworkGraph = () => {
       networkRef.current.selectEdges([]);
     }
   }, [selectedTracks]);
+
+  useEffect(() => {
+    if (networkRef.current !== null) {
+      networkRef.current.setOptions({
+        physics: { enabled: true },
+      });
+    }
+
+    setTimeout(() => {
+      if (networkRef.current !== null) {
+        networkRef.current.setOptions({
+          physics: { enabled: false },
+        });
+      }
+    }, 10000);
+  }, [data, correlationRange]);
 
   useEffect(() => {
     setGraph({
