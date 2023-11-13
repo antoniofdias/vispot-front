@@ -28,6 +28,7 @@ export const EdgeBundling = () => {
   } = useContext(AppContext);
 
   const [nodes, setNodes] = useState<Node[]>();
+  const [filteredNodes, setFilteredNodes] = useState<Node[]>();
   const [edges, setEdges] = useState<Edge[]>();
   const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
   const [testSpec, setTestSpec] = useState<any>(baseSpec);
@@ -57,12 +58,24 @@ export const EdgeBundling = () => {
       }
     }
     setEdges(newEdges);
+
     const updatedFilteredEdges = newEdges.filter(
       (edge) =>
         edge.weight >= correlationRange[0] / 10 &&
         edge.weight <= correlationRange[1] / 10
     );
     setFilteredEdges(updatedFilteredEdges);
+
+    const nodeSet = new Set<number>();
+    updatedFilteredEdges.forEach((edge) => {
+      nodeSet.add(edge.source);
+      nodeSet.add(edge.target);
+    });
+    nodeSet.add(0);
+    const updatedFilteredNodes = [root, ...newNodes].filter((node) =>
+      nodeSet.has(node.id as number)
+    );
+    setFilteredNodes(updatedFilteredNodes);
   }, [data.correlation, data.songs]);
 
   useEffect(() => {
@@ -73,6 +86,19 @@ export const EdgeBundling = () => {
           edge.weight <= correlationRange[1] / 10
       );
       setFilteredEdges(newEdges);
+
+      if (nodes !== undefined) {
+        const nodeSet = new Set<number>();
+        newEdges.forEach((edge) => {
+          nodeSet.add(edge.source);
+          nodeSet.add(edge.target);
+        });
+        nodeSet.add(0);
+        const updatedFilteredNodes = nodes.filter((node) =>
+          nodeSet.has(node.id as number)
+        );
+        setFilteredNodes(updatedFilteredNodes);
+      }
     }
   }, [correlationRange]);
 
@@ -92,12 +118,12 @@ export const EdgeBundling = () => {
       ],
     };
 
-    newTestSpec.data[0].values = nodes;
+    newTestSpec.data[0].values = filteredNodes;
     newTestSpec.data[2].values = filteredEdges;
 
     setTestSpec(newTestSpec);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTracks, nodes, filteredEdges]);
+  }, [selectedTracks, filteredNodes, filteredEdges]);
 
   if (loading) {
     return <Skeleton variant="circular" height="100%" />;
