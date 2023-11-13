@@ -1,6 +1,6 @@
 'use client';
 import { createTheme, ThemeProvider } from '@mui/material';
-import { green, yellow } from '@mui/material/colors';
+import { green, grey, yellow } from '@mui/material/colors';
 
 const greenTheme = createTheme({
   palette: {
@@ -14,6 +14,18 @@ const greenTheme = createTheme({
   },
 });
 
+const greyTheme = createTheme({
+  palette: {
+    primary: {
+      main: grey[900],
+      contrastText: '#fff',
+    },
+    secondary: {
+      main: grey[500],
+    },
+  },
+});
+
 export const ThemeContext = ({ children }: { children: React.ReactNode }) => {
-  return <ThemeProvider theme={greenTheme}>{children}</ThemeProvider>;
+  return <ThemeProvider theme={greyTheme}>{children}</ThemeProvider>;
 };
