@@ -54,7 +54,19 @@ const palettes = {
     '#ffeba9',
     '#fffdf7',
   ],
-  oranges: [
+  plasma: [
+    '#feebd8',
+    '#fddcba',
+    '#fdc997',
+    '#fdad6a',
+    '#fd9142',
+    '#f57622',
+    '#e75b0b',
+    '#cb4301',
+    '#cb4301',
+    '#7f2704',
+  ],
+  copper: [
     '#feebd8',
     '#fddcba',
     '#fdc997',
@@ -73,14 +85,20 @@ const PaletteCircle = ({ palette }: { palette: string }) => (
     <svg width={0} height={0}>
       <linearGradient id={palette} x1={1} y1={0} x2={1} y2={1}>
         {palettes[
-          palette as 'viridis' | 'cividis' | 'jet' | 'hot' | 'oranges'
+          palette as 'viridis' | 'cividis' | 'jet' | 'hot' | 'plasma' | 'copper'
         ].map((color, index) => (
           <stop
             key={index}
             offset={`${
               (100 * (index + 1)) /
               palettes[
-                palette as 'viridis' | 'cividis' | 'jet' | 'hot' | 'oranges'
+                palette as
+                  | 'viridis'
+                  | 'cividis'
+                  | 'jet'
+                  | 'hot'
+                  | 'plasma'
+                  | 'copper'
               ].length
             }%`}
             stopColor={color}
