@@ -43,7 +43,12 @@ export const NetworkGraph = () => {
         title:
           track.name +
           '<br>' +
-          (hasMoreThanOnePlaylist ? `[${track.playlist}]` : ''),
+          selectedAttribute +
+          ': ' +
+          track[selectedAttribute] +
+          (hasMoreThanOnePlaylist && selectedAttribute !== 'playlist'
+            ? `<br>[${track.playlist}]`
+            : ''),
         color: track.colors[selectedPalette][selectedAttribute],
       };
     });

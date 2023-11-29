@@ -47,7 +47,12 @@ const ScatterPlot = () => {
               (track) =>
                 track.name +
                 '<br>' +
-                (hasMoreThanOnePlaylist ? `[${track.playlist}]` : '')
+                selectedAttribute +
+                ': ' +
+                track[selectedAttribute] +
+                (hasMoreThanOnePlaylist && selectedAttribute !== 'playlist'
+                  ? `<br>[${track.playlist}]`
+                  : '')
             ),
             marker: {
               size: 12,
