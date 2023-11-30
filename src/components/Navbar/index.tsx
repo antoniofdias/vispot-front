@@ -55,7 +55,7 @@ export const Navbar = ({ open, handleOpen }: AppBarProps) => {
           >
             <MenuIcon />
           </IconButton>
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', flexGrow: 1 }}>
             <Image
               src={LogoImg}
               alt="Your Image Alt Text"
@@ -63,12 +63,7 @@ export const Navbar = ({ open, handleOpen }: AppBarProps) => {
               height={25.4}
               style={{ marginRight: '0.5rem' }}
             />
-            <Typography
-              variant="h6"
-              noWrap
-              component="div"
-              sx={{ flexGrow: 1 }}
-            >
+            <Typography variant="h6" noWrap component="div">
               vispot
             </Typography>
           </div>
