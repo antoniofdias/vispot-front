@@ -37,6 +37,8 @@ export type TrackItem = {
     cividis: Color;
     jet: Color;
     hot: Color;
+    plasma: Color;
+    copper: Color;
   };
 };
 

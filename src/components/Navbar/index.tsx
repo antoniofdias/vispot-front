@@ -11,7 +11,10 @@ import {
   styled,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import Image from 'next/image';
 import { ResetButton } from './ResetButton';
+
+import LogoImg from '@/assets/images/logo.png';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -52,9 +55,18 @@ export const Navbar = ({ open, handleOpen }: AppBarProps) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-            vispot
-          </Typography>
+          <div style={{ display: 'flex', flexGrow: 1 }}>
+            <Image
+              src={LogoImg}
+              alt="Your Image Alt Text"
+              width={15.7}
+              height={25.4}
+              style={{ marginRight: '0.5rem' }}
+            />
+            <Typography variant="h6" noWrap component="div">
+              vispot
+            </Typography>
+          </div>
           <ResetButton />
         </Toolbar>
       </AppBar>

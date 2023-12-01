@@ -62,7 +62,7 @@ const Body = () => {
   };
 
   const splitItems = [
-    { title: 'Scatter Plot', component: <ScatterPlot /> },
+    { title: 'Dimensionality Reduction', component: <ScatterPlot /> },
     { title: 'Network Graph', component: <NetworkGraph /> },
     { title: 'Edge Bundling', component: <EdgeBundling /> },
   ];
