@@ -152,14 +152,14 @@ export const baseSpec = {
             update: {
               stroke: [
                 {
-                  test: 'parent.source === active || parent.target === active',
+                  test: 'indexof(active, parent.source) !== -1 || indexof(active, parent.target) !== -1',
                   signal: 'colorOut',
                 },
                 { value: 'steelblue' },
               ],
               strokeOpacity: [
                 {
-                  test: 'parent.source === active || parent.target === active',
+                  test: 'indexof(active, parent.source) !== -1 || indexof(active, parent.target) !== -1',
                   value: 1,
                 },
                 { value: 0.2 },
