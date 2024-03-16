@@ -49,7 +49,7 @@ export const AppContext = createContext<AppContextType>({
   selectedTracks: null,
   selectedPalette: 'viridis',
   selectedAttribute: 'acousticness',
-  correlationRange: [0.3, 0.7],
+  correlationRange: [0.6, 1.0],
   hasMoreThanOnePlaylist: false,
   edgeBundlingSignals: {
     tension: 0.85,
@@ -79,7 +79,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     useState<Attribute>('acousticness');
 
   const [correlationRange, setCorrelationRange] = useState<number[]>([
-    0.3, 0.7,
+    0.6, 1.0,
   ]);
 
   const [hasMoreThanOnePlaylist, setHasMoreThanOnePlaylist] =
