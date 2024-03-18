@@ -10,7 +10,8 @@ import { backendApi } from '@/services/api';
 import styles from './styles.module.css';
 
 export const AddPlaylist = () => {
-  const { setData, loading, setLoading, setError } = useContext(DataContext);
+  const { setData, loading, setLoading, setError, setPlaylistNames } =
+    useContext(DataContext);
   const { setSelectedTracks } = useContext(AppContext);
   const [inputs, setInputs] = useState([
     {
@@ -66,6 +67,11 @@ export const AddPlaylist = () => {
       updatedInputsWithName[index].key =
         nameRes !== '' ? nameRes : `Playlist ${index + 1}`;
       setInputs(updatedInputsWithName);
+
+      const playlistNames = updatedInputsWithName.map(
+        (playlist) => playlist.key
+      );
+      setPlaylistNames(playlistNames);
     }, 3000);
 
     const newTimers = [...debounceTimers];
