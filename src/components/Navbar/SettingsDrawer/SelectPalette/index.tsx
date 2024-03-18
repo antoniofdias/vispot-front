@@ -1,9 +1,11 @@
 import { AppContext } from '@/contexts/AppProvider';
+import { DataContext } from '@/contexts/DataProvider';
 import { Circle } from '@mui/icons-material';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useContext } from 'react';
-import { DiscreteColorBar } from '../DiscreteColorbar';
+import { ColoredSquare } from './ColoredSquare';
+import { DiscreteColorBar } from './DiscreteColorbar';
 import styles from './styles.module.css';
 
 const palettes = {
@@ -111,8 +113,13 @@ const PaletteCircle = ({ palette }: { palette: string }) => (
 );
 
 export const SelectPalette = () => {
-  const { selectedAttribute, selectedPalette, setSelectedPalette } =
-    useContext(AppContext);
+  const {
+    selectedAttribute,
+    selectedPalette,
+    setSelectedPalette,
+    hasMoreThanOnePlaylist,
+  } = useContext(AppContext);
+  const { playlistNames } = useContext(DataContext);
 
   const handleChange = (event: SelectChangeEvent) => {
     setSelectedPalette(event.target.value as typeof selectedPalette);
@@ -120,8 +127,19 @@ export const SelectPalette = () => {
 
   return (
     <>
-      {selectedAttribute !== 'playlist' && (
+      {selectedAttribute === 'playlist' && hasMoreThanOnePlaylist ? (
         <>
+          <h5>Labels</h5>
+          {playlistNames.map((playlistName, index) => (
+            <div className={styles.menuItem}>
+              <ColoredSquare index={index} />
+              <p>{playlistName}</p>
+            </div>
+          ))}
+        </>
+      ) : (
+        <>
+          <h5>Palette</h5>
           <Select
             labelId="color-label"
             id="select-color"

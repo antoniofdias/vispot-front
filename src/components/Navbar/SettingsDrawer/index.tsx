@@ -30,7 +30,6 @@ const list = () => (
       <SelectColor />
     </div>
     <div className={styles.settingsItem}>
-      <h5>Palette</h5>
       <SelectPalette />
     </div>
     <div className={styles.settingsItem}>

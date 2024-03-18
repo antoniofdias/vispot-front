@@ -1,0 +1,6 @@
+.colorSquare {
+  width: 1rem;
+  height: 1rem;
+  border: 0.1rem solid black;
+  margin-top: 0.25rem;
+}
