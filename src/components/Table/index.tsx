@@ -17,8 +17,14 @@ const columns: GridColDef[] = [
     field: 'playlist',
     headerName: 'playlist',
     description: 'The name of the playlist containing the track.',
+    flex: 1,
   },
-  { field: 'name', headerName: 'name', description: 'The name of the track.' },
+  {
+    field: 'name',
+    headerName: 'name',
+    description: 'The name of the track.',
+    flex: 1,
+  },
   {
     field: 'duration_ms',
     headerName: 'duration',
@@ -35,6 +41,7 @@ const columns: GridColDef[] = [
     field: 'artist',
     headerName: 'artist',
     description: 'The name of the primary artist.',
+    flex: 1,
   },
   {
     field: 'danceability',
