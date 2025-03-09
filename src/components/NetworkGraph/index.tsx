@@ -1,21 +1,34 @@
-//@ts-nocheck
 import { AppContext } from '@/contexts/AppProvider';
 import { DataContext } from '@/contexts/DataProvider';
 import { Skeleton } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
-import Graph from 'react-vis-network-graph';
+import Graph from 'react-vis-graph-wrapper';
 
-type Node = {
-  id: string | number;
-  title: string;
+interface Node {
+  id: number;
+  title: HTMLDivElement;
   color: string;
-};
+}
 
-type Edge = {
+interface Edge {
   from: number;
   to: number;
-  title: number;
-};
+  color: {
+    color: string;
+    highlight: string;
+  };
+}
+
+interface GraphData {
+  nodes: Node[];
+  edges: Edge[];
+}
+
+interface RefData {
+  fit: () => void;
+  on: (arg0: string, arg1: () => void) => void;
+  selectNodes: (arg0: number[]) => void;
+}
 
 export const NetworkGraph = () => {
   const { data, loading } = useContext(DataContext);
@@ -28,101 +41,70 @@ export const NetworkGraph = () => {
     hasMoreThanOnePlaylist,
   } = useContext(AppContext);
 
-  const [nodes, setNodes] = useState<Node[]>();
-  const [edges, setEdges] = useState<Edge[]>();
-  const [filteredEdges, setFilteredEdges] = useState<Edge[]>();
-  const [graph, setGraph] = useState();
+  const [graph, setGraph] = useState<GraphData>({ nodes: [], edges: [] });
+  const networkRef = useRef<RefData | null>(null);
 
-  const networkRef = useRef<any>(null);
+  function htmlTitle(html: string) {
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    return container;
+  }
 
   useEffect(() => {
-    const newNodes = data.songs.map((track: any) => {
-      return {
-        id: track.id,
-        label: track.id,
-        title:
-          track.name +
-          '<br>' +
-          selectedAttribute +
-          ': ' +
-          track[selectedAttribute] +
+    if (!data?.songs || !data?.correlation) return;
+
+    const newNodes = data.songs.map((track) => ({
+      id: track.id,
+      title: htmlTitle(
+        `${track.name}<br>${selectedAttribute}: ${track[selectedAttribute]}` +
           (hasMoreThanOnePlaylist && selectedAttribute !== 'playlist'
             ? `<br>[${track.playlist}]`
-            : ''),
-        color: track.colors[selectedPalette][selectedAttribute],
-      };
-    });
-    setNodes(newNodes);
+            : '')
+      ),
+      color: track.colors[selectedPalette][selectedAttribute],
+    }));
 
-    const newEdges: Edge[] = [];
-    for (let i = 1; i <= newNodes.length; i++) {
-      for (let j = i + 1; j <= newNodes.length; j++) {
+    const newEdges = [];
+    for (let i = 0; i < newNodes.length; i++) {
+      for (let j = i + 1; j < newNodes.length; j++) {
         newEdges.push({
-          from: i,
-          to: j,
-          title: data.correlation[i - 1][j - 1].toFixed(3),
+          from: newNodes[i].id,
+          to: newNodes[j].id,
+          title: data.correlation[i][j].toFixed(3),
+          color: {
+            color: 'blue',
+            highlight: 'green',
+          },
         });
       }
     }
-    setEdges(newEdges);
-    const currentFilteredEdges = newEdges.filter(
+
+    const filteredEdges = newEdges.filter(
       (edge) =>
         edge.title >= correlationRange[0] / 10 &&
         edge.title <= correlationRange[1] / 10
     );
-    setFilteredEdges(currentFilteredEdges);
-  }, [data, selectedAttribute, selectedPalette, hasMoreThanOnePlaylist]);
+
+    setGraph({ nodes: newNodes, edges: filteredEdges });
+  }, [
+    data,
+    selectedAttribute,
+    selectedPalette,
+    hasMoreThanOnePlaylist,
+    correlationRange,
+  ]);
 
   useEffect(() => {
-    if (edges !== undefined) {
-      const newEdges = edges.filter(
-        (edge) =>
-          edge.title >= correlationRange[0] / 10 &&
-          edge.title <= correlationRange[1] / 10
-      );
-      setFilteredEdges(newEdges);
-    }
-  }, [correlationRange]);
-
-  useEffect(() => {
-    if (networkRef.current !== null && selectedTracks !== null) {
+    if (networkRef.current && selectedTracks) {
       networkRef.current.selectNodes(selectedTracks);
-    } else if (networkRef.current !== null && selectedTracks === null) {
-      networkRef.current.selectEdges([]);
     }
   }, [selectedTracks]);
 
   useEffect(() => {
-    if (networkRef.current !== null) {
-      networkRef.current.setOptions({
-        physics: { enabled: true },
-      });
-    }
-
-    setTimeout(() => {
-      if (networkRef.current !== null) {
-        networkRef.current.setOptions({
-          physics: { enabled: false },
-        });
-      }
-    }, 10000);
-  }, [data, correlationRange]);
-
-  useEffect(() => {
-    setGraph({
-      nodes: nodes?.map((node) => {
-        return {
-          ...node,
-          opacity:
-            selectedTracks === null || selectedTracks.includes(node.id)
-              ? 1
-              : 0.3,
-        };
-      }),
-      edges: filteredEdges,
+    networkRef.current?.on('stabilized', () => {
+      networkRef.current?.fit();
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedTracks, nodes, filteredEdges]);
+  }, []);
 
   if (loading) {
     return <Skeleton variant="circular" height="100%" />;
@@ -131,30 +113,25 @@ export const NetworkGraph = () => {
   const options = {
     autoResize: true,
     layout: {
-      hierarchical: false,
+      improvedLayout: false,
+      randomSeed: undefined,
     },
     edges: {
-      color: {
-        color: 'blue',
-        highlight: 'green',
-      },
-      arrows: { to: { enabled: false }, from: { enabled: false } },
+      color: 'blue',
+      arrows: { to: false, from: false },
     },
+    physics: { enabled: true },
   };
 
   const events = {
-    select: (event) => {
-      let { nodes } = event;
-      if (nodes.length) {
-        setSelectedTracks([nodes[0]]);
+    select: (event: any) => {
+      if (event.nodes.length) {
+        setSelectedTracks([event.nodes[0]]);
       }
     },
     doubleClick: () => {
-      if (
-        networkRef.current !== null &&
-        networkRef.current.view !== undefined
-      ) {
-        networkRef.current.view.fit();
+      if (networkRef.current) {
+        networkRef.current.fit();
       }
     },
   };
@@ -165,9 +142,7 @@ export const NetworkGraph = () => {
         graph={graph}
         options={options}
         events={events}
-        getNetwork={(network) => {
-          networkRef.current = network;
-        }}
+        getNetwork={(network) => (networkRef.current = network)}
       />
     </div>
   );
