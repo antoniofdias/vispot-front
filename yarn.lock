@@ -807,6 +807,11 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==
 
+"@types/lodash@^4.14.178":
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.21.tgz#b806831543d696b14f8112db600ea9d3a1df6ea4"
+  integrity sha512-FOvQ0YPD5NOfPgMzJihoT+Za5pdkDJWcbpuj1DjaKZIr/gxodQjY/uWEFlTNqW2ugXHUiL8lRQgw63dzKHZdeQ==
+
 "@types/node@20.2.1":
   version "20.2.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.1.tgz#de559d4b33be9a808fd43372ccee822c70f39704"
@@ -3509,12 +3514,17 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
+lodash-es@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
+
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash@^4.17.15:
+lodash@^4.17.15, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -4205,6 +4215,17 @@ react-vega@^7.6.0:
     fast-deep-equal "^3.1.1"
     prop-types "^15.8.1"
     vega-embed "^6.5.1"
+
+react-vis-graph-wrapper@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/react-vis-graph-wrapper/-/react-vis-graph-wrapper-0.1.3.tgz#98de3c75a62f7aaca51e71619a2e58e16eaed574"
+  integrity sha512-joKVERnXoruwHNaK9WVguM+RjlQBrwRweimtmKN7qWbJZ39ue+EPMU2Q/KN860qXcWO4YA5VGsUSxVKzZhaucA==
+  dependencies:
+    "@types/lodash" "^4.14.178"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+    vis-data "^7.1.2"
+    vis-network "^9.1.0"
 
 react-vis-network-graph@^3.0.1:
   version "3.0.1"
@@ -5350,10 +5371,20 @@ vis-data@^6.5.1:
   resolved "https://registry.yarnpkg.com/vis-data/-/vis-data-6.6.1.tgz#2aa52e46c305ad46bb7abe6e7634e2eecd743b15"
   integrity sha512-xmujDB2Dzf8T04rGFJ9OP4OA6zRVrz8R9hb0CVKryBrZRCljCga9JjSfgctA8S7wdZu7otDtUIwX4ZOgfV/57w==
 
+vis-data@^7.1.2:
+  version "7.1.10"
+  resolved "https://registry.yarnpkg.com/vis-data/-/vis-data-7.1.10.tgz#70970baf2e0c219565673b1e322eb1b7293b807e"
+  integrity sha512-23juM9tdCaHTX5vyIQ7XBzsfZU0Hny+gSTwniLrfFcmw9DOm7pi3+h9iEBsoZMp5rX6KNqWwc1MF0fkAmWVuoQ==
+
 vis-network@^7.6.4:
   version "7.10.2"
   resolved "https://registry.yarnpkg.com/vis-network/-/vis-network-7.10.2.tgz#b318f1907cf006d9640c4c31a262e0782405a3cf"
   integrity sha512-KDx2agbDnaiE0Bye4AcCRqTn5mxzDKhdUNpKkzSn0AOLBmdhNtPGjxAFluAmvFVyiSK5R6Q5KIWdLjeIMu/PAQ==
+
+vis-network@^9.1.0:
+  version "9.1.13"
+  resolved "https://registry.yarnpkg.com/vis-network/-/vis-network-9.1.13.tgz#3cb785ab0a45489556414d9f503a7fadc50ca90b"
+  integrity sha512-HLeHd5KZS92qzO1kC59qMh1/FWAZxMUEwUWBwDMoj6RKj/Ajkrgy/heEYo0Zc8SZNQ2J+u6omvK2+a28GX1QuQ==
 
 vt-pbf@^3.1.1:
   version "3.1.3"
