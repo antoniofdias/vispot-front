@@ -1,6 +1,6 @@
 'use client';
-import { mockedData } from '@/app/data';
 import { ApiResponseType } from '@/components/Table/types';
+import { mocks } from '@/mocks';
 import React, { useState } from 'react';
 
 type DataContextType = {
@@ -15,7 +15,7 @@ type DataContextType = {
 };
 
 export const DataContext = React.createContext<DataContextType>({
-  data: mockedData,
+  data: mocks.default,
   loading: false,
   error: '',
   playlistNames: [],
@@ -30,7 +30,7 @@ type DataProviderProps = {
 };
 
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
-  const [data, setData] = useState<ApiResponseType>(mockedData);
+  const [data, setData] = useState<ApiResponseType>(mocks.default);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [playlistNames, setPlaylistNames] = useState<string[]>([]);

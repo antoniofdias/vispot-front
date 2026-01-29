@@ -1,6 +1,6 @@
 import { ApiResponseType } from '@/components/Table/types';
 
-export const mockedData: ApiResponseType = {
+export const defaultMock: ApiResponseType = {
   songs: [
     {
       id: 1,
