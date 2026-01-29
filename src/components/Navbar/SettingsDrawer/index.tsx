@@ -1,5 +1,6 @@
 import { CorrelationSlider } from '@/components/Navbar/SettingsDrawer/CorrelationSlider';
 import { SelectColor } from '@/components/Navbar/SettingsDrawer/SelectColor';
+import { SelectMock } from '@/components/Navbar/SettingsDrawer/SelectMock';
 import { SelectPalette } from '@/components/Navbar/SettingsDrawer/SelectPalette';
 import { Chip, Divider } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -23,7 +24,12 @@ const CustomDivider = ({ children }: CustomDividerProps) => {
 const list = () => (
   <Box role="presentation" className={styles.box}>
     <CustomDivider>DATABASE</CustomDivider>
+    <div className={styles.settingsItem}>
+      <h5>Dataset</h5>
+      <SelectMock />
+    </div>
     <AddPlaylist />
+
     <CustomDivider>VISUAL ATTRIBUTES</CustomDivider>
     <div className={styles.settingsItem}>
       <h5>Color by</h5>
@@ -36,6 +42,7 @@ const list = () => (
       <h5>Correlation</h5>
       <CorrelationSlider />
     </div>
+
     <CustomDivider>EDGE BUNDLING</CustomDivider>
     <EdgeBundlingSettings />
     <ResetButton variant="contained" color="primary" fullWidth={true} />
